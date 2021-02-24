@@ -1,4 +1,4 @@
-package com.bukharov.drawing
+package com.bukharov.drawing.geometry
 
 import arrow.core.Either
 import arrow.core.flatMap
@@ -8,7 +8,7 @@ import arrow.core.right
 data class Line internal constructor(
     val a: Point,
     val b: Point
-): Shape {
+) : Shape {
 
     private fun isHorizontal(): Boolean =
         a.y == b.y
@@ -32,7 +32,6 @@ data class Line internal constructor(
     override fun hashCode(): Int =
         31 * (b.hashCode() + a.hashCode())
 
-
     companion object {
         fun create(from: Point, to: Point): Either<DrawingError, Line> {
             val line = if (from == to) LineShouldNotBePoint.left()
@@ -47,8 +46,7 @@ data class Line internal constructor(
             }
         }
     }
-
 }
 
-object LineShouldNotBePoint: DrawingError
-object LineShouldBeVerticalOrHorizontal: DrawingError
+object LineShouldNotBePoint : DrawingError
+object LineShouldBeVerticalOrHorizontal : DrawingError

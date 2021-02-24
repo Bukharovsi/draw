@@ -1,4 +1,4 @@
-package com.bukharov.drawing
+package com.bukharov.drawing.geometry
 
 import arrow.core.Either
 import arrow.core.left
@@ -12,6 +12,7 @@ class Canvas(
 
     private val shapes: MutableSet<Line> = mutableSetOf()
 
+    @Suppress("ReturnCount")
     fun put(shape: Line): Either<DrawingError, Canvas> {
         if (shape.upperRightCorner().moreByAnyDirectionThan(rightUpperCorner)) {
             return ShapeCanNotBePlacedToCanvas.left()
@@ -55,5 +56,5 @@ class Canvas(
     }
 }
 
-object ShapeCanNotBePlacedToCanvas: DrawingError
-object WrongCanvasSize: DrawingError
+object ShapeCanNotBePlacedToCanvas : DrawingError
+object WrongCanvasSize : DrawingError

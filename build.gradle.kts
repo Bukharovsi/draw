@@ -101,7 +101,7 @@ subprojects {
                 rule {
                     excludes = listOf("application")
                     limit {
-                        minimum = BigDecimal("0.95")
+                        minimum = BigDecimal("0.90")
                     }
                 }
             }

@@ -1,4 +1,4 @@
-package com.bukharov.drawing
+package com.bukharov.drawing.geometry
 
 data class Point(
     val x: Int,
@@ -11,12 +11,11 @@ data class Point(
         x < other.x || y < other.y
 
     companion object {
-        val zero = Point(0,0)
+        val zero = Point(0, 0)
     }
 }
 
-
-fun upperRightOfPoints(vararg points: Point)=
+fun upperRightOfPoints(vararg points: Point) =
     Point(
         x = maxXof(*points),
         y = maxYof(*points)

@@ -1,4 +1,4 @@
-package com.bukharov.drawing
+package com.bukharov.drawing.geometry
 
 import arrow.core.extensions.either.apply.tupled
 import arrow.core.flatMap
@@ -32,7 +32,7 @@ internal class CanvasTest {
     fun `two canvas with the different width and height are NOT equal`() {
         Canvas(
             rightUpperCorner = Point(6, 6)
-        ) shouldNotBe  Canvas(
+        ) shouldNotBe Canvas(
             rightUpperCorner = Point(6, 7)
         )
     }
@@ -55,12 +55,12 @@ internal class CanvasTest {
     fun `a shape might be placed on canvas if it is within canvas`() {
         tupled(
             Canvas.create(Point(9, 9)),
-            Line.create(Point.zero, Point(0,3))
+            Line.create(Point.zero, Point(0, 3))
         ).flatMap {
             it.a.put(it.b)
         } shouldBeRight {
             it.shapes().size shouldBe 1
-            it.shapes().contains(Line(Point.zero, Point(0,3)))
+            it.shapes().contains(Line(Point.zero, Point(0, 3)))
         }
     }
 
@@ -68,7 +68,7 @@ internal class CanvasTest {
     fun `a shape might NOT be placed on canvas if it does not fit canvas`() {
         tupled(
             Canvas.create(Point(9, 9)),
-            Line.create(Point.zero, Point(0,14))
+            Line.create(Point.zero, Point(0, 14))
         ).flatMap {
             it.a.put(it.b)
         } shouldBeLeft ShapeCanNotBePlacedToCanvas
@@ -78,7 +78,7 @@ internal class CanvasTest {
     fun `a shape might not be placed on canvas if it any coordinate less than 0`() {
         tupled(
             Canvas.create(Point(9, 9)),
-            Line.create(Point.zero, Point(-1,0))
+            Line.create(Point.zero, Point(-1, 0))
         ).flatMap {
             it.a.put(it.b)
         } shouldBeLeft ShapeCanNotBePlacedToCanvas

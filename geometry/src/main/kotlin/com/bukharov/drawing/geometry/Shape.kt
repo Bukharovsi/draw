@@ -1,4 +1,4 @@
-package com.bukharov.drawing
+package com.bukharov.drawing.geometry
 
 interface Shape {
 

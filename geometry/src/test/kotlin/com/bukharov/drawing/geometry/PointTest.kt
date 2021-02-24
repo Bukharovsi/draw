@@ -1,4 +1,4 @@
-package com.bukharov.drawing
+package com.bukharov.drawing.geometry
 
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -8,7 +8,7 @@ internal class PointTest {
 
     @Test
     fun `a point should be equal to another point if coordinates are the same`() {
-        Point(5, 6) shouldBe  Point(5, 6)
+        Point(5, 6) shouldBe Point(5, 6)
     }
 
     @Test
@@ -18,21 +18,21 @@ internal class PointTest {
 
     @Test
     fun `point should be more by any direction`() {
-        Point(3, 5).moreByAnyDirectionThan(Point( 1, 2)) shouldBe true
+        Point(3, 5).moreByAnyDirectionThan(Point(1, 2)) shouldBe true
     }
 
     @Test
     fun `point should NOT be more by any direction`() {
-        Point(1, 1).moreByAnyDirectionThan(Point( 3, 1)) shouldBe false
+        Point(1, 1).moreByAnyDirectionThan(Point(3, 1)) shouldBe false
     }
 
     @Test
     fun `point should be less by any direction`() {
-        Point(-1, 0).lessByAnyDirectionThan(Point( 2, 2)) shouldBe true
+        Point(-1, 0).lessByAnyDirectionThan(Point(2, 2)) shouldBe true
     }
 
     @Test
     fun `point should NOT be less by any direction`() {
-        Point(22, 3).lessByAnyDirectionThan(Point( 2, 2)) shouldBe false
+        Point(22, 3).lessByAnyDirectionThan(Point(2, 2)) shouldBe false
     }
 }

@@ -1,4 +1,4 @@
-package com.bukharov.drawing
+package com.bukharov.drawing.geometry
 
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -24,5 +24,4 @@ internal class PointKtTest {
     fun `calculate lowest left Point`() {
         lowestLeftOfPoints(Point(3, 4), Point(1, 10)) shouldBe (Point(1, 4))
     }
-
 }

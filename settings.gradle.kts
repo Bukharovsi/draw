@@ -1,4 +1,4 @@
 rootProject.name = "drawing"
 
 include(":application")
-include(":drawing")
+include(":geometry")
