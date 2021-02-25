@@ -1,5 +1,5 @@
 object LibVers {
-    const val junit = "5.7.1"
+    const val junit = "5.6.0"
     const val kotest = "4.4.1"
     const val arrow = "0.11.0"
     const val log4j = "2.12.0"
@@ -24,6 +24,7 @@ object Libs {
     const val junit_engine = "org.junit.jupiter:junit-jupiter-engine:${LibVers.junit}"
     const val kotest_junit = "io.kotest:kotest-runner-junit5:${LibVers.kotest}"
     const val kotest_arrow = "io.kotest:kotest-assertions-arrow:${LibVers.kotest}"
+    const val junit = "test-junit5:${Global.kotlin_version}"
 }
 
 object PluginVers {
@@ -38,11 +39,8 @@ object PluginVers {
 
 object Plugins {
     const val kotlin = "org.jetbrains.kotlin.jvm"
-    const val spring_boot = "org.springframework.boot"
     const val detekt = "io.gitlab.arturbosch.detekt"
     const val detekt_formatting = "io.gitlab.arturbosch.detekt:detekt-formatting"
-    const val spring_dependency_management = "io.spring.dependency-management"
-    const val spring_kotlin = "org.jetbrains.kotlin.plugin.spring"
     const val update_dependencies = "com.github.ben-manes.versions"
     const val owasp_dependencies = "org.owasp.dependencycheck"
 }
