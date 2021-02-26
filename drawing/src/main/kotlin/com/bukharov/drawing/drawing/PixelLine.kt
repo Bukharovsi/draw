@@ -5,7 +5,7 @@ import arrow.core.left
 import arrow.core.right
 import com.bukharov.drawing.geometry.DrawingError
 
-class PixelLine(
+class PixelLine internal constructor(
     length: Int
 ): Iterable<Pixel> {
     private val canvas: Array<Pixel> = Array(length) { Pixel.Empty }
