@@ -1,4 +1,4 @@
-package com.bukharov.drawing.drawing
+package com.bukharov.drawing.drawing.pixel
 
 import arrow.core.Either
 import arrow.core.left
@@ -6,7 +6,7 @@ import arrow.core.right
 import com.bukharov.drawing.geometry.DrawingError
 import java.io.PrintStream
 
-class PixelLine internal constructor(
+internal class PixelLine internal constructor(
     length: Int
 ) : Iterable<Pixel> {
     private val canvas: Array<Pixel> = Array(length) { Pixel.Empty }
@@ -15,15 +15,15 @@ class PixelLine internal constructor(
         canvas.iterator()
 
     fun changePixel(i: Int, newPixel: Pixel): Either<DrawingError, PixelLine> {
-        if (!has(i)) return PixelDoesNotExist.left()
+        if (!has(i)) return PixelDoesNotExist(needed = i, boundaries = canvas.lastIndex).left()
         else canvas[i] = newPixel
 
         return this.right()
     }
 
-    operator fun get(i: Int): Either<PixelDoesNotExist, Pixel> =
+    operator fun get(i: Int): Either<DrawingError, Pixel> =
         if (!has(i)) {
-            PixelDoesNotExist.left()
+            PixelDoesNotExist(needed = i, boundaries = canvas.lastIndex).left()
         } else {
             canvas[i].right()
         }
@@ -36,6 +36,23 @@ class PixelLine internal constructor(
         stream.print(charLine)
     }
 
+
+
+    override fun toString(): String {
+        return "pl(" + CharArray(canvas.size) { i -> canvas[i].print() }.concatToString() + ")"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (other !is PixelLine) return true
+        if (!canvas.contentEquals(other.canvas)) return false
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return canvas.contentHashCode()
+    }
+
+
     companion object {
         fun create(length: Int): Either<DrawingError, PixelLine> =
             if (length < 1) {
@@ -47,4 +64,4 @@ class PixelLine internal constructor(
 }
 
 object LineLengthShouldBePositiveValue : DrawingError
-object PixelDoesNotExist : DrawingError
+data class PixelDoesNotExist<T>(val needed: T, val boundaries: T) : DrawingError

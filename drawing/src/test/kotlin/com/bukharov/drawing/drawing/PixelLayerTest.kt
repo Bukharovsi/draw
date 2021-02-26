@@ -1,7 +1,12 @@
 package com.bukharov.drawing.drawing
 
+import com.bukharov.drawing.drawing.pixel.Pixel
+import com.bukharov.drawing.drawing.pixel.PixelDoesNotExist
+import com.bukharov.drawing.drawing.pixel.PixelLayer
+import com.bukharov.drawing.drawing.pixel.WrongWidthAndHeight
 import com.bukharov.drawing.geometry.Point
 import io.kotest.assertions.arrow.either.shouldBeLeft
+import io.kotest.assertions.arrow.either.shouldBeLeftOfType
 import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -30,14 +35,16 @@ internal class PixelLayerTest {
     @Test
     fun `pixel is NOT be retrievable if it is out of borders`() {
         PixelLayer.create(width = 5, height = 5) shouldBeRight {
-            layer -> layer.get(Point(x = 25, y = 25)) shouldBeLeft PixelDoesNotExist
+            layer -> layer.get(Point(x = 25, y = 25))
+            .shouldBeLeftOfType<PixelDoesNotExist<Point>>()
         }
     }
 
     @Test
     fun `pixel is NOT be retrievable if it is out of borders - negative`() {
         PixelLayer.create(width = 5, height = 5) shouldBeRight {
-            layer -> layer.get(Point(x = 25, y = -25)) shouldBeLeft PixelDoesNotExist
+            layer -> layer.get(Point(x = 25, y = -25))
+            .shouldBeLeftOfType<PixelDoesNotExist<Point>>()
         }
     }
 
@@ -56,8 +63,14 @@ internal class PixelLayerTest {
         val layer = PixelLayer.create(width = 5, height = 5)
         val pixelPointOutsideBorders = Point(x = 23, y = 23)
         layer shouldBeRight {
-            it.change(pixelPointOutsideBorders, Pixel.X) shouldBeLeft PixelDoesNotExist
+            it.change(pixelPointOutsideBorders, Pixel.X)
+                .shouldBeLeftOfType<PixelDoesNotExist<Point>>()
         }
+    }
+
+    @Test
+    fun `2 empty pixel Layers are identical`() {
+        PixelLayer.create(width = 5, height = 5) shouldBe PixelLayer.create(width = 5, height = 5)
     }
 
     @Test

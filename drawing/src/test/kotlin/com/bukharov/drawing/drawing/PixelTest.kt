@@ -1,5 +1,6 @@
 package com.bukharov.drawing.drawing
 
+import com.bukharov.drawing.drawing.pixel.Pixel
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.Test

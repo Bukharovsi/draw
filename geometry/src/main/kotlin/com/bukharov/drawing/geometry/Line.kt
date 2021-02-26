@@ -10,10 +10,10 @@ data class Line internal constructor(
     val b: Point
 ) : Shape {
 
-    private fun isHorizontal(): Boolean =
+    fun isHorizontal(): Boolean =
         a.y == b.y
 
-    private fun isVertical(): Boolean =
+    fun isVertical(): Boolean =
         a.x == b.x
 
     override fun downLeftCorner(): Point = lowestLeftOfPoints(a, b)

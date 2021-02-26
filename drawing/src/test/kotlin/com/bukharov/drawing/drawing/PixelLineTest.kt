@@ -1,7 +1,12 @@
 package com.bukharov.drawing.drawing
 
 import arrow.core.flatMap
+import com.bukharov.drawing.drawing.pixel.LineLengthShouldBePositiveValue
+import com.bukharov.drawing.drawing.pixel.Pixel
+import com.bukharov.drawing.drawing.pixel.PixelDoesNotExist
+import com.bukharov.drawing.drawing.pixel.PixelLine
 import io.kotest.assertions.arrow.either.shouldBeLeft
+import io.kotest.assertions.arrow.either.shouldBeLeftOfType
 import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Assertions.fail
@@ -42,7 +47,7 @@ internal class PixelLineTest {
     @Test
     fun `pixel can not be retrievable by index if id does not exist`() {
         PixelLine.create(length = 3) shouldBeRight { pixelLine ->
-            pixelLine[3] shouldBeLeft PixelDoesNotExist
+            pixelLine[3].shouldBeLeftOfType<PixelDoesNotExist<Int>>()
         }
     }
 
@@ -79,7 +84,7 @@ internal class PixelLineTest {
         PixelLine
             .create(5)
             .flatMap { it.changePixel(6, Pixel.X) }
-            .shouldBeLeft(PixelDoesNotExist)
+            .shouldBeLeftOfType<PixelDoesNotExist<Int>>()
     }
 
     @Test
@@ -121,5 +126,32 @@ internal class PixelLineTest {
         val printedStream = String(byteStream.toByteArray())
         val expectedString = " xx  " // 5 chars
         printedStream shouldBe expectedString
+    }
+
+    @Test
+    fun `two empty pixel lines are equal`() {
+        PixelLine.create(4) shouldBeRight PixelLine(4)
+    }
+
+    @Test
+    fun `two identical pixel lines are equal`() {
+        val expected = PixelLine.create(4)
+            .flatMap { it.changePixel(1, Pixel.X) }
+
+        val actual = PixelLine.create(4)
+            .flatMap { it.changePixel(1, Pixel.X) }
+
+        actual shouldBeRight actual
+    }
+
+    @Test
+    fun `two different pixel lines are NOT equal`() {
+        val expected = PixelLine.create(4)
+            .flatMap { it.changePixel(1, Pixel.X) }
+
+        val actual = PixelLine.create(4)
+            .flatMap { it.changePixel(2, Pixel.X) }
+
+        actual shouldBeRight actual
     }
 }

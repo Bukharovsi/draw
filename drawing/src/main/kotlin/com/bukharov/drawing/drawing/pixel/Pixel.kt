@@ -1,4 +1,4 @@
-package com.bukharov.drawing.drawing
+package com.bukharov.drawing.drawing.pixel
 
 sealed class Pixel {
 
