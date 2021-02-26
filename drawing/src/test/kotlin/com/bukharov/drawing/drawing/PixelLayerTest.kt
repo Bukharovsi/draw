@@ -3,7 +3,10 @@ package com.bukharov.drawing.drawing
 import com.bukharov.drawing.geometry.Point
 import io.kotest.assertions.arrow.either.shouldBeLeft
 import io.kotest.assertions.arrow.either.shouldBeRight
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import java.io.ByteArrayOutputStream
+import java.io.PrintStream
 
 internal class PixelLayerTest {
 
@@ -55,5 +58,35 @@ internal class PixelLayerTest {
         layer shouldBeRight {
             it.change(pixelPointOutsideBorders, Pixel.X) shouldBeLeft PixelDoesNotExist
         }
+    }
+
+    @Test
+    fun test() {
+        val byteStream = ByteArrayOutputStream()
+        val printStream = PrintStream(byteStream)
+
+        val layer = PixelLayer.create(3, 3)
+        layer.map { pixelLayer ->
+            pixelLayer.change(Point.zero, Pixel.X)
+            pixelLayer.change(Point(0, 1), Pixel.O)
+            pixelLayer.change(Point(0, 2), Pixel.O)
+            pixelLayer.change(Point(1, 0), Pixel.O)
+            pixelLayer.change(Point(1, 1), Pixel.X)
+            pixelLayer.change(Point(1, 2), Pixel.O)
+            pixelLayer.change(Point(2, 0), Pixel.O)
+            pixelLayer.change(Point(2, 1), Pixel.O)
+            pixelLayer.change(Point(2, 2), Pixel.X)
+            pixelLayer.drawTo(printStream)
+        }
+
+        val printed = String(byteStream.toByteArray())
+        val expected = """
+           xoo
+           oxo
+           oox
+           
+        """.trimIndent()
+
+        printed shouldBe expected
     }
 }

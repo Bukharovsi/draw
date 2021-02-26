@@ -5,6 +5,7 @@ import arrow.core.left
 import arrow.core.right
 import com.bukharov.drawing.geometry.DrawingError
 import com.bukharov.drawing.geometry.Point
+import java.io.PrintStream
 
 class PixelLayer(
     width: Int,
@@ -28,9 +29,12 @@ class PixelLayer(
         return this.right()
     }
 
-//    fun drawTo(stream: PrintStream) {
-//        stream.println()
-//    }
+    fun drawTo(stream: PrintStream) {
+        lines.forEach {
+            it.drawTo(stream)
+            stream.print("\n")
+        }
+    }
 
     companion object {
         fun create(width: Int, height: Int) =

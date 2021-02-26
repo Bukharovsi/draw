@@ -14,5 +14,6 @@ sealed class Pixel {
 
     companion object {
         val X = FiledPixel('x')
+        val O = FiledPixel('o')
     }
 }

@@ -96,21 +96,21 @@ internal class PixelLineTest {
 
     @Test
     fun `empty pixel line should be printed as all blanks`() {
-        val byteArray = ByteArrayOutputStream()
-        val printStream = PrintStream(byteArray)
+        val byteStream = ByteArrayOutputStream()
+        val printStream = PrintStream(byteStream)
         PixelLine.create(5) shouldBeRight { pixelLine ->
             pixelLine.drawTo(printStream)
         }
 
-        val printedStream = String(byteArray.toByteArray())
+        val printedStream = String(byteStream.toByteArray())
         val expectedString = "     " // 5 chars
         printedStream shouldBe expectedString
     }
 
     @Test
     fun `not empty pixel line should be printed right`() {
-        val byteArray = ByteArrayOutputStream()
-        val printStream = PrintStream(byteArray)
+        val byteStream = ByteArrayOutputStream()
+        val printStream = PrintStream(byteStream)
         PixelLine.create(5) shouldBeRight { pixelLine ->
             pixelLine.changePixel(1, Pixel.X)
             pixelLine.changePixel(2, Pixel.X)
@@ -118,7 +118,7 @@ internal class PixelLineTest {
             pixelLine.drawTo(printStream)
         }
 
-        val printedStream = String(byteArray.toByteArray())
+        val printedStream = String(byteStream.toByteArray())
         val expectedString = " xx  " // 5 chars
         printedStream shouldBe expectedString
     }
