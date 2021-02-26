@@ -39,16 +39,21 @@ internal class PixelLayerTest {
     }
 
     @Test
-    fun `pixel might be chnaged if it exists`() {
+    fun `pixel might be changed if it exists`() {
         val layer = PixelLayer.create(width = 5, height = 5)
-        val pixelPoint = Point(x = 3, y = 3)
+        val pixelPointInsideBorders = Point(x = 3, y = 3)
         layer shouldBeRight {
-            it.change(pixelPoint, Pixel.X)
-        }
-
-        layer.map {
-            it.get(pixelPoint) shouldBeRight { Pixel.X }
+            it.change(pixelPointInsideBorders, Pixel.X).shouldBeRight()
+            it.get(pixelPointInsideBorders) shouldBeRight { Pixel.X }
         }
     }
-    
+
+    @Test
+    fun `pixel should not be changed if it does NOT exist`() {
+        val layer = PixelLayer.create(width = 5, height = 5)
+        val pixelPointOutsideBorders = Point(x = 23, y = 23)
+        layer shouldBeRight {
+            it.change(pixelPointOutsideBorders, Pixel.X) shouldBeLeft PixelDoesNotExist
+        }
+    }
 }

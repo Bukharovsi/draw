@@ -22,8 +22,8 @@ internal class PixelLineTest {
     @Test
     fun `new created pixel line has all empty pixels`() {
         PixelLine.create(5)
-            .shouldBeRight{
-                it.forEach { pixel -> pixel shouldBe Pixel.Empty  }
+            .shouldBeRight {
+                it.forEach { pixel -> pixel shouldBe Pixel.Empty }
             }
     }
 
@@ -88,8 +88,7 @@ internal class PixelLineTest {
             .flatMap { it.changePixel(1, newPixel) }
             .fold(
                 ifRight = { pixelLine -> pixelLine[1] shouldBeRight newPixel },
-                ifLeft = { fail("Can not change pixel")}
+                ifLeft = { fail("Can not change pixel") }
             )
     }
-
 }

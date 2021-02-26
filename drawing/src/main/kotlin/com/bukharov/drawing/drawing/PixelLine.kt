@@ -7,7 +7,7 @@ import com.bukharov.drawing.geometry.DrawingError
 
 class PixelLine internal constructor(
     length: Int
-): Iterable<Pixel> {
+) : Iterable<Pixel> {
     private val canvas: Array<Pixel> = Array(length) { Pixel.Empty }
 
     override fun iterator(): Iterator<Pixel> =
@@ -31,7 +31,7 @@ class PixelLine internal constructor(
         0 <= i && i <= canvas.lastIndex
 
     companion object {
-        fun create(length: Int) : Either<DrawingError, PixelLine> =
+        fun create(length: Int): Either<DrawingError, PixelLine> =
             if (length < 1) {
                 LineLengthShouldBePositiveValue.left()
             } else {
@@ -43,8 +43,3 @@ class PixelLine internal constructor(
 object LineLengthShouldBePositiveValue : DrawingError
 object PixelDoesNotExist : DrawingError
 
-sealed class Pixel {
-    object X : Pixel()
-    object O : Pixel()
-    object Empty : Pixel()
-}

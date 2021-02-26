@@ -12,18 +12,19 @@ class PixelLayer(
 ) {
     private val lines: Array<PixelLine> = Array(height) { PixelLine(width) }
 
-    fun has(x: Int, y:Int): Boolean {
-        if (0 > y || y > lines.lastIndex) return false
-        return lines[y].has(x)
+    fun has(coordinate: Point): Boolean {
+        if (0 > coordinate.y || coordinate.y > lines.lastIndex) return false
+        return lines[coordinate.y].has(coordinate.x)
     }
 
-    fun get(coordinate: Point): Either<DrawingError, Pixel> {
-        if (!has(coordinate.x, coordinate.y)) return PixelDoesNotExist.left()
+    fun get(coordinate: Point): Either<PixelDoesNotExist, Pixel> {
+        if (!has(coordinate)) return PixelDoesNotExist.left()
         return lines[coordinate.y][coordinate.x]
     }
 
-    fun change(point: Point, pixel: Pixel): Either<DrawingError, PixelLayer> {
-        lines[point.y].changePixel(point.x, pixel)
+    fun change(coordinate: Point, pixel: Pixel): Either<PixelDoesNotExist, PixelLayer> {
+        if (!has(coordinate)) return PixelDoesNotExist.left()
+        lines[coordinate.y].changePixel(coordinate.x, pixel)
         return this.right()
     }
 
@@ -34,4 +35,4 @@ class PixelLayer(
     }
 }
 
-object WrongWidthAndHeight: DrawingError
+object WrongWidthAndHeight : DrawingError
