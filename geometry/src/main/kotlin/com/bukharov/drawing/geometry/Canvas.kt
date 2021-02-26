@@ -37,12 +37,15 @@ class Canvas(
         return true
     }
 
-    override fun hashCode(): Int {
-        return rightUpperCorner.hashCode()
-    }
-
     override fun toString(): String {
         return "Canvas(rightUpperCorner=$rightUpperCorner, shapes=$shapes)"
+    }
+
+    override fun hashCode(): Int {
+        var result = rightUpperCorner.hashCode()
+        result = 31 * result + leftDownCorner.hashCode()
+        result = 31 * result + shapes.hashCode()
+        return result
     }
 
     companion object {
