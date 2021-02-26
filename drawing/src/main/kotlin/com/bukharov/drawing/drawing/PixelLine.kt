@@ -4,6 +4,7 @@ import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
 import com.bukharov.drawing.geometry.DrawingError
+import java.io.PrintStream
 
 class PixelLine internal constructor(
     length: Int
@@ -30,6 +31,11 @@ class PixelLine internal constructor(
     fun has(i: Int): Boolean =
         0 <= i && i <= canvas.lastIndex
 
+    fun drawTo(stream: PrintStream) {
+        val charLine: CharArray = CharArray(canvas.size) { i -> canvas[i].print() }
+        stream.print(charLine)
+    }
+
     companion object {
         fun create(length: Int): Either<DrawingError, PixelLine> =
             if (length < 1) {
@@ -42,4 +48,3 @@ class PixelLine internal constructor(
 
 object LineLengthShouldBePositiveValue : DrawingError
 object PixelDoesNotExist : DrawingError
-

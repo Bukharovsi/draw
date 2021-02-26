@@ -6,6 +6,8 @@ import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Assertions.fail
 import org.junit.jupiter.api.Test
+import java.io.ByteArrayOutputStream
+import java.io.PrintStream
 
 internal class PixelLineTest {
 
@@ -90,5 +92,34 @@ internal class PixelLineTest {
                 ifRight = { pixelLine -> pixelLine[1] shouldBeRight newPixel },
                 ifLeft = { fail("Can not change pixel") }
             )
+    }
+
+    @Test
+    fun `empty pixel line should be printed as all blanks`() {
+        val byteArray = ByteArrayOutputStream()
+        val printStream = PrintStream(byteArray)
+        PixelLine.create(5) shouldBeRight { pixelLine ->
+            pixelLine.drawTo(printStream)
+        }
+
+        val printedStream = String(byteArray.toByteArray())
+        val expectedString = "     " // 5 chars
+        printedStream shouldBe expectedString
+    }
+
+    @Test
+    fun `not empty pixel line should be printed right`() {
+        val byteArray = ByteArrayOutputStream()
+        val printStream = PrintStream(byteArray)
+        PixelLine.create(5) shouldBeRight { pixelLine ->
+            pixelLine.changePixel(1, Pixel.X)
+            pixelLine.changePixel(2, Pixel.X)
+
+            pixelLine.drawTo(printStream)
+        }
+
+        val printedStream = String(byteArray.toByteArray())
+        val expectedString = " xx  " // 5 chars
+        printedStream shouldBe expectedString
     }
 }

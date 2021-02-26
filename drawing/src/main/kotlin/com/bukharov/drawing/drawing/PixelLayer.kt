@@ -28,6 +28,10 @@ class PixelLayer(
         return this.right()
     }
 
+//    fun drawTo(stream: PrintStream) {
+//        stream.println()
+//    }
+
     companion object {
         fun create(width: Int, height: Int) =
             if (height <= 0 || width <= 0) WrongWidthAndHeight.left()

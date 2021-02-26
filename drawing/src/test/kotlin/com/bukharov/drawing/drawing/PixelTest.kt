@@ -15,4 +15,14 @@ internal class PixelTest {
     fun `2 identical pixels are the equal`() {
         Pixel.X shouldBe Pixel.FiledPixel('x')
     }
+
+    @Test
+    fun `pixel prints its color`() {
+        Pixel.X.print() shouldBe 'x'
+    }
+
+    @Test
+    fun `empty pixel prints BLANK`() {
+        Pixel.Empty.print() shouldBe ' '
+    }
 }
