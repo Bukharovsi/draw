@@ -14,7 +14,7 @@ class DrawableLine(
     private val line: Line
 ) {
 
-    fun rasterize(): Either<DrawingError,PixelLayer> =
+    fun rasterize(): Either<DrawingError, PixelLayer> =
         tupled(
             PixelLayer.create(
                 width = line.upperRightCorner().x + 1,
@@ -31,16 +31,16 @@ class DrawableLine(
         }
 }
 
-private val horizontalDots: (Line) -> Set<Point> = { line->
+private val horizontalDots: (Line) -> Set<Point> = { line ->
     (line.a.x..line.b.x)
         .map { currentX -> Point(x = currentX, y = line.a.y) }
         .toSet()
 }
 
-private val verticalDots: (Line) -> Set<Point> = { line->
+private val verticalDots: (Line) -> Set<Point> = { line ->
     (line.a.y..line.b.y)
         .map { currentY -> Point(x = line.a.x, y = currentY) }
         .toSet()
 }
 
-object LineTypeIsNotSupported: DrawingError
+object LineTypeIsNotSupported : DrawingError

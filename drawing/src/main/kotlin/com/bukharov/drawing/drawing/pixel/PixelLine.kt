@@ -36,8 +36,6 @@ internal class PixelLine internal constructor(
         stream.print(charLine)
     }
 
-
-
     override fun toString(): String {
         return "pl(" + CharArray(canvas.size) { i -> canvas[i].print() }.concatToString() + ")"
     }
@@ -51,7 +49,6 @@ internal class PixelLine internal constructor(
     override fun hashCode(): Int {
         return canvas.contentHashCode()
     }
-
 
     companion object {
         fun create(length: Int): Either<DrawingError, PixelLine> =

@@ -3,9 +3,8 @@ package com.bukharov.drawing.drawing
 import com.bukharov.drawing.drawing.pixel.Pixel
 import com.bukharov.drawing.drawing.pixel.PixelDoesNotExist
 import com.bukharov.drawing.drawing.pixel.PixelLayer
-import com.bukharov.drawing.drawing.pixel.WrongWidthAndHeight
+import com.bukharov.drawing.geometry.DimensionMustBePositive
 import com.bukharov.drawing.geometry.Point
-import io.kotest.assertions.arrow.either.shouldBeLeft
 import io.kotest.assertions.arrow.either.shouldBeLeftOfType
 import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.shouldBe
@@ -17,12 +16,12 @@ internal class PixelLayerTest {
 
     @Test
     fun `pixelLayer can not be created with not positive height`() {
-        PixelLayer.create(width = 4, height = 0) shouldBeLeft WrongWidthAndHeight
+        PixelLayer.create(width = 4, height = 0).shouldBeLeftOfType<DimensionMustBePositive>()
     }
 
     @Test
     fun `pixelLayer can not be created with not positive width`() {
-        PixelLayer.create(width = 0, height = 3) shouldBeLeft WrongWidthAndHeight
+        PixelLayer.create(width = 0, height = 3).shouldBeLeftOfType<DimensionMustBePositive>()
     }
 
     @Test
