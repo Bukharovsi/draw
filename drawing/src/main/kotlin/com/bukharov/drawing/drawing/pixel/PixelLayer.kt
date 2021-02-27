@@ -1,7 +1,6 @@
 package com.bukharov.drawing.drawing.pixel
 
 import arrow.core.Either
-import arrow.core.flatMap
 import arrow.core.left
 import arrow.core.right
 import com.bukharov.drawing.geometry.Dimensions
@@ -36,13 +35,14 @@ class PixelLayer(
         return this.right()
     }
 
-    fun mergeAtop(aboveLayer: PixelLayer): PixelLayer {
-        TODO("need to remove either")
-        val merged = PixelLayer(dimensions)
-        aboveLayer.lines
-            .mapIndexed { index, lineAbove -> this.lines[index].mergeAtop(lineAbove) }
+//    fun mergeAtop(aboveLayer: PixelLayer): PixelLayer {
+//        TODO("need to remove either")
+//        aboveLayer.lines.size > 0
+//        val merged = PixelLayer(dimensions)
+//        aboveLayer.lines
+//            .mapIndexed { index, lineAbove -> this.lines[index].mergeAtop(lineAbove) }
 //            .mapIndexed { index, either -> either.map { merged.get(index) } }
-    }
+//    }
 
     fun drawTo(stream: PrintStream) {
         lines.forEach {
@@ -70,7 +70,8 @@ class PixelLayer(
         fun create(width: Int, height: Int) =
             Dimensions
                 .create(width = width, height = height)
-                .flatMap { dimensions -> PixelLayer(dimensions).right() }
+                .let { dimensions -> PixelLayer(dimensions) }
+                .right()
     }
 }
 

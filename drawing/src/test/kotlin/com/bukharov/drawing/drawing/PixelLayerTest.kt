@@ -7,6 +7,7 @@ import com.bukharov.drawing.geometry.DimensionMustBePositive
 import com.bukharov.drawing.geometry.Point
 import io.kotest.assertions.arrow.either.shouldBeLeftOfType
 import io.kotest.assertions.arrow.either.shouldBeRight
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import java.io.ByteArrayOutputStream
@@ -16,12 +17,12 @@ internal class PixelLayerTest {
 
     @Test
     fun `pixelLayer can not be created with not positive height`() {
-        PixelLayer.create(width = 4, height = 0).shouldBeLeftOfType<DimensionMustBePositive>()
+        shouldThrow<DimensionMustBePositive> { PixelLayer.create(width = 4, height = 0) }
     }
 
     @Test
     fun `pixelLayer can not be created with not positive width`() {
-        PixelLayer.create(width = 0, height = 3).shouldBeLeftOfType<DimensionMustBePositive>()
+        shouldThrow<DimensionMustBePositive> { PixelLayer.create(width = 0, height = 3) }
     }
 
     @Test

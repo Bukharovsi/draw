@@ -1,9 +1,5 @@
 package com.bukharov.drawing.geometry
 
-import arrow.core.Either
-import arrow.core.left
-import arrow.core.right
-
 class Canvas(
     val rightUpperCorner: Point
 ) {
@@ -12,18 +8,17 @@ class Canvas(
 
     private val shapes: MutableSet<Line> = mutableSetOf()
 
-    @Suppress("ReturnCount")
-    fun put(shape: Line): Either<DrawingError, Canvas> {
+    fun put(shape: Line): Canvas {
         if (shape.upperRightCorner().moreByAnyDirectionThan(rightUpperCorner)) {
-            return ShapeCanNotBePlacedToCanvas.left()
+            throw ShapeCanNotBePlacedToCanvas(shape, this)
         }
 
         if (shape.downLeftCorner().lessByAnyDirectionThan(leftDownCorner)) {
-            return ShapeCanNotBePlacedToCanvas.left()
+            throw ShapeCanNotBePlacedToCanvas(shape, this)
         }
 
         shapes.add(shape)
-        return this.right()
+        return this
     }
 
     fun shapes(): Set<Line> = shapes
@@ -49,15 +44,15 @@ class Canvas(
     }
 
     companion object {
-        fun create(rightUpperCorner: Point): Either<DrawingError, Canvas> {
+        fun create(rightUpperCorner: Point): Canvas {
             if (rightUpperCorner.x < 1 || rightUpperCorner.y < 1) {
-                return WrongCanvasSize.left()
+                throw WrongCanvasSize(rightUpperCorner)
             }
 
-            return Canvas(rightUpperCorner).right()
+            return Canvas(rightUpperCorner)
         }
     }
 }
 
-object ShapeCanNotBePlacedToCanvas : DrawingError
-object WrongCanvasSize : DrawingError
+class ShapeCanNotBePlacedToCanvas(val shape: Shape, val canvas: Canvas) : IllegalArgumentException()
+class WrongCanvasSize(val wrongSize: Point) : IllegalArgumentException()

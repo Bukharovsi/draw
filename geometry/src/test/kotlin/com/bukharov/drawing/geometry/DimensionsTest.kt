@@ -1,7 +1,6 @@
 package com.bukharov.drawing.geometry
 
-import io.kotest.assertions.arrow.either.shouldBeLeftOfType
-import io.kotest.assertions.arrow.either.shouldBeRight
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -9,7 +8,7 @@ internal class DimensionsTest {
 
     @Test
     fun `dimensions might not be zero or below`() {
-        Dimensions.create(0, 1).shouldBeLeftOfType<DimensionMustBePositive>()
+        shouldThrow<DimensionMustBePositive> { Dimensions.create(0, 1) }
     }
 
     @Test
@@ -19,6 +18,6 @@ internal class DimensionsTest {
 
     @Test
     fun `coordinates might be transformed to dimension`() {
-        Point(1, 3).toDimension() shouldBeRight Dimensions(width = 2, height = 4)
+        Point(1, 3).toDimension() shouldBe Dimensions(width = 2, height = 4)
     }
 }
