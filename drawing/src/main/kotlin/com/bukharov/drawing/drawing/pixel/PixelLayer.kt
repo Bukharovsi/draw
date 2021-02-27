@@ -36,6 +36,14 @@ class PixelLayer(
         return this.right()
     }
 
+    fun mergeAtop(aboveLayer: PixelLayer): PixelLayer {
+        TODO("need to remove either")
+        val merged = PixelLayer(dimensions)
+        aboveLayer.lines
+            .mapIndexed { index, lineAbove -> this.lines[index].mergeAtop(lineAbove) }
+//            .mapIndexed { index, either -> either.map { merged.get(index) } }
+    }
+
     fun drawTo(stream: PrintStream) {
         lines.forEach {
             it.drawTo(stream)

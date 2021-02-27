@@ -163,7 +163,7 @@ internal class PixelLineTest {
             PixelLine.create(4),
             PixelLine.create(4)
         ).flatMap {
-            it.a.mergeOnTheSurface(it.b)
+            it.a.mergeAtop(it.b)
         } shouldBe PixelLine.create(4)
     }
 
@@ -176,7 +176,7 @@ internal class PixelLineTest {
             emptyLine,
             filledLine
         ).flatMap {
-            it.a.mergeOnTheSurface(it.b)
+            it.a.mergeAtop(it.b)
         } shouldBe filledLine
     }
 
@@ -186,7 +186,7 @@ internal class PixelLineTest {
             PixelLine.create(4),
             PixelLine.create(5)
         ).flatMap {
-            it.a.mergeOnTheSurface(it.b)
+            it.a.mergeAtop(it.b)
         }.shouldBeLeftOfType<LinesCanNotBeMerged>()
     }
 }

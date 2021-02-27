@@ -31,6 +31,16 @@ internal class PixelLine internal constructor(
     fun has(i: Int): Boolean =
         0 <= i && i <= canvas.lastIndex
 
+    fun mergeAtop(above: PixelLine): Either<LinesCanNotBeMerged, PixelLine> {
+        if (this.length != above.length) return LinesCanNotBeMerged(this.length, above.length).left()
+        val merged = PixelLine(length)
+        above
+            .mapIndexed { index: Int, pixelAbove: Pixel -> this.canvas[index].mergeAtop(pixelAbove) }
+            .mapIndexed { index: Int, mergedPixel: Pixel -> merged.changePixel(index, mergedPixel) }
+
+        return merged.right()
+    }
+
     fun drawTo(stream: PrintStream) {
         val charLine: CharArray = CharArray(canvas.size) { i -> canvas[i].print() }
         stream.print(charLine)
@@ -48,16 +58,6 @@ internal class PixelLine internal constructor(
 
     override fun hashCode(): Int {
         return canvas.contentHashCode()
-    }
-
-    fun mergeOnTheSurface(above: PixelLine): Either<LinesCanNotBeMerged, PixelLine> {
-        if (this.length != above.length) return LinesCanNotBeMerged(this.length, above.length).left()
-        val merged = PixelLine(length)
-        above
-            .mapIndexed { index: Int, pixelAbove: Pixel -> this.canvas[index].mergeAtop(pixelAbove) }
-            .mapIndexed { index: Int, mergedPixel: Pixel -> merged.changePixel(index, mergedPixel) }
-
-        return merged.right()
     }
 
     companion object {
