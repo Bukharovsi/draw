@@ -2,6 +2,7 @@ package com.bukharov.drawing.geometry
 
 import arrow.core.extensions.either.apply.tupled
 import arrow.core.flatMap
+import arrow.core.right
 import io.kotest.assertions.arrow.either.shouldBeLeft
 import io.kotest.assertions.arrow.either.shouldBeRight
 import io.kotest.matchers.shouldBe
@@ -55,7 +56,7 @@ internal class CanvasTest {
     fun `a shape might be placed on canvas if it is within canvas`() {
         tupled(
             Canvas.create(Point(9, 9)),
-            Line.create(Point.zero, Point(0, 3))
+            Line.create(Point.zero, Point(0, 3)).right()
         ).flatMap {
             it.a.put(it.b)
         } shouldBeRight {
@@ -68,7 +69,7 @@ internal class CanvasTest {
     fun `a shape might NOT be placed on canvas if it does not fit canvas`() {
         tupled(
             Canvas.create(Point(9, 9)),
-            Line.create(Point.zero, Point(0, 14))
+            Line.create(Point.zero, Point(0, 14)).right()
         ).flatMap {
             it.a.put(it.b)
         } shouldBeLeft ShapeCanNotBePlacedToCanvas
@@ -78,7 +79,7 @@ internal class CanvasTest {
     fun `a shape might not be placed on canvas if it any coordinate less than 0`() {
         tupled(
             Canvas.create(Point(9, 9)),
-            Line.create(Point.zero, Point(-1, 0))
+            Line.create(Point.zero, Point(-1, 0)).right()
         ).flatMap {
             it.a.put(it.b)
         } shouldBeLeft ShapeCanNotBePlacedToCanvas

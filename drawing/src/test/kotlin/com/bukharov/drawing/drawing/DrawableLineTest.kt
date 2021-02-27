@@ -19,9 +19,8 @@ internal class DrawableLineTest {
             .flatMap { it.change(Point(3, 1), Pixel.X) }
 
         val actualPixelLayer = Line
-            .create(Point(1, 1), Point(3, 1))
-            .map { DrawableLine(it) }
-            .flatMap { it.rasterize() }
+        .create(Point(1, 1), Point(3, 1))
+        .let { DrawableLine(it) }.rasterize()
 
         actualPixelLayer shouldBe expectedPixelLayer
     }
@@ -35,9 +34,8 @@ internal class DrawableLineTest {
             .flatMap { it.change(Point(1, 3), Pixel.X) }
 
         val actualPixelLayer = Line
-            .create(Point(1, 1), Point(1, 3))
-            .map { DrawableLine(it) }
-            .flatMap { it.rasterize() }
+        .create(Point(1, 1), Point(1, 3))
+        .let { DrawableLine(it) }.rasterize()
 
         actualPixelLayer shouldBe expectedPixelLayer
     }

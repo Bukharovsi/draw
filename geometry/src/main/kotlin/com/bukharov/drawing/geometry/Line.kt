@@ -1,10 +1,5 @@
 package com.bukharov.drawing.geometry
 
-import arrow.core.Either
-import arrow.core.flatMap
-import arrow.core.left
-import arrow.core.right
-
 data class Line internal constructor(
     val a: Point,
     val b: Point
@@ -26,27 +21,23 @@ data class Line internal constructor(
         if (a == other.a && b == other.b) return true
         if (a == other.b && b == other.a) return true
 
-        return true
+        return false
     }
 
     override fun hashCode(): Int =
         31 * (b.hashCode() + a.hashCode())
 
     companion object {
-        fun create(from: Point, to: Point): Either<DrawingError, Line> {
-            val line = if (from == to) LineShouldNotBePoint.left()
-            else Line(from, to).right()
+        fun create(from: Point, to: Point): Line {
+            val line = if (from == to) throw LineShouldNotBeAPoint(from) else Line(from, to)
 
-            return line.flatMap {
-                return if (!(it.isHorizontal() || it.isVertical())) {
-                    LineShouldBeVerticalOrHorizontal.left()
-                } else {
-                    it.right()
-                }
+            if (!(line.isHorizontal() || line.isVertical())) {
+                throw LineShouldBeVerticalOrHorizontal(line)
             }
+            return line
         }
     }
 }
 
-object LineShouldNotBePoint : DrawingError
-object LineShouldBeVerticalOrHorizontal : DrawingError
+class LineShouldNotBeAPoint(val coordinate: Point) : IllegalArgumentException()
+class LineShouldBeVerticalOrHorizontal(val line: Line) : IllegalArgumentException()
