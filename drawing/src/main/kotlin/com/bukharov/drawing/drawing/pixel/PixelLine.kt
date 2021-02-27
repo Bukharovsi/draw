@@ -7,7 +7,7 @@ import com.bukharov.drawing.geometry.DrawingError
 import java.io.PrintStream
 
 internal class PixelLine internal constructor(
-    length: Int
+    private val length: Int
 ) : Iterable<Pixel> {
     private val canvas: Array<Pixel> = Array(length) { Pixel.Empty }
 
@@ -50,6 +50,16 @@ internal class PixelLine internal constructor(
         return canvas.contentHashCode()
     }
 
+    fun mergeOnTheSurface(above: PixelLine): Either<LinesCanNotBeMerged, PixelLine> {
+        if (this.length != above.length) return LinesCanNotBeMerged(this.length, above.length).left()
+        val merged = PixelLine(length)
+        above
+            .mapIndexed { index: Int, pixelAbove: Pixel -> this.canvas[index].mergeAtop(pixelAbove) }
+            .mapIndexed { index: Int, mergedPixel: Pixel -> merged.changePixel(index, mergedPixel) }
+
+        return merged.right()
+    }
+
     companion object {
         fun create(length: Int): Either<DrawingError, PixelLine> =
             if (length < 1) {
@@ -61,4 +71,5 @@ internal class PixelLine internal constructor(
 }
 
 object LineLengthShouldBePositiveValue : DrawingError
+class LinesCanNotBeMerged(val line1Length: Int, val line2Length: Int) : DrawingError
 data class PixelDoesNotExist<T>(val needed: T, val boundaries: T) : DrawingError

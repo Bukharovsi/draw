@@ -1,7 +1,9 @@
 package com.bukharov.drawing.drawing
 
+import arrow.core.extensions.either.apply.tupled
 import arrow.core.flatMap
 import com.bukharov.drawing.drawing.pixel.LineLengthShouldBePositiveValue
+import com.bukharov.drawing.drawing.pixel.LinesCanNotBeMerged
 import com.bukharov.drawing.drawing.pixel.Pixel
 import com.bukharov.drawing.drawing.pixel.PixelDoesNotExist
 import com.bukharov.drawing.drawing.pixel.PixelLine
@@ -153,5 +155,38 @@ internal class PixelLineTest {
             .flatMap { it.changePixel(2, Pixel.X) }
 
         actual shouldBeRight actual
+    }
+
+    @Test
+    fun `two empty lines the same length will be merged to one empty line`() {
+        tupled(
+            PixelLine.create(4),
+            PixelLine.create(4)
+        ).flatMap {
+            it.a.mergeOnTheSurface(it.b)
+        } shouldBe PixelLine.create(4)
+    }
+
+    @Test
+    fun `filled line might me merged on empty line`() {
+        val filledLine = PixelLine.create(4).flatMap { it.changePixel(1, Pixel.X) }
+        val emptyLine = PixelLine.create(4)
+
+        tupled(
+            emptyLine,
+            filledLine
+        ).flatMap {
+            it.a.mergeOnTheSurface(it.b)
+        } shouldBe filledLine
+    }
+
+    @Test
+    fun `2 pixel lines with different length can not be merged`() {
+        tupled(
+            PixelLine.create(4),
+            PixelLine.create(5)
+        ).flatMap {
+            it.a.mergeOnTheSurface(it.b)
+        }.shouldBeLeftOfType<LinesCanNotBeMerged>()
     }
 }
