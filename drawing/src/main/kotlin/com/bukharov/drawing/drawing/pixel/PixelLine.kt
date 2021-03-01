@@ -1,11 +1,10 @@
 package com.bukharov.drawing.drawing.pixel
 
-import java.io.PrintStream
-
 internal class PixelLine internal constructor(
-    private val length: Int
+    private val length: Int,
+    fillWith: Pixel = Pixel.Empty
 ) : Iterable<Pixel> {
-    private val canvas: Array<Pixel> = Array(length) { Pixel.Empty }
+    private val canvas: Array<Pixel> = Array(length) { fillWith }
 
     override fun iterator(): Iterator<Pixel> =
         canvas.iterator()
@@ -33,10 +32,9 @@ internal class PixelLine internal constructor(
         return merged
     }
 
-    fun drawTo(stream: PrintStream) {
-        val charLine: CharArray = CharArray(canvas.size) { i -> canvas[i].print() }
-        stream.print(charLine)
-    }
+    fun print(): String =
+        CharArray(canvas.size, { i -> canvas[i].print() })
+            .joinToString(separator = "")
 
     override fun toString(): String {
         return "pl(" + CharArray(canvas.size) { i -> canvas[i].print() }.concatToString() + ")"
@@ -53,11 +51,11 @@ internal class PixelLine internal constructor(
     }
 
     companion object {
-        fun create(length: Int) =
+        fun create(length: Int, fillWith: Pixel = Pixel.Empty) =
             if (length < 1) {
                 throw LineLengthShouldBePositiveValue(length)
             } else {
-                PixelLine(length)
+                PixelLine(length, fillWith)
         }
     }
 }

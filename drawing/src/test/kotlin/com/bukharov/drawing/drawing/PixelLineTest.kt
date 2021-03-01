@@ -9,8 +9,6 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import java.io.ByteArrayOutputStream
-import java.io.PrintStream
 import org.junit.jupiter.api.Test
 
 internal class PixelLineTest {
@@ -88,25 +86,18 @@ internal class PixelLineTest {
 
     @Test
     fun `empty pixel line should be printed as all blanks`() {
-        val byteStream = ByteArrayOutputStream()
-        val printStream = PrintStream(byteStream)
-        PixelLine.create(5).drawTo(printStream)
-
-        val printedStream = String(byteStream.toByteArray())
+        val printedStream = PixelLine.create(5).print()
         val expectedString = "     " // 5 chars
         printedStream shouldBe expectedString
     }
 
     @Test
     fun `not empty pixel line should be printed right`() {
-        val byteStream = ByteArrayOutputStream()
-        val printStream = PrintStream(byteStream)
-        PixelLine.create(5)
+        val printedStream = PixelLine.create(5)
             .changePixel(1, Pixel.X)
             .changePixel(2, Pixel.X)
-            .drawTo(printStream)
+            .print()
 
-        val printedStream = String(byteStream.toByteArray())
         val expectedString = " xx  " // 5 chars
         printedStream shouldBe expectedString
     }

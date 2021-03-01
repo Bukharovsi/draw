@@ -1,14 +1,13 @@
 package com.bukharov.drawing.drawing
 
 import com.bukharov.drawing.drawing.pixel.LayerPixelDoesNotExist
+import com.bukharov.drawing.drawing.pixel.LayersHaveDifferentSize
 import com.bukharov.drawing.drawing.pixel.Pixel
 import com.bukharov.drawing.drawing.pixel.PixelLayer
 import com.bukharov.drawing.geometry.DimensionMustBePositive
 import com.bukharov.drawing.geometry.Point
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
-import java.io.ByteArrayOutputStream
-import java.io.PrintStream
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -69,10 +68,7 @@ internal class PixelLayerTest {
 
     @Test
     fun `filled pixels should be drawable`() {
-        val byteStream = ByteArrayOutputStream()
-        val printStream = PrintStream(byteStream)
-
-        PixelLayer.create(3, 3)
+        val printed = PixelLayer.create(3, 3)
             .change(Point.zero, Pixel.X)
             .change(Point(0, 1), Pixel.O)
             .change(Point(0, 2), Pixel.O)
@@ -82,9 +78,8 @@ internal class PixelLayerTest {
             .change(Point(2, 0), Pixel.O)
             .change(Point(2, 1), Pixel.O)
             .change(Point(2, 2), Pixel.X)
-            .drawTo(printStream)
+            .print()
 
-        val printed = String(byteStream.toByteArray())
         val expected = """
            xoo
            oxo
@@ -93,5 +88,43 @@ internal class PixelLayerTest {
         """.trimIndent()
 
         printed shouldBe expected
+    }
+
+    @Test
+    fun `2 layers the same dimension should be merged`() {
+        val background = PixelLayer.create(3, 3, Pixel.O)
+        val layer1 = PixelLayer.create(3, 3)
+            .change(Point(0, 0), Pixel.X)
+            .change(Point(1, 1), Pixel.X)
+            .change(Point(2, 2), Pixel.X)
+
+        val merged = background.mergeAtop(layer1).print()
+
+        val expected = """
+           xoo
+           oxo
+           oox
+           
+        """.trimIndent()
+
+        merged shouldBe expected
+    }
+
+    @Test
+    fun `2 empty layers merged - empty layer`() {
+        val background = PixelLayer.create(3, 3)
+        val layer1 = PixelLayer.create(3, 3)
+
+        val merged = background.mergeAtop(layer1)
+
+        merged shouldBe PixelLayer.create(3, 3)
+    }
+
+    @Test
+    fun `2 layers with different size are not mergeble`() {
+        shouldThrow<LayersHaveDifferentSize> {
+            PixelLayer.create(3, 3)
+                .mergeAtop(PixelLayer.create(10, 10))
+        }
     }
 }

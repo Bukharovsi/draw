@@ -2,12 +2,12 @@ package com.bukharov.drawing.drawing.pixel
 
 import com.bukharov.drawing.geometry.Dimensions
 import com.bukharov.drawing.geometry.Point
-import java.io.PrintStream
 
 class PixelLayer(
-    private val dimensions: Dimensions
+    private val dimensions: Dimensions,
+    fillWith: Pixel = Pixel.Empty
 ) {
-    private val lines: Array<PixelLine> = Array(dimensions.height) { PixelLine(dimensions.width) }
+    private val lines: Array<PixelLine> = Array(dimensions.height) { PixelLine(dimensions.width, fillWith) }
 
     fun has(coordinate: Point): Boolean {
         if (0 > coordinate.y || coordinate.y > lines.lastIndex) return false
@@ -31,21 +31,19 @@ class PixelLayer(
         return this
     }
 
-//    fun mergeAtop(aboveLayer: PixelLayer): PixelLayer {
-//        TODO("need to remove either")
-//        aboveLayer.lines.size > 0
-//        val merged = PixelLayer(dimensions)
-//        aboveLayer.lines
-//            .mapIndexed { index, lineAbove -> this.lines[index].mergeAtop(lineAbove) }
-//            .mapIndexed { index, either -> either.map { merged.get(index) } }
-//    }
-
-    fun drawTo(stream: PrintStream) {
-        lines.forEach {
-            it.drawTo(stream)
-            stream.print("\n")
-        }
+    fun mergeAtop(aboveLayer: PixelLayer): PixelLayer {
+        if (aboveLayer.dimensions != this.dimensions) throw LayersHaveDifferentSize(this, aboveLayer)
+        val merged = PixelLayer(dimensions)
+        aboveLayer.lines
+            .mapIndexed { index, lineAbove -> this.lines[index].mergeAtop(lineAbove) }
+            .mapIndexed { index, mergedLine -> merged.lines[index] = mergedLine }
+        return merged
     }
+
+    fun print() =
+        lines.joinToString(separator = "") {
+            it.print() + "\n"
+        }
 
     override fun toString(): String {
         return "PixelLayer(lines=${lines.contentToString()})"
@@ -63,11 +61,12 @@ class PixelLayer(
     }
 
     companion object {
-        fun create(width: Int, height: Int) =
+        fun create(width: Int, height: Int, fillWith: Pixel = Pixel.Empty) =
             Dimensions
                 .create(width = width, height = height)
-                .let { dimensions -> PixelLayer(dimensions) }
+                .let { dimensions -> PixelLayer(dimensions, fillWith) }
     }
 }
 
 data class LayerPixelDoesNotExist(val needed: Point, val boundaries: Point) : IllegalStateException()
+data class LayersHaveDifferentSize(val layer1: PixelLayer, val layer2: PixelLayer): IllegalStateException()
