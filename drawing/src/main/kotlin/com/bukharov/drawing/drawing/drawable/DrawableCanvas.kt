@@ -7,11 +7,11 @@ import com.bukharov.drawing.geometry.toDimension
 // add background?
 class DrawableCanvas(
     val canvas: Canvas
-) {
+) : Drawable {
     private val size = canvas.rightUpperCorner.toDimension()
     private val back = PixelLayer.create(size)
 
-    fun rasterize(): PixelLayer {
+    override fun rasterize(): PixelLayer {
         val imagesOfShapes = canvas.shapes()
             .map { shape -> DrawableLine(shape).rasterize() }
 

@@ -10,9 +10,9 @@ import kotlin.math.min
 
 class DrawableLine(
     private val line: Line
-) {
+) : Drawable {
 
-    fun rasterize(): PixelLayer {
+    override fun rasterize(): PixelLayer {
         val pixelLayer = PixelLayer.create(
             line.upperRightCorner().toDimension()
         )

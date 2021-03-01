@@ -28,7 +28,7 @@ class Canvas(
         if (other !is Canvas) return false
 
         if (rightUpperCorner != other.rightUpperCorner) return false
-
+        if (shapes != other.shapes()) return false
         return true
     }
 

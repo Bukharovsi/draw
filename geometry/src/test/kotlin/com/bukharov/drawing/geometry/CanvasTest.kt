@@ -36,6 +36,23 @@ internal class CanvasTest {
     }
 
     @Test
+    fun `canvas with shape is not equal to empty one`() {
+        Canvas(rightUpperCorner = Point(6, 6))
+            .put(Line(Point.zero, Point(0, 1)))
+            .shouldNotBe(Canvas(rightUpperCorner = Point(6, 6)))
+    }
+
+    @Test
+    fun `if 2 canvas contain the same shapes - they are equal`() {
+        Canvas(rightUpperCorner = Point(6, 6))
+            .put(Line(Point.zero, Point(0, 1)))
+            .shouldBe(
+                Canvas(rightUpperCorner = Point(6, 6))
+                    .put(Line(Point.zero, Point(0, 1)))
+            )
+    }
+
+    @Test
     fun `canvas might not have width 0`() {
         shouldThrow<WrongCanvasSize> { Canvas.create(rightUpperCorner = Point(0, 6)) }
     }

@@ -3,7 +3,7 @@ package com.bukharov.drawing.drawing.pixel
 internal class PixelLine private constructor(
     private val canvas: Array<Pixel>,
     val length: Int
-) : Iterable<Pixel>, Cloneable {
+) : Iterable<Pixel>, Cloneable, Printable {
 
     internal constructor(
         length: Int,
@@ -38,7 +38,7 @@ internal class PixelLine private constructor(
 
     public override fun clone(): PixelLine = PixelLine(canvas, length)
 
-    fun print(): String =
+    override fun print(): String =
         CharArray(canvas.size, { i -> canvas[i].print() })
             .joinToString(separator = "")
 

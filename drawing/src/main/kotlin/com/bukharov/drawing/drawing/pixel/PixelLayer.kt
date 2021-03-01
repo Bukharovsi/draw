@@ -6,7 +6,7 @@ import com.bukharov.drawing.geometry.Point
 class PixelLayer private constructor(
     private val lines: Array<PixelLine>,
     val dimensions: Dimensions,
-) : Cloneable {
+) : Cloneable, Printable {
 
     internal constructor(
         dimensions: Dimensions,
@@ -56,7 +56,7 @@ class PixelLayer private constructor(
         return merged
     }
 
-    fun print() =
+    override fun print() =
         lines.joinToString(separator = "") {
             it.print() + "\n"
         }

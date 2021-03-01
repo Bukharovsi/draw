@@ -1,6 +1,7 @@
 package com.bukharov.drawing.drawing.drawable
 
-interface Drawable {
+import com.bukharov.drawing.drawing.pixel.PixelLayer
 
-    fun draw()
+interface Drawable {
+    fun rasterize(): PixelLayer
 }
