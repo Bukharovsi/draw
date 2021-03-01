@@ -1,17 +1,28 @@
 package com.bukharov.drawing.geometry
 
-data class Dimensions internal constructor(
+data class Dimensions constructor(
     val width: Int,
     val height: Int
 ) {
 
+    init {
+        if (width <= 0 || height <= 0) throw DimensionMustBePositive(width, height)
+    }
+
     fun toUpperRightCoordinate(): Point =
         Point(x = width - 1, y = height - 1)
 
+    fun moreByAnyDirectionThan(other: Dimensions) =
+        this.toUpperRightCoordinate()
+            .moreByAnyDirectionThan(other.toUpperRightCoordinate())
+
+    fun lessByAnyDirectionThan(other: Dimensions) =
+        this.toUpperRightCoordinate()
+            .lessByAnyDirectionThan(other.toUpperRightCoordinate())
+
     companion object {
         fun create(width: Int, height: Int) =
-            if (width <= 0 || height <= 0) throw DimensionMustBePositive(width, height)
-            else Dimensions(width = width, height = height)
+            Dimensions(width = width, height = height)
     }
 }
 

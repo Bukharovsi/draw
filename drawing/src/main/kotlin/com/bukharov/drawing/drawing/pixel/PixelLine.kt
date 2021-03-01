@@ -1,10 +1,14 @@
 package com.bukharov.drawing.drawing.pixel
 
-internal class PixelLine internal constructor(
-    private val length: Int,
-    fillWith: Pixel = Pixel.Empty
-) : Iterable<Pixel> {
-    private val canvas: Array<Pixel> = Array(length) { fillWith }
+internal class PixelLine private constructor(
+    private val canvas: Array<Pixel>,
+    val length: Int
+) : Iterable<Pixel>, Cloneable {
+
+    internal constructor(
+        length: Int,
+        fillWith: Pixel = Pixel.Empty
+    ) : this(canvas = Array(length) { fillWith }, length = length)
 
     override fun iterator(): Iterator<Pixel> =
         canvas.iterator()
@@ -23,7 +27,7 @@ internal class PixelLine internal constructor(
         0 <= i && i <= canvas.lastIndex
 
     fun mergeAtop(above: PixelLine): PixelLine {
-        if (this.length != above.length) throw LinesCanNotBeMerged(this.length, above.length)
+        if (this.length < above.length) throw LinesCanNotBeMerged(this.length, above.length)
         val merged = PixelLine(length)
         above
             .mapIndexed { index: Int, pixelAbove: Pixel -> this.canvas[index].mergeAtop(pixelAbove) }
@@ -31,6 +35,8 @@ internal class PixelLine internal constructor(
 
         return merged
     }
+
+    public override fun clone(): PixelLine = PixelLine(canvas, length)
 
     fun print(): String =
         CharArray(canvas.size, { i -> canvas[i].print() })

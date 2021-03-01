@@ -1,10 +1,7 @@
-package com.bukharov.drawing.drawing
+package com.bukharov.drawing.drawing.pixel
 
-import com.bukharov.drawing.drawing.pixel.LayerPixelDoesNotExist
-import com.bukharov.drawing.drawing.pixel.LayersHaveDifferentSize
-import com.bukharov.drawing.drawing.pixel.Pixel
-import com.bukharov.drawing.drawing.pixel.PixelLayer
 import com.bukharov.drawing.geometry.DimensionMustBePositive
+import com.bukharov.drawing.geometry.Dimensions
 import com.bukharov.drawing.geometry.Point
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
@@ -121,10 +118,17 @@ internal class PixelLayerTest {
     }
 
     @Test
-    fun `2 layers with different size are not mergeble`() {
+    fun `a big layer can not be merged on top of a small one`() {
         shouldThrow<LayersHaveDifferentSize> {
             PixelLayer.create(3, 3)
                 .mergeAtop(PixelLayer.create(10, 10))
         }
+    }
+
+    @Test
+    fun `a small layer can be merged on top of a large one`() {
+        PixelLayer.create(Dimensions.create(3, 3))
+            .mergeAtop(PixelLayer.create(Dimensions.create(2, 2)))
+            .shouldBe(PixelLayer.create(Dimensions.create(3, 3)))
     }
 }

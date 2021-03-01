@@ -1,10 +1,5 @@
-package com.bukharov.drawing.drawing
+package com.bukharov.drawing.drawing.pixel
 
-import com.bukharov.drawing.drawing.pixel.LineLengthShouldBePositiveValue
-import com.bukharov.drawing.drawing.pixel.LinesCanNotBeMerged
-import com.bukharov.drawing.drawing.pixel.Pixel
-import com.bukharov.drawing.drawing.pixel.PixelDoesNotExist
-import com.bukharov.drawing.drawing.pixel.PixelLine
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
@@ -14,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class PixelLineTest {
 
     @Test
-    fun `new created pixel line should have mnot more than length pixels`() {
+    fun `new created pixel line should have not more than length pixels`() {
         PixelLine.create(2) should { line ->
             line.iterator()
                 .also { it.next() }
@@ -146,11 +141,25 @@ internal class PixelLineTest {
     }
 
     @Test
-    fun `2 pixel lines with different length can not be merged`() {
+    fun `long line can not be merged on a short one`() {
         shouldThrow<LinesCanNotBeMerged> {
             PixelLine
                 .create(4)
                 .mergeAtop(PixelLine.create(5))
         }
+    }
+
+    @Test
+    fun `short empty line might be merged on a long one`() {
+            PixelLine
+                .create(3)
+                .mergeAtop(PixelLine.create(2))
+                .shouldBe(PixelLine(3))
+    }
+
+    @Test
+    fun `cloned PixelLine equal to original one`() {
+        val origin = PixelLine.create(3).changePixel(0, Pixel.X)
+        origin.clone() shouldBe origin
     }
 }
