@@ -1,9 +1,5 @@
 package com.bukharov.drawing.drawing.pixel
 
-import arrow.core.Either
-import arrow.core.left
-import arrow.core.right
-import com.bukharov.drawing.geometry.DrawingError
 import java.io.PrintStream
 
 internal class PixelLine internal constructor(
@@ -14,31 +10,27 @@ internal class PixelLine internal constructor(
     override fun iterator(): Iterator<Pixel> =
         canvas.iterator()
 
-    fun changePixel(i: Int, newPixel: Pixel): Either<DrawingError, PixelLine> {
-        if (!has(i)) return PixelDoesNotExist(needed = i, boundaries = canvas.lastIndex).left()
+    fun changePixel(i: Int, newPixel: Pixel): PixelLine {
+        if (!has(i)) throw PixelDoesNotExist(needed = i, boundaries = canvas.lastIndex)
         else canvas[i] = newPixel
-
-        return this.right()
+        return this
     }
 
-    operator fun get(i: Int): Either<DrawingError, Pixel> =
-        if (!has(i)) {
-            PixelDoesNotExist(needed = i, boundaries = canvas.lastIndex).left()
-        } else {
-            canvas[i].right()
-        }
+    operator fun get(i: Int) =
+        if (!has(i)) throw PixelDoesNotExist(needed = i, boundaries = canvas.lastIndex)
+        else canvas[i]
 
     fun has(i: Int): Boolean =
         0 <= i && i <= canvas.lastIndex
 
-    fun mergeAtop(above: PixelLine): Either<LinesCanNotBeMerged, PixelLine> {
-        if (this.length != above.length) return LinesCanNotBeMerged(this.length, above.length).left()
+    fun mergeAtop(above: PixelLine): PixelLine {
+        if (this.length != above.length) throw LinesCanNotBeMerged(this.length, above.length)
         val merged = PixelLine(length)
         above
             .mapIndexed { index: Int, pixelAbove: Pixel -> this.canvas[index].mergeAtop(pixelAbove) }
             .mapIndexed { index: Int, mergedPixel: Pixel -> merged.changePixel(index, mergedPixel) }
 
-        return merged.right()
+        return merged
     }
 
     fun drawTo(stream: PrintStream) {
@@ -61,15 +53,15 @@ internal class PixelLine internal constructor(
     }
 
     companion object {
-        fun create(length: Int): Either<DrawingError, PixelLine> =
+        fun create(length: Int) =
             if (length < 1) {
-                LineLengthShouldBePositiveValue.left()
+                throw LineLengthShouldBePositiveValue(length)
             } else {
-                PixelLine(length).right()
+                PixelLine(length)
         }
     }
 }
 
-object LineLengthShouldBePositiveValue : DrawingError
-class LinesCanNotBeMerged(val line1Length: Int, val line2Length: Int) : DrawingError
-data class PixelDoesNotExist<T>(val needed: T, val boundaries: T) : DrawingError
+class LineLengthShouldBePositiveValue(val length: Int) : IllegalArgumentException()
+class LinesCanNotBeMerged(val line1Length: Int, val line2Length: Int) : IllegalStateException()
+data class PixelDoesNotExist(val needed: Int, val boundaries: Int) : IllegalStateException()

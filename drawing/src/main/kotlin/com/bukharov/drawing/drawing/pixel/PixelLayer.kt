@@ -1,10 +1,6 @@
 package com.bukharov.drawing.drawing.pixel
 
-import arrow.core.Either
-import arrow.core.left
-import arrow.core.right
 import com.bukharov.drawing.geometry.Dimensions
-import com.bukharov.drawing.geometry.DrawingError
 import com.bukharov.drawing.geometry.Point
 import java.io.PrintStream
 
@@ -18,21 +14,21 @@ class PixelLayer(
         return lines[coordinate.y].has(coordinate.x)
     }
 
-    fun get(coordinate: Point): Either<DrawingError, Pixel> {
-        if (!has(coordinate)) return PixelDoesNotExist(
+    fun get(coordinate: Point): Pixel {
+        if (!has(coordinate)) throw LayerPixelDoesNotExist(
             needed = coordinate,
             boundaries = dimensions.toUpperRightCoordinate()
-        ).left()
+        )
         return lines[coordinate.y][coordinate.x]
     }
 
-    fun change(coordinate: Point, pixel: Pixel): Either<DrawingError, PixelLayer> {
-        if (!has(coordinate)) return PixelDoesNotExist(
+    fun change(coordinate: Point, pixel: Pixel): PixelLayer {
+        if (!has(coordinate)) throw LayerPixelDoesNotExist(
             needed = coordinate,
             boundaries = dimensions.toUpperRightCoordinate()
-        ).left()
+        )
         lines[coordinate.y].changePixel(coordinate.x, pixel)
-        return this.right()
+        return this
     }
 
 //    fun mergeAtop(aboveLayer: PixelLayer): PixelLayer {
@@ -71,8 +67,7 @@ class PixelLayer(
             Dimensions
                 .create(width = width, height = height)
                 .let { dimensions -> PixelLayer(dimensions) }
-                .right()
     }
 }
 
-object WrongWidthAndHeight : DrawingError
+data class LayerPixelDoesNotExist(val needed: Point, val boundaries: Point) : IllegalStateException()

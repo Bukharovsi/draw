@@ -1,6 +1,5 @@
 package com.bukharov.drawing.drawing
 
-import arrow.core.flatMap
 import com.bukharov.drawing.drawing.pixel.Pixel
 import com.bukharov.drawing.drawing.pixel.PixelLayer
 import com.bukharov.drawing.geometry.Line
@@ -14,9 +13,9 @@ internal class DrawableLineTest {
     fun `horizontal line rasterized properly`() {
         val expectedPixelLayer = PixelLayer
             .create(4, 2)
-            .flatMap { it.change(Point(1, 1), Pixel.X) }
-            .flatMap { it.change(Point(2, 1), Pixel.X) }
-            .flatMap { it.change(Point(3, 1), Pixel.X) }
+            .change(Point(1, 1), Pixel.X)
+            .change(Point(2, 1), Pixel.X)
+            .change(Point(3, 1), Pixel.X)
 
         val actualPixelLayer = Line
         .create(Point(1, 1), Point(3, 1))
@@ -29,9 +28,9 @@ internal class DrawableLineTest {
     fun `vertical line rasterized properly`() {
         val expectedPixelLayer = PixelLayer
             .create(2, 4)
-            .flatMap { it.change(Point(1, 1), Pixel.X) }
-            .flatMap { it.change(Point(1, 2), Pixel.X) }
-            .flatMap { it.change(Point(1, 3), Pixel.X) }
+            .change(Point(1, 1), Pixel.X)
+            .change(Point(1, 2), Pixel.X)
+            .change(Point(1, 3), Pixel.X)
 
         val actualPixelLayer = Line
         .create(Point(1, 1), Point(1, 3))

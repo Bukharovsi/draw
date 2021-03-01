@@ -1,12 +1,7 @@
 package com.bukharov.drawing.drawing
 
-import arrow.core.Either
-import arrow.core.extensions.either.apply.tupled
-import arrow.core.left
-import arrow.core.right
 import com.bukharov.drawing.drawing.pixel.Pixel
 import com.bukharov.drawing.drawing.pixel.PixelLayer
-import com.bukharov.drawing.geometry.DrawingError
 import com.bukharov.drawing.geometry.Line
 import com.bukharov.drawing.geometry.Point
 
@@ -14,21 +9,20 @@ class DrawableLine(
     private val line: Line
 ) {
 
-    fun rasterize(): Either<DrawingError, PixelLayer> =
-        tupled(
-            PixelLayer.create(
-                width = line.upperRightCorner().x + 1,
-                height = line.upperRightCorner().y + 1
-            ),
-            when (true) {
-                line.isHorizontal() -> horizontalDots(line).right()
-                line.isVertical() -> verticalDots(line).right()
-                else -> LineTypeIsNotSupported.left()
-            }
-        ).map { tupled ->
-                tupled.b.forEach { point -> tupled.a.change(point, Pixel.X) }
-                tupled.a
-        }
+    fun rasterize(): PixelLayer {
+        val pixelLayer = PixelLayer.create(
+            width = line.upperRightCorner().x + 1,
+            height = line.upperRightCorner().y + 1
+        )
+
+        when (true) {
+            line.isHorizontal() -> horizontalDots(line)
+            line.isVertical() -> verticalDots(line)
+            else -> throw LineTypeIsNotSupported
+        }.forEach { point -> pixelLayer.change(point, Pixel.X) }
+
+        return pixelLayer
+    }
 }
 
 private val horizontalDots: (Line) -> Set<Point> = { line ->
@@ -43,4 +37,4 @@ private val verticalDots: (Line) -> Set<Point> = { line ->
         .toSet()
 }
 
-object LineTypeIsNotSupported : DrawingError
+object LineTypeIsNotSupported : IllegalStateException()

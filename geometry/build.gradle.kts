@@ -6,5 +6,6 @@ dependencies {
 
     // test
     testImplementation(Libs.kotest_junit)
+    testImplementation(Libs.junit_params)
     testImplementation(Libs.junit_engine)
 }
