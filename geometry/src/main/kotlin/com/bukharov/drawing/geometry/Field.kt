@@ -1,6 +1,6 @@
 package com.bukharov.drawing.geometry
 
-class Canvas(
+class Field(
     val rightUpperCorner: Point
 ) {
 
@@ -8,7 +8,7 @@ class Canvas(
 
     private val shapes: MutableSet<Line> = mutableSetOf()
 
-    fun put(shape: Line): Canvas {
+    fun put(shape: Line): Field {
         if (shape.upperRightCorner().moreByAnyDirectionThan(rightUpperCorner)) {
             throw ShapeCanNotBePlacedToCanvas(shape, this)
         }
@@ -25,7 +25,7 @@ class Canvas(
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is Canvas) return false
+        if (other !is Field) return false
 
         if (rightUpperCorner != other.rightUpperCorner) return false
         if (shapes != other.shapes()) return false
@@ -44,15 +44,15 @@ class Canvas(
     }
 
     companion object {
-        fun create(rightUpperCorner: Point): Canvas {
+        fun create(rightUpperCorner: Point): Field {
             if (rightUpperCorner.x < 1 || rightUpperCorner.y < 1) {
                 throw WrongCanvasSize(rightUpperCorner)
             }
 
-            return Canvas(rightUpperCorner)
+            return Field(rightUpperCorner)
         }
     }
 }
 
-class ShapeCanNotBePlacedToCanvas(val shape: Shape, val canvas: Canvas) : IllegalArgumentException()
+class ShapeCanNotBePlacedToCanvas(val shape: Shape, val field: Field) : IllegalArgumentException()
 class WrongCanvasSize(val wrongSize: Point) : IllegalArgumentException()

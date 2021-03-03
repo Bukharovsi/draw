@@ -2,18 +2,18 @@ package com.bukharov.drawing.drawing.drawable
 
 import com.bukharov.drawing.drawing.pixel.Pixel
 import com.bukharov.drawing.drawing.pixel.PixelLayer
-import com.bukharov.drawing.geometry.Canvas
 import com.bukharov.drawing.geometry.Dimensions
+import com.bukharov.drawing.geometry.Field
 import com.bukharov.drawing.geometry.Line
 import com.bukharov.drawing.geometry.Point
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-internal class DrawableCanvasTest {
+internal class DrawableFieldTest {
 
     @Test
     fun `fully filled canvas might be rasterized`() {
-        val filledCanvas = Canvas(rightUpperCorner = Point(1, 1))
+        val filledCanvas = Field(rightUpperCorner = Point(1, 1))
             .put(Line.create(Point.zero, Point(0, 1)))
             .put(Line.create(Point.zero, Point(1, 0)))
             .put(Line.create(Point(1, 1), Point(1, 0)))
@@ -24,16 +24,16 @@ internal class DrawableCanvasTest {
         expected[Point(1, 0)] = Pixel.X
         expected[Point(1, 1)] = Pixel.X
 
-        DrawableCanvas(canvas = filledCanvas).rasterize() shouldBe expected
+        DrawableField(field = filledCanvas).rasterize() shouldBe expected
     }
 
     @Test
     fun `canvas might be rasterized`() {
-        val twoLines = Canvas(rightUpperCorner = Point(5, 5))
+        val twoLines = Field(rightUpperCorner = Point(5, 5))
             .put(Line.create(Point.zero, Point(0, 4)))
             .put(Line.create(Point.zero, Point(4, 0)))
 
-        val imageOf2Lines = DrawableCanvas(twoLines)
+        val imageOf2Lines = DrawableField(twoLines)
             .rasterize()
 
         val expected = PixelLayer.create(Dimensions(6, 6))

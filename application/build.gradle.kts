@@ -1,6 +1,8 @@
 dependencies {
 
     // project
+    implementation(project(":geometry"))
+    implementation(project(":drawing"))
 
     // kotlin
     implementation(Libs.kotlin_jdk8)
