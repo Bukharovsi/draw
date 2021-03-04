@@ -45,7 +45,7 @@ internal class PixelLayerTest {
         val pixelPointInsideBorders = Point(x = 3, y = 3)
 
         PixelLayer.create(width = 5, height = 5)
-            .change(pixelPointInsideBorders, Pixel.X)
+            .also { it[pixelPointInsideBorders] = Pixel.X }
             .get(pixelPointInsideBorders) shouldBe Pixel.X
     }
 
@@ -54,7 +54,7 @@ internal class PixelLayerTest {
         shouldThrow<LayerPixelDoesNotExist> {
             PixelLayer
                 .create(width = 5, height = 5)
-                .change(Point(x = 23, y = 23), Pixel.X)
+                .set(Point(x = 23, y = 23), Pixel.X)
         }
     }
 
@@ -66,16 +66,17 @@ internal class PixelLayerTest {
     @Test
     fun `filled pixels should be drawable`() {
         val printed = PixelLayer.create(3, 3)
-            .change(Point.zero, Pixel.X)
-            .change(Point(0, 1), Pixel.O)
-            .change(Point(0, 2), Pixel.O)
-            .change(Point(1, 0), Pixel.O)
-            .change(Point(1, 1), Pixel.X)
-            .change(Point(1, 2), Pixel.O)
-            .change(Point(2, 0), Pixel.O)
-            .change(Point(2, 1), Pixel.O)
-            .change(Point(2, 2), Pixel.X)
-            .print()
+            .also {
+                it[Point.zero] = Pixel.X
+                it[Point(0, 1)] = Pixel.O
+                it[Point(0, 2)] = Pixel.O
+                it[Point(1, 0)] = Pixel.O
+                it[Point(1, 1)] = Pixel.X
+                it[Point(1, 2)] = Pixel.O
+                it[Point(2, 0)] = Pixel.O
+                it[Point(2, 1)] = Pixel.O
+                it[Point(2, 2)] = Pixel.X
+            }.print()
 
         val expected = """
            xoo
@@ -91,9 +92,11 @@ internal class PixelLayerTest {
     fun `2 layers the same dimension should be merged`() {
         val background = PixelLayer.create(3, 3, Pixel.O)
         val layer1 = PixelLayer.create(3, 3)
-            .change(Point(0, 0), Pixel.X)
-            .change(Point(1, 1), Pixel.X)
-            .change(Point(2, 2), Pixel.X)
+            .also {
+                it[Point(0, 0)] = Pixel.X
+                it[Point(1, 1)] = Pixel.X
+                it[Point(2, 2)] = Pixel.X
+            }
 
         val merged = background.mergeAtop(layer1).print()
 

@@ -36,9 +36,9 @@ internal class DrawableLineTest {
     fun `horizontal line rasterized properly`() {
         val expectedPixelLayer = PixelLayer
             .create(4, 2)
-            .change(Point(1, 1), Pixel.X)
-            .change(Point(2, 1), Pixel.X)
-            .change(Point(3, 1), Pixel.X)
+            .also { it[Point(1, 1)] = Pixel.X }
+            .also { it[Point(2, 1)] = Pixel.X }
+            .also { it[Point(3, 1)] = Pixel.X }
 
         val actualPixelLayer =
             Line.create(Point(1, 1), Point(3, 1))
@@ -51,9 +51,9 @@ internal class DrawableLineTest {
     fun `vertical line rasterized properly`() {
         val expectedPixelLayer = PixelLayer
             .create(2, 4)
-            .change(Point(1, 1), Pixel.X)
-            .change(Point(1, 2), Pixel.X)
-            .change(Point(1, 3), Pixel.X)
+            .also { it[Point(1, 1)] = Pixel.X }
+            .also { it[Point(1, 2)] = Pixel.X }
+            .also { it[Point(1, 3)] = Pixel.X }
 
         val actualPixelLayer = Line
         .create(Point(1, 1), Point(1, 3))

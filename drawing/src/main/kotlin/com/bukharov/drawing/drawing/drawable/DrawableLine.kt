@@ -21,7 +21,7 @@ class DrawableLine(
             line.isHorizontal() -> horizontalDots(line)
             line.isVertical() -> verticalDots(line)
             else -> throw LineTypeIsNotSupported
-        }.forEach { point -> pixelLayer.change(point, Pixel.X) }
+        }.forEach { point -> pixelLayer[point] = Pixel.X }
 
         return pixelLayer
     }

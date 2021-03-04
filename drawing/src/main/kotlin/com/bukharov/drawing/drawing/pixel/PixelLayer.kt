@@ -29,17 +29,17 @@ class PixelLayer private constructor(
         return lines[coordinate.y][coordinate.x]
     }
 
-    operator fun set(coordinate: Point, pixel: Pixel) {
-        change(coordinate, pixel)
+    fun getOrNull(coordinate: Point): Pixel? {
+        if (!has(coordinate)) return null
+        return lines[coordinate.y][coordinate.x]
     }
 
-    fun change(coordinate: Point, pixel: Pixel): PixelLayer {
+    operator fun set(coordinate: Point, pixel: Pixel) {
         if (!has(coordinate)) throw LayerPixelDoesNotExist(
             needed = coordinate,
             boundaries = dimensions.toUpperRightCoordinate()
         )
         lines[coordinate.y].changePixel(coordinate.x, pixel)
-        return this
     }
 
     fun mergeAtop(aboveLayer: PixelLayer): PixelLayer {
@@ -76,7 +76,7 @@ class PixelLayer private constructor(
         return lines.contentHashCode()
     }
 
-    override fun clone() = PixelLayer(lines.map { it.clone() }.toTypedArray(), dimensions)
+    public override fun clone() = PixelLayer(lines.map { it.clone() }.toTypedArray(), dimensions)
 
     companion object {
         fun create(width: Int, height: Int, fillWith: Pixel = Pixel.Empty) =

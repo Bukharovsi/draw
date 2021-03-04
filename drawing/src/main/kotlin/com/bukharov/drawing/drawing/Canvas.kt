@@ -1,6 +1,8 @@
 package com.bukharov.drawing.drawing
 
 import com.bukharov.drawing.drawing.drawable.DrawableField
+import com.bukharov.drawing.drawing.filling.FloodFill
+import com.bukharov.drawing.drawing.pixel.Pixel
 import com.bukharov.drawing.drawing.pixel.PixelLayer
 import com.bukharov.drawing.geometry.Dimensions
 import com.bukharov.drawing.geometry.Field
@@ -30,9 +32,9 @@ class Canvas(
         vectorLayers.put(shape = shape)
     }
 
-    fun fill(target: Point) {
+    fun fill(target: Point, withColor: Pixel) {
         println(target)
-        background = rasterize() // and fill(target)
+        background = FloodFill(rasterize()).fill(target, withColor) // and fill(target)
     }
 
     fun print() =
