@@ -33,30 +33,22 @@ class FloodFill(
         originColor: Pixel,
         destinationPixel: Pixel
     ) {
-        if (pixelLayer.has(target)) {
-            if (pixelLayer[target] == originColor) {
-                pixelLayer[target] = destinationPixel
-
-                if (pixelLayer.getOrNull(target.incY())?.equals(originColor) == true) {
-                    needToExplore.add(target.incY())
-                }
-
-                if (pixelLayer.getOrNull(target.decY())?.equals(originColor) == true) {
-                    needToExplore.add(target.decY())
-                }
-
-                if (pixelLayer.getOrNull(target.incX())?.equals(originColor) == true) {
-                    needToExplore.add(target.incX())
-                }
-
-                if (pixelLayer.getOrNull(target.decX())?.equals(originColor) == true) {
-                    needToExplore.add(target.decX())
-                }
-            } else {
-                return
-            }
-        } else {
+        if (pixelLayer[target] != originColor) {
             return
+        }
+        pixelLayer[target] = destinationPixel
+
+        if (pixelLayer.getOrNull(target.incY())?.equals(originColor) == true) {
+            needToExplore.add(target.incY())
+        }
+        if (pixelLayer.getOrNull(target.decY())?.equals(originColor) == true) {
+            needToExplore.add(target.decY())
+        }
+        if (pixelLayer.getOrNull(target.incX())?.equals(originColor) == true) {
+            needToExplore.add(target.incX())
+        }
+        if (pixelLayer.getOrNull(target.decX())?.equals(originColor) == true) {
+            needToExplore.add(target.decX())
         }
     }
 }
