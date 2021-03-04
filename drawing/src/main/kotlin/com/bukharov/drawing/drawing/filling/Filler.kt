@@ -9,4 +9,7 @@ interface Filler {
     fun fill(starting: Point, fillWith: Pixel): PixelLayer
 }
 
-class CanNotFillPointItIsOutOfCanvas(target: Point, size: Dimensions): IllegalArgumentException()
+class CanNotFillPointItIsOutOfCanvas(
+    val target: Point,
+    val size: Dimensions
+) : IllegalArgumentException()

@@ -1,12 +1,12 @@
 package com.bukharov.drawing
 
 import com.bukharov.drawing.command.CommandFactory
-import com.bukharov.drawing.drawing.Canvas
+import com.bukharov.drawing.drawing.DrawableCanvas
 import java.util.*
 
 fun main() {
 
-    var workCanvas: Canvas? = null
+    var workCanvas: DrawableCanvas? = null
 
     val reader = Scanner(System.`in`)
     while (true) {

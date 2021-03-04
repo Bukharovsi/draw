@@ -1,7 +1,7 @@
 package com.bukharov.drawing.command.drawing
 
 import com.bukharov.drawing.command.drawing.error.CanvasShouldBePresent
-import com.bukharov.drawing.drawing.Canvas
+import com.bukharov.drawing.drawing.DrawableCanvas
 import com.bukharov.drawing.drawing.pixel.Pixel
 import com.bukharov.drawing.geometry.Point
 
@@ -10,7 +10,7 @@ class FillCommand(
     private val fillBy: Char
 ) : DrawingCommand {
 
-    override fun execute(current: Canvas?): Canvas {
+    override fun execute(current: DrawableCanvas?): DrawableCanvas {
         if (current == null) throw CanvasShouldBePresent()
 
         return current

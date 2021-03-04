@@ -8,12 +8,12 @@ import com.bukharov.drawing.geometry.Point
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-internal class CanvasTest {
+internal class DrawableCanvasTest {
 
     @Test
     fun `empty canvas will be rasterized to empty pixel layer`() {
         val fiveXfive = Dimensions(5, 5)
-        val canvas = Canvas(fiveXfive)
+        val canvas = DrawableCanvas(fiveXfive)
         val actualPixelLayer = canvas.rasterize()
 
         val emptyPixelLayer = PixelLayer.create(fiveXfive)
@@ -24,7 +24,7 @@ internal class CanvasTest {
     @Test
     fun `shape on pictures must be rasterized`() {
         val fiveXfive = Dimensions(5, 5)
-        val canvas = Canvas(fiveXfive)
+        val canvas = DrawableCanvas(fiveXfive)
         canvas.put(Line.create(Point(1, 1), Point(1, 3)))
         val actualPixelLayer = canvas.rasterize()
 
@@ -39,7 +39,7 @@ internal class CanvasTest {
     @Test
     fun `shape on pictures must be printable`() {
         val fiveXfive = Dimensions(5, 5)
-        val canvas = Canvas(fiveXfive)
+        val canvas = DrawableCanvas(fiveXfive)
         canvas.put(Line.create(Point(0, 0), Point(0, 4)))
         canvas.put(Line.create(Point(0, 4), Point(4, 4)))
         val actualPicture = canvas.print()

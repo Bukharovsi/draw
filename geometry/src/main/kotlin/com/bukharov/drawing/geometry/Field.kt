@@ -6,9 +6,9 @@ class Field(
 
     private val leftDownCorner = Point.zero
 
-    private val shapes: MutableSet<Line> = mutableSetOf()
+    private val shapes: MutableSet<Shape> = mutableSetOf()
 
-    fun put(shape: Line): Field {
+    fun put(shape: Shape): Field {
         if (shape.upperRightCorner().moreByAnyDirectionThan(rightUpperCorner)) {
             throw ShapeCanNotBePlacedToCanvas(shape, this)
         }
@@ -21,7 +21,7 @@ class Field(
         return this
     }
 
-    fun shapes(): Set<Line> = shapes
+    fun shapes(): Set<Shape> = shapes
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

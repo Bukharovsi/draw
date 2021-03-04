@@ -1,11 +1,11 @@
 package com.bukharov.drawing.command.application
 
-import com.bukharov.drawing.drawing.Canvas
+import com.bukharov.drawing.drawing.DrawableCanvas
 import kotlin.system.exitProcess
 
 class QuitCommand : ApplicationCommand {
 
-    override fun execute(current: Canvas?): Canvas {
+    override fun execute(current: DrawableCanvas?): DrawableCanvas {
         exitProcess(0)
     }
 
