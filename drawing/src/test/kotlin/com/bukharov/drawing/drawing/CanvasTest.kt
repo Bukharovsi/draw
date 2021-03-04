@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test
 internal class CanvasTest {
 
     @Test
-    fun `empty canvas will be rasterized to empty pixel layer` () {
+    fun `empty canvas will be rasterized to empty pixel layer`() {
         val fiveXfive = Dimensions(5, 5)
-        val canvas =  Canvas(fiveXfive)
+        val canvas = Canvas(fiveXfive)
         val actualPixelLayer = canvas.rasterize()
 
         val emptyPixelLayer = PixelLayer.create(fiveXfive)
@@ -24,14 +24,14 @@ internal class CanvasTest {
     @Test
     fun `shape on pictures must be rasterized`() {
         val fiveXfive = Dimensions(5, 5)
-        val canvas =  Canvas(fiveXfive)
+        val canvas = Canvas(fiveXfive)
         canvas.put(Line.create(Point(1, 1), Point(1, 3)))
         val actualPixelLayer = canvas.rasterize()
 
         val expectedPixelLayer = PixelLayer.create(fiveXfive)
-        expectedPixelLayer[Point(1,1)] = Pixel.X
-        expectedPixelLayer[Point(1,2)] = Pixel.X
-        expectedPixelLayer[Point(1,3)] = Pixel.X
+        expectedPixelLayer[Point(1, 1)] = Pixel.X
+        expectedPixelLayer[Point(1, 2)] = Pixel.X
+        expectedPixelLayer[Point(1, 3)] = Pixel.X
 
         actualPixelLayer shouldBe expectedPixelLayer
     }
