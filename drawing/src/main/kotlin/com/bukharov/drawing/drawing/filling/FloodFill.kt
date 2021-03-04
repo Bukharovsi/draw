@@ -3,10 +3,10 @@ package com.bukharov.drawing.drawing.filling
 import com.bukharov.drawing.drawing.pixel.Pixel
 import com.bukharov.drawing.drawing.pixel.PixelLayer
 import com.bukharov.drawing.geometry.Point
-import com.bukharov.drawing.geometry.down
-import com.bukharov.drawing.geometry.left
-import com.bukharov.drawing.geometry.right
-import com.bukharov.drawing.geometry.up
+import com.bukharov.drawing.geometry.decX
+import com.bukharov.drawing.geometry.decY
+import com.bukharov.drawing.geometry.incX
+import com.bukharov.drawing.geometry.incY
 import java.util.*
 
 class FloodFill(
@@ -37,20 +37,20 @@ class FloodFill(
             if (pixelLayer[target] == originColor) {
                 pixelLayer[target] = destinationPixel
 
-                if (pixelLayer.getOrNull(target.up())?.equals(originColor) == true) {
-                    needToExplore.add(target.up())
+                if (pixelLayer.getOrNull(target.incY())?.equals(originColor) == true) {
+                    needToExplore.add(target.incY())
                 }
 
-                if (pixelLayer.getOrNull(target.down())?.equals(originColor) == true) {
-                    needToExplore.add(target.down())
+                if (pixelLayer.getOrNull(target.decY())?.equals(originColor) == true) {
+                    needToExplore.add(target.decY())
                 }
 
-                if (pixelLayer.getOrNull(target.right())?.equals(originColor) == true) {
-                    needToExplore.add(target.right())
+                if (pixelLayer.getOrNull(target.incX())?.equals(originColor) == true) {
+                    needToExplore.add(target.incX())
                 }
 
-                if (pixelLayer.getOrNull(target.left())?.equals(originColor) == true) {
-                    needToExplore.add(target.left())
+                if (pixelLayer.getOrNull(target.decX())?.equals(originColor) == true) {
+                    needToExplore.add(target.decX())
                 }
             } else {
                 return

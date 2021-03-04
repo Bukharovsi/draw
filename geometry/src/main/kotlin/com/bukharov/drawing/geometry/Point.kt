@@ -32,7 +32,7 @@ fun maxYof(vararg points: Point): Int = points.maxOf { it.y }
 fun minXof(vararg points: Point): Int = points.minOf { it.x }
 fun minYof(vararg points: Point): Int = points.minOf { it.y }
 
-fun Point.up() = Point(this.x, this.y + 1)
-fun Point.down() = Point(this.x, this.y - 1)
-fun Point.right() = Point(this.x + 1, this.y)
-fun Point.left() = Point(this.x - 1, this.y + 1)
+fun Point.incY() = Point(this.x, this.y + 1)
+fun Point.decY() = Point(this.x, this.y - 1)
+fun Point.incX() = Point(this.x + 1, this.y)
+fun Point.decX() = Point(this.x - 1, this.y)

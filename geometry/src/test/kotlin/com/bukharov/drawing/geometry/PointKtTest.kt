@@ -24,4 +24,24 @@ internal class PointKtTest {
     fun `calculate lowest left Point`() {
         lowestLeftOfPoints(Point(3, 4), Point(1, 10)) shouldBe (Point(1, 4))
     }
+
+    @Test
+    fun `point inc x`() {
+        Point.zero.incX() shouldBe Point(1, 0)
+    }
+
+    @Test
+    fun `point inc y`() {
+        Point.zero.incY() shouldBe Point(0, 1)
+    }
+
+    @Test
+    fun `point dec x`() {
+        Point.zero.decX() shouldBe Point(-1, 0)
+    }
+
+    @Test
+    fun `point dec y`() {
+        Point.zero.decY() shouldBe Point(0, -1)
+    }
 }

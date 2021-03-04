@@ -11,7 +11,7 @@ import com.bukharov.drawing.geometry.Shape
 
 class DrawableCanvas(
     val size: Dimensions
-) : Canvas {
+) {
     var background: PixelLayer
     var vectorLayers: Field
 
@@ -20,7 +20,7 @@ class DrawableCanvas(
         background = PixelLayer(size)
     }
 
-    override fun rasterize(): PixelLayer {
+    fun rasterize(): PixelLayer {
         val mergedLayers = DrawableField(field = vectorLayers)
             .rasterize()
         background = background.mergeAtop(mergedLayers)
@@ -28,15 +28,14 @@ class DrawableCanvas(
         return background
     }
 
-    override fun put(shape: Shape) {
+    fun put(shape: Shape) {
         vectorLayers.put(shape = shape)
     }
 
     fun fill(target: Point, withColor: Pixel) {
-        println(target)
-        background = FloodFill(rasterize()).fill(target, withColor) // and fill(target)
+        background = FloodFill(rasterize()).fill(target, withColor)
     }
 
-    override fun print() =
+    fun print() =
         rasterize().print()
 }

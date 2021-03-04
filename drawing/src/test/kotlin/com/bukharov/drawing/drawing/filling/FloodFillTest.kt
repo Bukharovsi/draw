@@ -36,17 +36,26 @@ internal class FloodFillTest {
     @Test
     fun `should fill figure if target point is figure`() {
         val origin = PixelLayer(Dimensions(5, 5))
-        origin[Point(3, 4)] = Pixel.X
+        origin[Point(1, 4)] = Pixel.X
+        origin[Point(2, 4)] = Pixel.X
+        origin[Point(2, 3)] = Pixel.X
         origin[Point(3, 3)] = Pixel.X
         origin[Point(4, 3)] = Pixel.X
 
-        val filled = FloodFill(origin).fill(Point(3, 4), Pixel.O)
+        println(origin.print())
+        val filled = FloodFill(origin).fill(Point(4, 3), Pixel.O)
 
-        filled[Point(3, 4)] shouldBe Pixel.O
+        filled[Point(1, 4)] shouldBe Pixel.O
+        filled[Point(2, 3)] shouldBe Pixel.O
+        filled[Point(2, 3)] shouldBe Pixel.O
         filled[Point(3, 3)] shouldBe Pixel.O
         filled[Point(4, 3)] shouldBe Pixel.O
+
         filled[Point.zero] shouldBe Pixel.Empty
         filled[Point(4, 4)] shouldBe Pixel.Empty
+
+        println(filled.print())
+
     }
 
     @Test
