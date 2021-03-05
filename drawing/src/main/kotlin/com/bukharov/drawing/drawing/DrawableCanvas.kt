@@ -1,7 +1,7 @@
 package com.bukharov.drawing.drawing
 
 import com.bukharov.drawing.drawing.drawable.DrawableField
-import com.bukharov.drawing.drawing.filling.FloodFill
+import com.bukharov.drawing.drawing.filling.FloodFill4xDirection
 import com.bukharov.drawing.drawing.pixel.Pixel
 import com.bukharov.drawing.drawing.pixel.PixelLayer
 import com.bukharov.drawing.geometry.Dimensions
@@ -33,7 +33,7 @@ class DrawableCanvas(
     }
 
     fun fill(target: Point, withColor: Pixel) {
-        background = FloodFill(rasterize()).fill(target, withColor)
+        background = FloodFill4xDirection(rasterize()).fill(target, withColor)
     }
 
     fun print() =

@@ -9,7 +9,7 @@ import com.bukharov.drawing.geometry.incX
 import com.bukharov.drawing.geometry.incY
 import java.util.*
 
-class FloodFill(
+class FloodFill4xDirection(
     origin: PixelLayer
 ) : Filler {
     val pixelLayer = origin.clone()

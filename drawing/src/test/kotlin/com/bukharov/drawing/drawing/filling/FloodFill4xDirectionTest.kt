@@ -9,13 +9,13 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldContain
 import org.junit.jupiter.api.Test
 
-internal class FloodFillTest {
+internal class FloodFill4xDirectionTest {
 
     @Test
     fun `should fill empty canvas entierly`() {
         val origin = PixelLayer(Dimensions(5, 5))
         val fillWith = Pixel.O
-        val filled = FloodFill(origin).fill(Point(3, 3), fillWith)
+        val filled = FloodFill4xDirection(origin).fill(Point(3, 3), fillWith)
 
         filled.print().shouldContain(Regex("^${fillWith.print()}+$", RegexOption.MULTILINE))
     }
@@ -27,7 +27,7 @@ internal class FloodFillTest {
         origin[Point(3, 3)] = Pixel.X
         origin[Point(4, 3)] = Pixel.X
 
-        val filled = FloodFill(origin).fill(Point.zero, Pixel.O)
+        val filled = FloodFill4xDirection(origin).fill(Point.zero, Pixel.O)
 
         filled.print().shouldContain(Regex("^${Pixel.O.print()}+$", RegexOption.MULTILINE))
         filled[Point(4, 4)] shouldBe Pixel.Empty
@@ -43,7 +43,7 @@ internal class FloodFillTest {
         origin[Point(4, 3)] = Pixel.X
 
         println(origin.print())
-        val filled = FloodFill(origin).fill(Point(4, 3), Pixel.O)
+        val filled = FloodFill4xDirection(origin).fill(Point(4, 3), Pixel.O)
 
         filled[Point(1, 4)] shouldBe Pixel.O
         filled[Point(2, 3)] shouldBe Pixel.O
@@ -62,7 +62,7 @@ internal class FloodFillTest {
     fun `should throw exeption if target point is out of canvas`() {
         val origin = PixelLayer(Dimensions(5, 5))
         shouldThrow<CanNotFillPointItIsOutOfCanvas> {
-            FloodFill(origin).fill(Point(100, 4), Pixel.O)
+            FloodFill4xDirection(origin).fill(Point(100, 4), Pixel.O)
         }
     }
 }
