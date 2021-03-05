@@ -4,5 +4,5 @@ import com.bukharov.drawing.geometry.Dimensions
 
 interface Printable {
     val dimensions: Dimensions
-    fun print(): List<String>
+    fun asStrings(): List<String>
 }

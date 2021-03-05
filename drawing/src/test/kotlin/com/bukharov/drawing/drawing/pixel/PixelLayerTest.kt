@@ -76,7 +76,7 @@ internal class PixelLayerTest {
                 it[Point(2, 0)] = Pixel.O
                 it[Point(2, 1)] = Pixel.O
                 it[Point(2, 2)] = Pixel.X
-            }.print()
+            }.asStrings()
 
         val expected = listOf(
             "xoo",
@@ -97,7 +97,7 @@ internal class PixelLayerTest {
                 it[Point(2, 2)] = Pixel.X
             }
 
-        val merged = background.mergeAtop(layer1).print()
+        val merged = background.mergeAtop(layer1).asStrings()
 
         val expected = listOf(
             "xoo",

@@ -1,27 +1,27 @@
 package com.bukharov.drawing
 
 import com.bukharov.drawing.command.CommandFactory
+import com.bukharov.drawing.command.application.PrintCommand
 import com.bukharov.drawing.drawing.DrawableCanvas
-import com.bukharov.drawing.drawing.pixel.print
-import com.bukharov.drawing.pixel.PixelBorder
+import com.bukharov.drawing.pixel.BorderDecoratorFactory
+import com.bukharov.drawing.pixel.HorizontalAndVerticalBorder
 import java.util.Scanner
 
 fun main() {
+    val borderFactory: BorderDecoratorFactory = HorizontalAndVerticalBorder.Factory
+    val printCommand = PrintCommand(borderFactory)
+    val reader = Scanner(System.`in`)
 
     var workCanvas: DrawableCanvas? = null
-
-    val reader = Scanner(System.`in`)
     while (true) {
         println("Please enter your command")
         val command = reader.nextLine()
-
         val foundCommand = CommandFactory.createCommand(command)
-
         if (null != foundCommand) {
             workCanvas = foundCommand.execute(workCanvas)
-            println(PixelBorder(workCanvas.rasterize()).print().print())
+            printCommand.execute(workCanvas)
         } else {
-            println("sorry command is not supported")
+            println("Sorry, command is not supported")
         }
     }
 }

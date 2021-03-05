@@ -4,7 +4,6 @@ import com.bukharov.drawing.drawing.drawable.DrawableField
 import com.bukharov.drawing.drawing.filling.FloodFill4xDirection
 import com.bukharov.drawing.drawing.pixel.Pixel
 import com.bukharov.drawing.drawing.pixel.PixelLayer
-import com.bukharov.drawing.drawing.pixel.print
 import com.bukharov.drawing.geometry.Dimensions
 import com.bukharov.drawing.geometry.Field
 import com.bukharov.drawing.geometry.Point
@@ -38,5 +37,5 @@ class DrawableCanvas(
     }
 
     fun print(): List<String> =
-        rasterize().print()
+        rasterize().asStrings()
 }

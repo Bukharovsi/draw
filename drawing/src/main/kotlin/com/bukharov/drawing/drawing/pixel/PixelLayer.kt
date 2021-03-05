@@ -56,7 +56,7 @@ class PixelLayer private constructor(
         return merged
     }
 
-    override fun print(): List<String> =
+    override fun asStrings(): List<String> =
         lines.map {
             it.print()
         }.toList()

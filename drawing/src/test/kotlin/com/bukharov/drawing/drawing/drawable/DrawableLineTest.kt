@@ -13,7 +13,7 @@ internal class DrawableLineTest {
     @Test
     fun `vertical line will be rasterized and print to a line`() {
             val image = Line.create(Point(0, 0), Point(0, 1))
-                .let { DrawableLine(it) }.rasterize().print()
+                .let { DrawableLine(it) }.rasterize().asStrings()
 
         image shouldBe listOf("x", "x")
     }

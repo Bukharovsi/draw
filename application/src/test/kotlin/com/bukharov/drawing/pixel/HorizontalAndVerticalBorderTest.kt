@@ -7,13 +7,13 @@ import io.kotest.matchers.string.shouldEndWith
 import io.kotest.matchers.string.shouldStartWith
 import org.junit.jupiter.api.Test
 
-internal class PixelBorderTest {
+internal class HorizontalAndVerticalBorderTest {
 
     @Test
     fun `border should be around pixel layer`() {
-        val layerWithBorder = PixelBorder(
+        val layerWithBorder = HorizontalAndVerticalBorder(
             PixelLayer.create(Dimensions(5, 5))
-        ).print()
+        ).asStrings()
 
         layerWithBorder.size shouldBe 5 + 2
         layerWithBorder.first() shouldBe "-------"

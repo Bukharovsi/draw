@@ -17,7 +17,7 @@ internal class FloodFill4xDirectionTest {
         val fillWith = Pixel.O
         val filled = FloodFill4xDirection(origin).fill(Point(3, 3), fillWith)
 
-        filled.print().map {
+        filled.asStrings().map {
             it shouldContain(Regex("^${fillWith.print()}+$", RegexOption.MULTILINE))
         }
     }
