@@ -7,7 +7,8 @@ import com.bukharov.drawing.geometry.decX
 import com.bukharov.drawing.geometry.decY
 import com.bukharov.drawing.geometry.incX
 import com.bukharov.drawing.geometry.incY
-import java.util.*
+import java.util.Queue
+import java.util.LinkedList
 
 class FloodFill4xDirection(
     origin: PixelLayer

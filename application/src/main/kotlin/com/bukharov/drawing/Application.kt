@@ -2,7 +2,9 @@ package com.bukharov.drawing
 
 import com.bukharov.drawing.command.CommandFactory
 import com.bukharov.drawing.drawing.DrawableCanvas
-import java.util.*
+import com.bukharov.drawing.drawing.pixel.print
+import com.bukharov.drawing.pixel.PixelBorder
+import java.util.Scanner
 
 fun main() {
 
@@ -17,7 +19,7 @@ fun main() {
 
         if (null != foundCommand) {
             workCanvas = foundCommand.execute(workCanvas)
-            println(workCanvas.print())
+            println(PixelBorder(workCanvas.rasterize()).print().print())
         } else {
             println("sorry command is not supported")
         }

@@ -5,7 +5,7 @@ import com.bukharov.drawing.geometry.Point
 
 class PixelLayer private constructor(
     private val lines: Array<PixelLine>,
-    val dimensions: Dimensions,
+    override val dimensions: Dimensions,
 ) : Cloneable, Printable {
 
     internal constructor(

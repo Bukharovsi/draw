@@ -38,21 +38,18 @@ internal class DrawableCanvasTest {
 
     @Test
     fun `shape on pictures must be printable`() {
-        val fiveXfive = Dimensions(5, 5)
-        val canvas = DrawableCanvas(fiveXfive)
+        val canvas = DrawableCanvas(Dimensions(5, 5))
         canvas.put(Line.create(Point(0, 0), Point(0, 4)))
         canvas.put(Line.create(Point(0, 4), Point(4, 4)))
         val actualPicture = canvas.print()
 
-        val expectedPicture =
-            """
-            x    
-            x    
-            x    
-            x    
-            xxxxx
-            
-            """.trimIndent()
+        val expectedPicture = listOf(
+            "x    ",
+            "x    ",
+            "x    ",
+            "x    ",
+            "xxxxx"
+        )
 
         actualPicture shouldBe expectedPicture
     }

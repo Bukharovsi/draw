@@ -51,7 +51,6 @@ internal class FloodFill4xDirectionTest {
         origin[Point(3, 3)] = Pixel.X
         origin[Point(4, 3)] = Pixel.X
 
-        println(origin.print())
         val filled = FloodFill4xDirection(origin).fill(Point(4, 3), Pixel.O)
 
         filled[Point(1, 4)] shouldBe Pixel.O
@@ -62,9 +61,6 @@ internal class FloodFill4xDirectionTest {
 
         filled[Point.zero] shouldBe Pixel.Empty
         filled[Point(4, 4)] shouldBe Pixel.Empty
-
-        println(filled.print())
-
     }
 
     @Test
