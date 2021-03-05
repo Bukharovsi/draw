@@ -52,4 +52,9 @@ class FloodFill4xDirection(
             needToExplore.add(target.decX())
         }
     }
+
+    object Factory : FillerFactory {
+        override fun create(pixelLayer: PixelLayer): Filler =
+            FloodFill4xDirection(pixelLayer)
+    }
 }

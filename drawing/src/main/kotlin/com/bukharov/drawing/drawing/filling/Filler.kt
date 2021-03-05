@@ -9,6 +9,10 @@ interface Filler {
     fun fill(starting: Point, fillWith: Pixel): PixelLayer
 }
 
+interface FillerFactory {
+    fun create(pixelLayer: PixelLayer): Filler
+}
+
 class CanNotFillPointItIsOutOfCanvas(
     val target: Point,
     val size: Dimensions

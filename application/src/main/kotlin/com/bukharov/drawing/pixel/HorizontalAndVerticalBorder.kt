@@ -23,8 +23,7 @@ class HorizontalAndVerticalBorder(
         .toString()
         .repeat(dimensions.width + 2)
 
-    object Factory: BorderDecoratorFactory {
+    object Factory : BorderDecoratorFactory {
         override fun create(printable: Printable) = HorizontalAndVerticalBorder(printable)
     }
-
 }

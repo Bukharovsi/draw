@@ -1,6 +1,7 @@
 package com.bukharov.drawing.drawing
 
 import com.bukharov.drawing.drawing.drawable.DrawableField
+import com.bukharov.drawing.drawing.filling.FillerFactory
 import com.bukharov.drawing.drawing.filling.FloodFill4xDirection
 import com.bukharov.drawing.drawing.pixel.Pixel
 import com.bukharov.drawing.drawing.pixel.PixelLayer
@@ -10,7 +11,8 @@ import com.bukharov.drawing.geometry.Point
 import com.bukharov.drawing.geometry.Shape
 
 class DrawableCanvas(
-    val size: Dimensions
+    val size: Dimensions,
+    val fillerFactory: FillerFactory = FloodFill4xDirection.Factory
 ) {
     var background: PixelLayer
     var vectorLayers: Field
@@ -33,7 +35,7 @@ class DrawableCanvas(
     }
 
     fun fill(target: Point, withColor: Pixel) {
-        background = FloodFill4xDirection(rasterize()).fill(target, withColor)
+        background = fillerFactory.create(rasterize()).fill(target, withColor)
     }
 
     fun print(): List<String> =
