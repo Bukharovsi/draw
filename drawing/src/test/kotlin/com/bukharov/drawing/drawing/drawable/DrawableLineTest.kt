@@ -15,7 +15,7 @@ internal class DrawableLineTest {
             val image = Line.create(Point(0, 0), Point(0, 1))
                 .let { DrawableLine(it) }.rasterize().print()
 
-        image shouldBe "x\nx\n"
+        image shouldBe listOf("x", "x")
     }
 
     @Test

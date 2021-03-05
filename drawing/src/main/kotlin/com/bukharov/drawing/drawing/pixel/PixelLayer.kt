@@ -56,10 +56,10 @@ class PixelLayer private constructor(
         return merged
     }
 
-    override fun print() =
-        lines.joinToString(separator = "") {
-            it.print() + "\n"
-        }
+    override fun print(): List<String> =
+        lines.map {
+            it.print()
+        }.toList()
 
     override fun toString(): String {
         return "PixelLayer(lines=${lines.contentToString()})"

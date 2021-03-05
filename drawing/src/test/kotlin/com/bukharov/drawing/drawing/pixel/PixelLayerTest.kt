@@ -78,12 +78,11 @@ internal class PixelLayerTest {
                 it[Point(2, 2)] = Pixel.X
             }.print()
 
-        val expected = """
-           xoo
-           oxo
-           oox
-           
-        """.trimIndent()
+        val expected = listOf(
+            "xoo",
+            "oxo",
+            "oox"
+        )
 
         printed shouldBe expected
     }
@@ -100,12 +99,11 @@ internal class PixelLayerTest {
 
         val merged = background.mergeAtop(layer1).print()
 
-        val expected = """
-           xoo
-           oxo
-           oox
-           
-        """.trimIndent()
+        val expected = listOf(
+            "xoo",
+            "oxo",
+            "oox"
+        )
 
         merged shouldBe expected
     }

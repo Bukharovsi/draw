@@ -17,7 +17,9 @@ internal class FloodFill4xDirectionTest {
         val fillWith = Pixel.O
         val filled = FloodFill4xDirection(origin).fill(Point(3, 3), fillWith)
 
-        filled.print().shouldContain(Regex("^${fillWith.print()}+$", RegexOption.MULTILINE))
+        filled.print().map {
+            it shouldContain(Regex("^${fillWith.print()}+$", RegexOption.MULTILINE))
+        }
     }
 
     @Test
@@ -29,7 +31,14 @@ internal class FloodFill4xDirectionTest {
 
         val filled = FloodFill4xDirection(origin).fill(Point.zero, Pixel.O)
 
-        filled.print().shouldContain(Regex("^${Pixel.O.print()}+$", RegexOption.MULTILINE))
+        filled[Point.zero] shouldBe Pixel.O
+        filled[Point(2, 3)] shouldBe Pixel.O
+        filled[Point(2, 4)] shouldBe Pixel.O
+
+        filled[Point(3, 4)] shouldBe Pixel.X
+        filled[Point(3, 3)] shouldBe Pixel.X
+        filled[Point(3, 3)] shouldBe Pixel.X
+
         filled[Point(4, 4)] shouldBe Pixel.Empty
     }
 

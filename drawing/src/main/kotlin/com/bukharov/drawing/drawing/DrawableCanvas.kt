@@ -36,6 +36,6 @@ class DrawableCanvas(
         background = FloodFill4xDirection(rasterize()).fill(target, withColor)
     }
 
-    fun print() =
-        rasterize().print()
+    fun print(): String =
+        rasterize().print().joinToString(separator = "") { it + "\n" }
 }
