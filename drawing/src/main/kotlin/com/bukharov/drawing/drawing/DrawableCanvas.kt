@@ -11,9 +11,9 @@ import com.bukharov.drawing.geometry.Point
 import com.bukharov.drawing.geometry.Shape
 
 class DrawableCanvas(
-    val size: Dimensions,
+    override val size: Dimensions,
     val fillerFactory: FillerFactory = FloodFill4xDirection.Factory
-) {
+) : Canvas {
     var background: PixelLayer
     var vectorLayers: Field
 
@@ -22,7 +22,7 @@ class DrawableCanvas(
         background = PixelLayer(size)
     }
 
-    fun rasterize(): PixelLayer {
+    override fun rasterize(): PixelLayer {
         val mergedLayers = DrawableField(field = vectorLayers)
             .rasterize()
         background = background.mergeAtop(mergedLayers)
@@ -30,14 +30,14 @@ class DrawableCanvas(
         return background
     }
 
-    fun put(shape: Shape) {
+    override fun put(shape: Shape) {
         vectorLayers.put(shape = shape)
     }
 
-    fun fill(target: Point, withColor: Pixel) {
+    override fun fill(target: Point, withColor: Pixel) {
         background = fillerFactory.create(rasterize()).fill(target, withColor)
     }
 
-    fun print(): List<String> =
+    override fun print(): List<String> =
         rasterize().asStrings()
 }
