@@ -16,7 +16,7 @@ internal class DrawableCanvasTest {
         val canvas = DrawableCanvas(fiveXfive)
         val actualPixelLayer = canvas.rasterize()
 
-        val emptyPixelLayer = PixelLayer.create(fiveXfive)
+        val emptyPixelLayer = PixelLayer(fiveXfive)
 
         actualPixelLayer shouldBe emptyPixelLayer
     }
@@ -28,7 +28,7 @@ internal class DrawableCanvasTest {
         canvas.put(Line.create(Point(1, 1), Point(1, 3)))
         val actualPixelLayer = canvas.rasterize()
 
-        val expectedPixelLayer = PixelLayer.create(fiveXfive)
+        val expectedPixelLayer = PixelLayer(fiveXfive)
         expectedPixelLayer[Point(1, 1)] = Pixel.X
         expectedPixelLayer[Point(1, 2)] = Pixel.X
         expectedPixelLayer[Point(1, 3)] = Pixel.X

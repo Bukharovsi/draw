@@ -13,7 +13,7 @@ class DrawableLine(
 ) : Drawable {
 
     override fun rasterize(): PixelLayer {
-        val pixelLayer = PixelLayer.create(
+        val pixelLayer = PixelLayer(
             line.upperRightCorner().toDimension()
         )
 

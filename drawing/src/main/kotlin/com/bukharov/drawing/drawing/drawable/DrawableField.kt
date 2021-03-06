@@ -9,7 +9,7 @@ class DrawableField(
     val field: Field
 ) : Drawable {
     private val size = field.rightUpperCorner.toDimension()
-    private val emptyBackground = PixelLayer.create(size)
+    private val emptyBackground = PixelLayer(size)
 
     override fun rasterize(): PixelLayer {
         val imagesOfShapes =

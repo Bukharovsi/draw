@@ -8,7 +8,7 @@ internal class DimensionsTest {
 
     @Test
     fun `dimensions might not be zero or below`() {
-        shouldThrow<DimensionMustBePositive> { Dimensions.create(0, 1) }
+        shouldThrow<DimensionMustBePositive> { Dimensions(0, 1) }
     }
 
     @Test

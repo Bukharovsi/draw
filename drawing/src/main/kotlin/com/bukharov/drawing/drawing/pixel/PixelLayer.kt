@@ -8,7 +8,7 @@ class PixelLayer private constructor(
     override val dimensions: Dimensions,
 ) : Cloneable, Printable {
 
-    internal constructor(
+    constructor(
         dimensions: Dimensions,
         fillWith: Pixel = Pixel.Empty
     ) : this(
@@ -77,16 +77,6 @@ class PixelLayer private constructor(
     }
 
     public override fun clone() = PixelLayer(lines.map { it.clone() }.toTypedArray(), dimensions)
-
-    companion object {
-        fun create(width: Int, height: Int, fillWith: Pixel = Pixel.Empty) =
-            Dimensions
-                .create(width = width, height = height)
-                .let { dimensions -> PixelLayer(dimensions, fillWith) }
-
-        fun create(size: Dimensions, fillWith: Pixel = Pixel.Empty) =
-             PixelLayer(size, fillWith)
-    }
 }
 
 data class LayerPixelDoesNotExist(val needed: Point, val boundaries: Point) : IllegalStateException()

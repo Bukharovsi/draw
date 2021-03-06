@@ -12,7 +12,7 @@ internal class HorizontalAndVerticalBorderTest {
     @Test
     fun `border should be around pixel layer`() {
         val layerWithBorder = HorizontalAndVerticalBorder(
-            PixelLayer.create(Dimensions(5, 5))
+            PixelLayer(Dimensions(5, 5))
         ).asStrings()
 
         layerWithBorder.size shouldBe 5 + 2

@@ -36,7 +36,7 @@ internal class DrawableFieldTest {
         val imageOf2Lines = DrawableField(twoLines)
             .rasterize()
 
-        val expected = PixelLayer.create(Dimensions(6, 6))
+        val expected = PixelLayer(Dimensions(6, 6))
         expected[Point(0, 0)] = Pixel.X
 
         expected[Point(0, 1)] = Pixel.X
