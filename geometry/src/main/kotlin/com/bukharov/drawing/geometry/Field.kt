@@ -8,6 +8,12 @@ class Field(
 
     private val shapes: MutableSet<Shape> = mutableSetOf()
 
+    init {
+        if (rightUpperCorner.x < 1 || rightUpperCorner.y < 1) {
+            throw WrongCanvasSize(rightUpperCorner)
+        }
+    }
+
     fun put(shape: Shape): Field {
         if (shape.upperRightCorner().moreByAnyDirectionThan(rightUpperCorner)) {
             throw ShapeCanNotBePlacedToCanvas(shape, this)
@@ -41,16 +47,6 @@ class Field(
         result = 31 * result + leftDownCorner.hashCode()
         result = 31 * result + shapes.hashCode()
         return result
-    }
-
-    companion object {
-        fun create(rightUpperCorner: Point): Field {
-            if (rightUpperCorner.x < 1 || rightUpperCorner.y < 1) {
-                throw WrongCanvasSize(rightUpperCorner)
-            }
-
-            return Field(rightUpperCorner)
-        }
     }
 }
 

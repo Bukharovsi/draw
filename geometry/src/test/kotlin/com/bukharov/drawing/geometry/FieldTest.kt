@@ -10,7 +10,7 @@ internal class FieldTest {
 
     @Test
     fun `canvas with positive values width and height might be created`() {
-        Field.create(
+        Field(
             rightUpperCorner = Point(6, 6)
         ) shouldBe Field(
             rightUpperCorner = Point(6, 6)
@@ -54,18 +54,17 @@ internal class FieldTest {
 
     @Test
     fun `canvas might not have width 0`() {
-        shouldThrow<WrongCanvasSize> { Field.create(rightUpperCorner = Point(0, 6)) }
+        shouldThrow<WrongCanvasSize> { Field(rightUpperCorner = Point(0, 6)) }
     }
 
     @Test
     fun `canvas might not have height 0`() {
-        shouldThrow<WrongCanvasSize> { Field.create(rightUpperCorner = Point(6, 0)) }
+        shouldThrow<WrongCanvasSize> { Field(rightUpperCorner = Point(6, 0)) }
     }
 
     @Test
     fun `a shape might be placed on canvas if it is within canvas`() {
-        Field
-            .create(Point(9, 9))
+        Field(Point(9, 9))
             .put(Line.create(Point.zero, Point(0, 3)))
             .should {
                 it.shapes().size shouldBe 1
@@ -76,8 +75,7 @@ internal class FieldTest {
     @Test
     fun `a shape might NOT be placed on canvas if it does not fit canvas`() {
         shouldThrow<ShapeCanNotBePlacedToCanvas> {
-            Field
-                .create(Point(9, 9))
+            Field(Point(9, 9))
                 .put(Line.create(Point.zero, Point(0, 14)))
         }
     }
@@ -85,8 +83,7 @@ internal class FieldTest {
     @Test
     fun `a shape might not be placed on canvas if it any coordinate less than 0`() {
         shouldThrow<ShapeCanNotBePlacedToCanvas> {
-            Field
-                .create(Point(9, 9))
+            Field(Point(9, 9))
                 .put(Line.create(Point.zero, Point(-1, 0)))
         }
     }
