@@ -7,6 +7,7 @@ import com.bukharov.drawing.pixel.BorderDecoratorFactory
 import com.bukharov.drawing.pixel.HorizontalAndVerticalBorder
 import java.util.Scanner
 
+@Suppress("TooGenericExceptionCaught")
 fun main() {
     val borderFactory: BorderDecoratorFactory = HorizontalAndVerticalBorder.Factory
     val printCommand = PrintCommand(borderFactory)
@@ -18,8 +19,13 @@ fun main() {
         val command = reader.nextLine()
         val foundCommand = CommandFactory.createCommand(command)
         if (null != foundCommand) {
-            workCanvas = foundCommand.execute(workCanvas)
-            printCommand.execute(workCanvas)
+            try {
+                workCanvas = foundCommand.execute(workCanvas)
+                printCommand.execute(workCanvas)
+            } catch (e: Throwable) {
+                // todo add error handler
+                println(e.message)
+            }
         } else {
             println("Sorry, command is not supported")
         }

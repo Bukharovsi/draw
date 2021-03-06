@@ -22,16 +22,16 @@ class FillCommand(
 
         @Suppress("MagicNumber")
         override fun tryToCreate(stringCommand: String): DrawingCommand? {
-            val res = regex.find(stringCommand.trim()) ?: return null
+            val cmd = regex.find(stringCommand.trim()) ?: return null
 
             return FillCommand(
                 target = Point(
-                    x = res.groups[1]?.value?.toInt()
-                        ?: throw NumberFormatException("int expected, but ${res.groups[1]?.value} given"),
-                    y = res.groups[2]?.value?.toInt()
-                        ?: throw NumberFormatException("int expected, but ${res.groups[1]?.value} given")
+                    x = cmd.groups[1]?.value?.toInt()
+                        ?: throw NumberFormatException("int expected, but ${cmd.groups[1]?.value} given"),
+                    y = cmd.groups[2]?.value?.toInt()
+                        ?: throw NumberFormatException("int expected, but ${cmd.groups[1]?.value} given")
                 ),
-                fillBy = res.groups[3]?.value?.toCharArray()?.first()
+                fillBy = cmd.groups[3]?.value?.toCharArray()?.first()
                     ?: throw IllegalArgumentException("Illegal filling char given")
             )
         }

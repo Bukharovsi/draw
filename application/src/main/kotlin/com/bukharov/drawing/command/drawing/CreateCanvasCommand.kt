@@ -16,13 +16,13 @@ class CreateCanvasCommand(
         val regex = Regex("^C (\\d+) (\\d+)$", RegexOption.IGNORE_CASE)
 
         override fun tryToCreate(stringCommand: String): DrawingCommand? {
-            val res = regex.find(stringCommand.trim()) ?: return null
+            val cmd = regex.find(stringCommand.trim()) ?: return null
 
             return CreateCanvasCommand(Dimensions(
-                width = res.groups[1]?.value?.toInt()
-                    ?: throw NumberFormatException("int expected, but ${res.groups[1]?.value} given"),
-                height = res.groups[2]?.value?.toInt()
-                    ?: throw NumberFormatException("int expected, but ${res.groups[1]?.value} given"))
+                width = cmd.groups[1]?.value?.toInt()
+                    ?: throw NumberFormatException("int expected, but ${cmd.groups[1]?.value} given"),
+                height = cmd.groups[2]?.value?.toInt()
+                    ?: throw NumberFormatException("int expected, but ${cmd.groups[1]?.value} given"))
             )
         }
     }

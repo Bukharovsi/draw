@@ -1,8 +1,8 @@
 package com.bukharov.drawing.drawing.pixel
 
-internal class PixelLine private constructor(
+internal class PixelRow private constructor(
     private val canvas: Array<Pixel>,
-    val length: Int
+    private val length: Int
 ) : Iterable<Pixel>, Cloneable {
 
     internal constructor(
@@ -13,7 +13,7 @@ internal class PixelLine private constructor(
     override fun iterator(): Iterator<Pixel> =
         canvas.iterator()
 
-    fun changePixel(i: Int, newPixel: Pixel): PixelLine {
+    fun changePixel(i: Int, newPixel: Pixel): PixelRow {
         if (!has(i)) throw PixelDoesNotExist(needed = i, boundaries = canvas.lastIndex)
         else canvas[i] = newPixel
         return this
@@ -26,9 +26,9 @@ internal class PixelLine private constructor(
     fun has(i: Int): Boolean =
         0 <= i && i <= canvas.lastIndex
 
-    fun mergeAtop(above: PixelLine): PixelLine {
+    fun mergeAtop(above: PixelRow): PixelRow {
         if (this.length < above.length) throw LinesCanNotBeMerged(this.length, above.length)
-        val merged = PixelLine(length)
+        val merged = PixelRow(length)
         above
             .mapIndexed { index: Int, pixelAbove: Pixel -> this.canvas[index].mergeAtop(pixelAbove) }
             .mapIndexed { index: Int, mergedPixel: Pixel -> merged.changePixel(index, mergedPixel) }
@@ -36,7 +36,7 @@ internal class PixelLine private constructor(
         return merged
     }
 
-    public override fun clone(): PixelLine = PixelLine(canvas, length)
+    public override fun clone(): PixelRow = PixelRow(canvas, length)
 
     fun print(): String =
         CharArray(canvas.size, { i -> canvas[i].print() })
@@ -47,7 +47,7 @@ internal class PixelLine private constructor(
     }
 
     override fun equals(other: Any?): Boolean {
-        if (other !is PixelLine) return true
+        if (other !is PixelRow) return true
         if (!canvas.contentEquals(other.canvas)) return false
         return true
     }
@@ -61,7 +61,7 @@ internal class PixelLine private constructor(
             if (length < 1) {
                 throw LineLengthShouldBePositiveValue(length)
             } else {
-                PixelLine(length, fillWith)
+                PixelRow(length, fillWith)
         }
     }
 }

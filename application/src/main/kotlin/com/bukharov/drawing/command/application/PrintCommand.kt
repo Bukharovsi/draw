@@ -7,7 +7,7 @@ import com.bukharov.drawing.drawing.pixel.print
 import com.bukharov.drawing.pixel.BorderDecoratorFactory
 
 class PrintCommand(
-    val borderFactory: BorderDecoratorFactory
+    private val borderFactory: BorderDecoratorFactory
 ) : Command {
     override fun execute(current: Canvas?): Canvas {
         if (null == current) throw CanvasShouldBePresent()

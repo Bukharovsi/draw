@@ -4,7 +4,7 @@ import com.bukharov.drawing.geometry.Dimensions
 import com.bukharov.drawing.geometry.Point
 
 class PixelLayer private constructor(
-    private val lines: Array<PixelLine>,
+    private val rows: Array<PixelRow>,
     override val dimensions: Dimensions,
 ) : Cloneable, Printable {
 
@@ -12,13 +12,13 @@ class PixelLayer private constructor(
         dimensions: Dimensions,
         fillWith: Pixel = Pixel.Empty
     ) : this(
-        lines = Array(dimensions.height) { PixelLine(dimensions.width, fillWith) },
+        rows = Array(dimensions.height) { PixelRow(dimensions.width, fillWith) },
         dimensions = dimensions
     )
 
     fun has(coordinate: Point): Boolean {
-        if (0 > coordinate.y || coordinate.y > lines.lastIndex) return false
-        return lines[coordinate.y].has(coordinate.x)
+        if (0 > coordinate.y || coordinate.y > rows.lastIndex) return false
+        return rows[coordinate.y].has(coordinate.x)
     }
 
     operator fun get(coordinate: Point): Pixel {
@@ -26,12 +26,12 @@ class PixelLayer private constructor(
             needed = coordinate,
             boundaries = dimensions.toUpperRightCoordinate()
         )
-        return lines[coordinate.y][coordinate.x]
+        return rows[coordinate.y][coordinate.x]
     }
 
     fun getOrNull(coordinate: Point): Pixel? {
         if (!has(coordinate)) return null
-        return lines[coordinate.y][coordinate.x]
+        return rows[coordinate.y][coordinate.x]
     }
 
     operator fun set(coordinate: Point, pixel: Pixel) {
@@ -39,7 +39,7 @@ class PixelLayer private constructor(
             needed = coordinate,
             boundaries = dimensions.toUpperRightCoordinate()
         )
-        lines[coordinate.y].changePixel(coordinate.x, pixel)
+        rows[coordinate.y].changePixel(coordinate.x, pixel)
     }
 
     fun mergeAtop(aboveLayer: PixelLayer): PixelLayer {
@@ -50,33 +50,33 @@ class PixelLayer private constructor(
         }
 
         val merged = this.clone()
-        aboveLayer.lines
-            .mapIndexed { index, lineAbove -> this.lines[index].mergeAtop(lineAbove) }
-            .mapIndexed { index, mergedLine -> merged.lines[index] = mergedLine }
+        aboveLayer.rows
+            .mapIndexed { index, lineAbove -> this.rows[index].mergeAtop(lineAbove) }
+            .mapIndexed { index, mergedLine -> merged.rows[index] = mergedLine }
         return merged
     }
 
     override fun asStrings(): List<String> =
-        lines.map {
+        rows.map {
             it.print()
         }.toList()
 
     override fun toString(): String {
-        return "PixelLayer(lines=${lines.contentToString()})"
+        return "PixelLayer(lines=${rows.contentToString()})"
     }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is PixelLayer) return false
-        if (!lines.contentEquals(other.lines)) return false
+        if (!rows.contentEquals(other.rows)) return false
         return true
     }
 
     override fun hashCode(): Int {
-        return lines.contentHashCode()
+        return rows.contentHashCode()
     }
 
-    public override fun clone() = PixelLayer(lines.map { it.clone() }.toTypedArray(), dimensions)
+    public override fun clone() = PixelLayer(rows.map { it.clone() }.toTypedArray(), dimensions)
 }
 
 data class LayerPixelDoesNotExist(val needed: Point, val boundaries: Point) : IllegalStateException()

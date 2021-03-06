@@ -21,20 +21,20 @@ class DrawLineCommand(
 
         @Suppress("MagicNumber")
         override fun tryToCreate(stringCommand: String): DrawingCommand? {
-            val res = regex.find(stringCommand.trim()) ?: return null
+            val cmd = regex.find(stringCommand.trim()) ?: return null
 
             return DrawLineCommand(
                 a = Point(
-                    x = res.groups[1]?.value?.toInt()
-                        ?: throw NumberFormatException("int expected, but ${res.groups[1]?.value} given"),
-                    y = res.groups[2]?.value?.toInt()
-                        ?: throw NumberFormatException("int expected, but ${res.groups[1]?.value} given")
+                    x = cmd.groups[1]?.value?.toInt()
+                        ?: throw NumberFormatException("int expected, but ${cmd.groups[1]?.value} given"),
+                    y = cmd.groups[2]?.value?.toInt()
+                        ?: throw NumberFormatException("int expected, but ${cmd.groups[1]?.value} given")
                 ),
                 b = Point(
-                    x = res.groups[3]?.value?.toInt()
-                        ?: throw NumberFormatException("int expected, but ${res.groups[1]?.value} given"),
-                    y = res.groups[4]?.value?.toInt()
-                        ?: throw NumberFormatException("int expected, but ${res.groups[1]?.value} given")
+                    x = cmd.groups[3]?.value?.toInt()
+                        ?: throw NumberFormatException("int expected, but ${cmd.groups[1]?.value} given"),
+                    y = cmd.groups[4]?.value?.toInt()
+                        ?: throw NumberFormatException("int expected, but ${cmd.groups[1]?.value} given")
                 ),
             )
         }

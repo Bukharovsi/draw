@@ -5,6 +5,9 @@ import com.bukharov.drawing.geometry.Field
 import com.bukharov.drawing.geometry.Line
 import com.bukharov.drawing.geometry.toDimension
 
+/**
+ * Draw a pixel representation of a geometric field containing shapes
+ */
 class DrawableField(
     val field: Field
 ) : Drawable {
@@ -12,7 +15,7 @@ class DrawableField(
     private val emptyBackground = PixelLayer(size)
 
     override fun rasterize(): PixelLayer {
-        val imagesOfShapes =
+        val layersOfShapes: List<PixelLayer> =
             mutableListOf(emptyBackground) + field
                 .shapes()
                 .map { shape ->
@@ -20,6 +23,6 @@ class DrawableField(
                     else throw ShapeCanNotBeRasterized(shape)
                 }
 
-        return imagesOfShapes.reduce { acc, layer -> acc.mergeAtop(layer) }
+        return layersOfShapes.reduce { acc, layer -> acc.mergeAtop(layer) }
     }
 }

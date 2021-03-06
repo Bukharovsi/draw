@@ -8,6 +8,9 @@ import com.bukharov.drawing.geometry.toDimension
 import kotlin.math.max
 import kotlin.math.min
 
+/**
+ * Draw a line to a pixel layer
+ */
 class DrawableLine(
     private val line: Line
 ) : Drawable {
