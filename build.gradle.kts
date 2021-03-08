@@ -1,10 +1,40 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+project.setProperty("mainClassName", "com.bukharov.drawing.ApplicationKt")
+
 val parentProjectDir = projectDir
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath(BuildLibs.shadow)
+    }
+}
+
 plugins {
-    id(Plugins.kotlin) version PluginVers.kotlin apply false
+    id(Plugins.kotlin) version PluginVers.kotlin
     id(Plugins.detekt) version PluginVers.detekt
     id(Plugins.update_dependencies) version PluginVers.update_dependencies
-    id(Plugins.owasp_dependencies) version PluginVers.owasp_dependencies
+    id(Plugins.shadow) version PluginVers.shadow
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    implementation(project(":application"))
+}
+
+tasks {
+    withType<ShadowJar> {
+        manifest {
+            attributes["Main-Class"] = "com.bukharov.drawing.ApplicationKt"
+        }
+    }
 }
 
 subprojects {
@@ -27,7 +57,6 @@ subprojects {
         plugin(Plugins.detekt)
         plugin("jacoco")
         plugin(Plugins.update_dependencies)
-        plugin(Plugins.owasp_dependencies)
     }
 
     repositories {
@@ -49,7 +78,6 @@ subprojects {
             detektPlugins("${Plugins.detekt_formatting}:${PluginVers.detekt_formatting}")
         }
     }
-
 
     tasks {
 
