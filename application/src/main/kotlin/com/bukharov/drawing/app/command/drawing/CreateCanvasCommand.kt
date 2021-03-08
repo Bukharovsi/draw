@@ -1,5 +1,6 @@
 package com.bukharov.drawing.app.command.drawing
 
+import com.bukharov.drawing.app.command.util.groupAsIntOrThrow
 import com.bukharov.drawing.drawing.Canvas
 import com.bukharov.drawing.drawing.DrawableCanvas
 import com.bukharov.drawing.geometry.Dimensions
@@ -19,11 +20,9 @@ class CreateCanvasCommand(
             val cmd = regex.find(stringCommand.trim()) ?: return null
 
             return CreateCanvasCommand(Dimensions(
-                width = cmd.groups[1]?.value?.toInt()
-                    ?: throw NumberFormatException("int expected, but ${cmd.groups[1]?.value} given"),
-                height = cmd.groups[2]?.value?.toInt()
-                    ?: throw NumberFormatException("int expected, but ${cmd.groups[1]?.value} given"))
-            )
+                width = cmd.groupAsIntOrThrow(1),
+                height = cmd.groupAsIntOrThrow(2)
+            ))
         }
     }
 }

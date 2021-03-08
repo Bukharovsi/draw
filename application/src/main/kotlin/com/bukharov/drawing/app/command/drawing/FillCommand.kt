@@ -1,6 +1,8 @@
 package com.bukharov.drawing.app.command.drawing
 
 import com.bukharov.drawing.app.command.drawing.error.CanvasShouldBePresent
+import com.bukharov.drawing.app.command.util.groupAsCharOrThrow
+import com.bukharov.drawing.app.command.util.groupAsIntOrThrow
 import com.bukharov.drawing.drawing.Canvas
 import com.bukharov.drawing.drawing.pixel.Pixel
 import com.bukharov.drawing.geometry.Point
@@ -26,13 +28,10 @@ class FillCommand(
 
             return FillCommand(
                 target = Point(
-                    x = cmd.groups[1]?.value?.toInt()
-                        ?: throw NumberFormatException("int expected, but ${cmd.groups[1]?.value} given"),
-                    y = cmd.groups[2]?.value?.toInt()
-                        ?: throw NumberFormatException("int expected, but ${cmd.groups[1]?.value} given")
+                    x = cmd.groupAsIntOrThrow(1),
+                    y = cmd.groupAsIntOrThrow(2)
                 ),
-                fillBy = cmd.groups[3]?.value?.toCharArray()?.first()
-                    ?: throw IllegalArgumentException("Illegal filling char given")
+                fillBy = cmd.groupAsCharOrThrow(3)
             )
         }
     }

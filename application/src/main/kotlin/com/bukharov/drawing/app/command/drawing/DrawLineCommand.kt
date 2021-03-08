@@ -1,6 +1,7 @@
 package com.bukharov.drawing.app.command.drawing
 
 import com.bukharov.drawing.app.command.drawing.error.CanvasShouldBePresent
+import com.bukharov.drawing.app.command.util.groupAsIntOrThrow
 import com.bukharov.drawing.drawing.Canvas
 import com.bukharov.drawing.geometry.Line
 import com.bukharov.drawing.geometry.Point
@@ -25,16 +26,12 @@ class DrawLineCommand(
 
             return DrawLineCommand(
                 a = Point(
-                    x = cmd.groups[1]?.value?.toInt()
-                        ?: throw NumberFormatException("int expected, but ${cmd.groups[1]?.value} given"),
-                    y = cmd.groups[2]?.value?.toInt()
-                        ?: throw NumberFormatException("int expected, but ${cmd.groups[1]?.value} given")
+                    x = cmd.groupAsIntOrThrow(1),
+                    y = cmd.groupAsIntOrThrow(2)
                 ),
                 b = Point(
-                    x = cmd.groups[3]?.value?.toInt()
-                        ?: throw NumberFormatException("int expected, but ${cmd.groups[1]?.value} given"),
-                    y = cmd.groups[4]?.value?.toInt()
-                        ?: throw NumberFormatException("int expected, but ${cmd.groups[1]?.value} given")
+                    x = cmd.groupAsIntOrThrow(3),
+                    y = cmd.groupAsIntOrThrow(4)
                 ),
             )
         }
