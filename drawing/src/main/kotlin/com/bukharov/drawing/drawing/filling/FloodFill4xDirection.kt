@@ -39,16 +39,16 @@ class FloodFill4xDirection(
         }
         pixelLayer[target] = destinationPixel
 
-        if (pixelLayer.getOrNull(target.incY())?.equals(originColor) == true) {
+        if (pixelLayer.getOrNull(target.incY()) == originColor) {
             needToExplore.add(target.incY())
         }
-        if (pixelLayer.getOrNull(target.decY())?.equals(originColor) == true) {
+        if (pixelLayer.getOrNull(target.decY()) == originColor) {
             needToExplore.add(target.decY())
         }
-        if (pixelLayer.getOrNull(target.incX())?.equals(originColor) == true) {
+        if (pixelLayer.getOrNull(target.incX()) == originColor) {
             needToExplore.add(target.incX())
         }
-        if (pixelLayer.getOrNull(target.decX())?.equals(originColor) == true) {
+        if (pixelLayer.getOrNull(target.decX()) == originColor) {
             needToExplore.add(target.decX())
         }
     }

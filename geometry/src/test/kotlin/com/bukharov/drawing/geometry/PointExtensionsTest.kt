@@ -3,7 +3,7 @@ package com.bukharov.drawing.geometry
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-internal class PointKtTest {
+internal class PointExtensionsTest {
 
     @Test
     fun `calculate max x point`() {

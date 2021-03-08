@@ -49,12 +49,6 @@ internal class DrawableFieldTest {
         expected[Point(3, 0)] = Pixel.X
         expected[Point(4, 0)] = Pixel.X
 
-        println("expected:")
-        println(expected.asStrings())
-
-        println("actual:")
-        println(imageOf2Lines.asStrings())
-
         imageOf2Lines shouldBe expected
     }
 }
