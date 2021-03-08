@@ -1,4 +1,49 @@
-The task
+## Technical Overview
+### Modularity
+
+There are 3 modules
+ - Geometry
+ - Drawing
+ - Application
+
+**Geometry** is responsible for all the vector shapes and knows how to represent any 
+shape in the Cartesian coordinate system. Actually it means that geometry represents
+vectors and does not care about pixel representation
+
+**Drawing** is about pixels and how to represent any vector shape on a pixel field
+There are 3 packages
+ - **pixel**  contains pixel itself and array of pixel on a surface 
+ - **drawable** knows how to draw any vector shape on a pixel layer
+ - **filling** there is  a requirement to fill an area. But it is not a vector 
+operation and must be performed on rasterized field
+Canvas just an aggregation root (or endpoint) for all operations that allows 
+   an application to manipulate with a picture
+   
+**Application**
+Represents the application itself and contains of
+ - **commands** that represent some actions that manipulate the picture. E.x.
+Add line, fill area and so on
+ - **pixel** represent a border for pixel layer. it is not a part of domain language
+and exists only because of the application. Therefore it is inside application package
+   
+###Dependencies
+Geometry <- Drawable <- Application
+
+It means that Geometry is domain core of the application and does not aware neighbours.
+Drawable is also part of domain core, but it is aware of geometry, but does not aware 
+of application
+
+## Architecture decision record
+The track of ADRs might be found inside `adr` folder 
+
+## How to build & run
+to compile it you need JDK at least 1.8. But also tested on JDK 12.
+
+Build - `./gradlew build`
+
+Run - `./gradlew shadowJar && java -jar build/libs/drawing-all.jar`
+
+## The task
 
 You're given the task of writing a simple console version of a drawing program.
 At this time, the functionality of the program is quite limited but this might change in the future.
