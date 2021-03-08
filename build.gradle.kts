@@ -1,5 +1,4 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-project.setProperty("mainClassName", "com.bukharov.drawing.ApplicationKt")
 
 val parentProjectDir = projectDir
 
