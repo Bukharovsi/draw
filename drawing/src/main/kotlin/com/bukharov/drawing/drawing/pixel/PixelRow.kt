@@ -27,11 +27,8 @@ internal class PixelRow private constructor(
 
     fun mergeAtop(above: PixelRow): PixelRow {
         if (this.length < above.length) throw LinesCanNotBeMerged(this.length, above.length)
-        val merged = PixelRow(length)
-        above
-            .mapIndexed { index: Int, pixelAbove: Pixel -> this.canvas[index].mergeAtop(pixelAbove) }
-            .mapIndexed { index: Int, mergedPixel: Pixel -> merged.set(index, mergedPixel) }
-
+        val merged = this.clone()
+        above.forEachIndexed { index: Int, pixelAbove: Pixel -> merged[index] = this[index].mergeAtop(pixelAbove) }
         return merged
     }
 

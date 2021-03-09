@@ -161,7 +161,7 @@ internal class PixelRowTest {
     }
 
     @Test
-    fun `two partly filled lines merged into one partly filled`() {
+    fun `two partly filled lines - merged into one partly filled`() {
         val line1 = PixelRow.create(5)
             .apply { this[0] = Pixel.X }
             .apply { this[1] = Pixel.X }
@@ -169,6 +169,26 @@ internal class PixelRowTest {
         val line2 = PixelRow.create(5)
             .apply { this[3] = Pixel.X }
             .apply { this[4] = Pixel.X }
+
+        val expected = PixelRow.create(5)
+            .apply { this[0] = Pixel.X }
+            .apply { this[1] = Pixel.X }
+            .apply { this[3] = Pixel.X }
+            .apply { this[4] = Pixel.X }
+
+        line1.mergeAtop(line2) shouldBe expected
+    }
+
+    @Test
+    fun `two partly filled lines with different length - merged into one partly filled`() {
+
+        val line1 = PixelRow.create(5)
+            .apply { this[3] = Pixel.X }
+            .apply { this[4] = Pixel.X }
+
+        val line2 = PixelRow.create(2)
+            .apply { this[0] = Pixel.X }
+            .apply { this[1] = Pixel.X }
 
         val expected = PixelRow.create(5)
             .apply { this[0] = Pixel.X }
