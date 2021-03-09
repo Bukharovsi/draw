@@ -82,4 +82,3 @@ class PixelLayer private constructor(
 }
 
 data class LayerPixelDoesNotExist(val needed: Point, val boundaries: Point) : IllegalStateException()
-data class LayersHaveDifferentSize(val background: Dimensions, val above: Dimensions) : IllegalStateException()
