@@ -15,6 +15,7 @@ sealed class Pixel {
     object Empty : Pixel() {
         override fun print() = ' '
         override fun mergeAtop(atop: Pixel) = atop
+        override fun toString() = "EmptyPixel"
     }
 
     companion object {
