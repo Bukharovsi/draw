@@ -79,8 +79,8 @@ internal class RectangleTest {
             lowerRightCorner = Point(3, 0)
         )
 
-        rectangle.lowerLeftCorner() shouldBe Point(0, 0)
-        rectangle.upperRightCorner() shouldBe Point(3, 3)
+        rectangle.lowerLeftCorner shouldBe Point(0, 0)
+        rectangle.upperRightCorner shouldBe Point(3, 3)
     }
 
     @Test

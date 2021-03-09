@@ -69,20 +69,20 @@ internal class LineTest {
     fun `line returns correct upper right corner if p2 is actual upper right corner`() {
         val p1 = Point(1, 3)
         val p2 = Point(1, 5)
-        Line.create(p1, p2).upperRightCorner() shouldBe p2
+        Line.create(p1, p2).upperRightCorner shouldBe p2
     }
 
     @Test
     fun `line returns correct upper right corner if p1 is actual upper right corner`() {
         val p1 = Point(10, 20)
         val p2 = Point(10, 5)
-        Line.create(p1, p2).upperRightCorner() shouldBe p1
+        Line.create(p1, p2).upperRightCorner shouldBe p1
     }
 
     @Test
     fun `line returns correct lowest left corner if p1 is actual lowest left corner`() {
         val p1 = Point(1, 3)
         val p2 = Point(4, 3)
-        Line.create(p1, p2).lowerLeftCorner() shouldBe p1
+        Line.create(p1, p2).lowerLeftCorner shouldBe p1
     }
 }

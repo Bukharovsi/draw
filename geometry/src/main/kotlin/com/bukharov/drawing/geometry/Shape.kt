@@ -1,6 +1,6 @@
 package com.bukharov.drawing.geometry
 
 interface Shape {
-    fun lowerLeftCorner(): Point
-    fun upperRightCorner(): Point
+    val lowerLeftCorner: Point
+    val upperRightCorner: Point
 }

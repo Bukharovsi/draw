@@ -5,6 +5,9 @@ class Rectangle(
     val lowerRightCorner: Point
 ) : Shape {
 
+    override val lowerLeftCorner = Point(x = upperLeftCorner.x, y = lowerRightCorner.y)
+    override val upperRightCorner = Point(x = lowerRightCorner.x, y = upperLeftCorner.y)
+
     init {
         if (upperLeftCorner.y <= lowerRightCorner.y) {
             throw RectangleCoordinatesAreIncorrect(
@@ -24,23 +27,11 @@ class Rectangle(
     }
 
     fun edges() = setOf(
-        Line(upperLeftCorner, upperRightCorner()),
-        Line(upperRightCorner(), lowerRightCorner),
-        Line(lowerRightCorner, lowerLeftCorner()),
-        Line(lowerLeftCorner(), upperLeftCorner)
+        Line(upperLeftCorner, upperRightCorner),
+        Line(upperRightCorner, lowerRightCorner),
+        Line(lowerRightCorner, lowerLeftCorner),
+        Line(lowerLeftCorner, upperLeftCorner)
     )
-
-    override fun lowerLeftCorner() =
-        Point(
-            x = upperLeftCorner.x,
-            y = lowerRightCorner.y
-        )
-
-    override fun upperRightCorner() =
-        Point(
-            x = lowerRightCorner.x,
-            y = upperLeftCorner.y
-        )
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

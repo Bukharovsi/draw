@@ -15,11 +15,11 @@ class Field(
     }
 
     fun put(shape: Shape): Field {
-        if (shape.upperRightCorner().moreByAnyDirectionThan(rightUpperCorner)) {
+        if (shape.upperRightCorner.moreByAnyDirectionThan(rightUpperCorner)) {
             throw ShapeCanNotBePlacedToCanvas(shape, this)
         }
 
-        if (shape.lowerLeftCorner().lessByAnyDirectionThan(leftDownCorner)) {
+        if (shape.lowerLeftCorner.lessByAnyDirectionThan(leftDownCorner)) {
             throw ShapeCanNotBePlacedToCanvas(shape, this)
         }
 
@@ -56,7 +56,7 @@ class ShapeCanNotBePlacedToCanvas(
 ) : UserReadableError, IllegalArgumentException() {
 
     override fun message() =
-        "Shape with dimensions from ${shape.lowerLeftCorner()}  ${shape.upperRightCorner()} " +
+        "Shape with dimensions from ${shape.lowerLeftCorner}  ${shape.upperRightCorner} " +
             "can not be placed to field with size ${field.rightUpperCorner}"
 }
 

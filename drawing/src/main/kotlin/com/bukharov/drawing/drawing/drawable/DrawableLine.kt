@@ -17,7 +17,7 @@ class DrawableLine(
 
     override fun rasterize(): PixelLayer {
         val pixelLayer = PixelLayer(
-            line.upperRightCorner().toDimension()
+            line.upperRightCorner.toDimension()
         )
 
         when (true) {

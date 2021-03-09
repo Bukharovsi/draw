@@ -5,14 +5,14 @@ data class Line internal constructor(
     val b: Point
 ) : Shape {
 
+    override val lowerLeftCorner = lowestLeftOfPoints(a, b)
+    override val upperRightCorner = upperRightOfPoints(a, b)
+
     fun isHorizontal(): Boolean =
         a.y == b.y
 
     fun isVertical(): Boolean =
         a.x == b.x
-
-    override fun lowerLeftCorner(): Point = lowestLeftOfPoints(a, b)
-    override fun upperRightCorner(): Point = upperRightOfPoints(a, b)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
