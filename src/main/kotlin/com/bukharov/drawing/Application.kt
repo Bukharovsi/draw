@@ -3,5 +3,8 @@ package com.bukharov.drawing
 import com.bukharov.drawing.app.Drawing
 
 fun main() {
-    Drawing().run()
+    Drawing(
+        inStream = System.`in`,
+        outStream = System.out
+    ).run()
 }

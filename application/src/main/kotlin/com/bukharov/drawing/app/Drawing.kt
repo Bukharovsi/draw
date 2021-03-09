@@ -5,19 +5,23 @@ import com.bukharov.drawing.app.command.application.PrintCommand
 import com.bukharov.drawing.drawing.Canvas
 import com.bukharov.drawing.app.pixel.BorderDecoratorFactory
 import com.bukharov.drawing.app.pixel.HorizontalAndVerticalBorder
+import java.io.InputStream
+import java.io.PrintStream
 import java.util.Scanner
 
 @Suppress("TooGenericExceptionCaught")
-class Drawing {
+class Drawing(
+    private val inStream: InputStream,
+    private val outStream: PrintStream
+) {
 
-    val borderFactory: BorderDecoratorFactory = HorizontalAndVerticalBorder.Factory
-    val printCommand = PrintCommand(borderFactory)
-    val reader = Scanner(System.`in`)
+    private val borderFactory: BorderDecoratorFactory = HorizontalAndVerticalBorder.Factory
+    private val printCommand = PrintCommand(borderFactory, outStream)
+    private val reader = Scanner(inStream)
 
     fun run() {
         var workCanvas: Canvas? = null
-        while (true) {
-            println("Please enter your command")
+        while (outStream.println("Please enter your command") == Unit && reader.hasNextLine()) {
             val command = reader.nextLine()
             val foundCommand = CommandFactory.createCommand(command)
             if (null != foundCommand) {
@@ -26,10 +30,10 @@ class Drawing {
                     printCommand.execute(workCanvas)
                 } catch (e: Throwable) {
                     // todo add error handler
-                    println(e.message)
+                    outStream.println(e.message)
                 }
             } else {
-                println("Sorry, command is not supported")
+                outStream.println("Sorry, command is not supported")
             }
         }
     }
