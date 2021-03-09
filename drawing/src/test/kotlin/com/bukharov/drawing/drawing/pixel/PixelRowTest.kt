@@ -67,7 +67,7 @@ internal class PixelRowTest {
     fun `when pixel has not been changed then Error`() {
         shouldThrow<PixelDoesNotExist> {
             PixelRow.create(5)
-                .changePixel(6, Pixel.X)
+                .set(6, Pixel.X)
         }
     }
 
@@ -76,7 +76,9 @@ internal class PixelRowTest {
         val newPixel = Pixel.X
         PixelRow
             .create(5)
-            .changePixel(1, newPixel)[1] shouldBe newPixel
+            .apply { this[1] = newPixel }
+            .get(1)
+            .shouldBe(newPixel)
     }
 
     @Test
@@ -89,8 +91,8 @@ internal class PixelRowTest {
     @Test
     fun `not empty pixel line should be printed right`() {
         val printedStream = PixelRow.create(5)
-            .changePixel(1, Pixel.X)
-            .changePixel(2, Pixel.X)
+            .apply { this[1] = Pixel.X }
+            .apply { this[2] = Pixel.X }
             .print()
 
         val expectedString = " xx  " // 5 chars
@@ -105,10 +107,10 @@ internal class PixelRowTest {
     @Test
     fun `two identical pixel lines are equal`() {
         val expected = PixelRow
-            .create(4).changePixel(1, Pixel.X)
+            .create(4).set(1, Pixel.X)
 
         val actual = PixelRow
-            .create(4).changePixel(1, Pixel.X)
+            .create(4).set(1, Pixel.X)
 
         actual shouldBe expected
     }
@@ -116,10 +118,10 @@ internal class PixelRowTest {
     @Test
     fun `two different pixel lines are NOT equal`() {
         val expected = PixelRow.create(4)
-            .changePixel(1, Pixel.X)
+            .apply { this[1] = Pixel.X }
 
         val actual = PixelRow.create(4)
-            .changePixel(2, Pixel.X)
+            .apply { this[2] = Pixel.X }
 
         actual shouldNotBe expected
     }
@@ -134,7 +136,8 @@ internal class PixelRowTest {
 
     @Test
     fun `filled line might me merged on empty line`() {
-        val filledLine = PixelRow.create(4).changePixel(1, Pixel.X)
+        val filledLine = PixelRow.create(4)
+            .apply { this[1] = Pixel.X }
         val emptyLine = PixelRow.create(4)
 
         emptyLine.mergeAtop(filledLine) shouldBe filledLine
@@ -158,8 +161,28 @@ internal class PixelRowTest {
     }
 
     @Test
+    fun `two partly filled lines merged into one partly filled`() {
+        val line1 = PixelRow.create(5)
+            .apply { this[0] = Pixel.X }
+            .apply { this[1] = Pixel.X }
+
+        val line2 = PixelRow.create(5)
+            .apply { this[3] = Pixel.X }
+            .apply { this[4] = Pixel.X }
+
+        val expected = PixelRow.create(5)
+            .apply { this[0] = Pixel.X }
+            .apply { this[1] = Pixel.X }
+            .apply { this[3] = Pixel.X }
+            .apply { this[4] = Pixel.X }
+
+        line1.mergeAtop(line2) shouldBe expected
+    }
+
+    @Test
     fun `cloned PixelLine equal to original one`() {
-        val origin = PixelRow.create(3).changePixel(0, Pixel.X)
+        val origin = PixelRow.create(3)
+            .apply { this[0] = Pixel.X }
         origin.clone() shouldBe origin
     }
 }

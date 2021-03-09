@@ -1,6 +1,7 @@
 package com.bukharov.drawing.geometry
 
 import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.Test
@@ -23,7 +24,7 @@ internal class RectangleTest {
         Rectangle(
             upperLeftCorner = Point(0, 3),
             lowerRightCorner = Point(3, 0)
-        ) shouldNotBe  Rectangle(
+        ) shouldNotBe Rectangle(
             upperLeftCorner = Point(0, 3),
             lowerRightCorner = Point(500, 0)
         )
@@ -34,7 +35,7 @@ internal class RectangleTest {
         Rectangle(
             upperLeftCorner = Point(0, 3),
             lowerRightCorner = Point(3, 0)
-        ) shouldNotBe  Rectangle(
+        ) shouldNotBe Rectangle(
             upperLeftCorner = Point(2, 3),
             lowerRightCorner = Point(3, 0)
         )
@@ -80,5 +81,18 @@ internal class RectangleTest {
 
         rectangle.downLeftCorner() shouldBe Point(0, 0)
         rectangle.upperRightCorner() shouldBe Point(3, 3)
+    }
+
+    @Test
+    fun `rectangle contains 4 edges`() {
+        val edges = Rectangle(
+            upperLeftCorner = Point(0, 3),
+            lowerRightCorner = Point(3, 0)
+        ).edges()
+
+        edges shouldContain Line(Point(0, 0), Point(0, 3))
+        edges shouldContain Line(Point(0, 3), Point(3, 3))
+        edges shouldContain Line(Point(3, 3), Point(3, 0))
+        edges shouldContain Line(Point(3, 0), Point(0, 0))
     }
 }

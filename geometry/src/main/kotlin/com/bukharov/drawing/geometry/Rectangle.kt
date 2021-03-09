@@ -3,7 +3,7 @@ package com.bukharov.drawing.geometry
 class Rectangle(
     val upperLeftCorner: Point,
     val lowerRightCorner: Point
-): Shape {
+) : Shape {
 
     init {
         if (upperLeftCorner.y <= lowerRightCorner.y) {
@@ -14,6 +14,13 @@ class Rectangle(
             throw RectangleCoordinatesAreIncorrect(upperLeftCorner, lowerRightCorner)
         }
     }
+
+    fun edges() = setOf(
+        Line(upperLeftCorner, upperRightCorner()),
+        Line(upperRightCorner(), lowerRightCorner),
+        Line(lowerRightCorner, downLeftCorner()),
+        Line(downLeftCorner(), upperLeftCorner)
+    )
 
     override fun downLeftCorner() =
         Point(

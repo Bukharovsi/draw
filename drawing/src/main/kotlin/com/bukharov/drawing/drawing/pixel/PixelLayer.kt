@@ -39,7 +39,7 @@ class PixelLayer private constructor(
             needed = coordinate,
             boundaries = dimensions.toUpperRightCoordinate()
         )
-        rows[coordinate.y].changePixel(coordinate.x, pixel)
+        rows[coordinate.y].set(coordinate.x, pixel)
     }
 
     fun mergeAtop(aboveLayer: PixelLayer): PixelLayer {
@@ -52,7 +52,7 @@ class PixelLayer private constructor(
         val merged = this.clone()
         aboveLayer.rows
             .mapIndexed { index, lineAbove -> this.rows[index].mergeAtop(lineAbove) }
-            .mapIndexed { index, mergedLine -> merged.rows[index] = mergedLine }
+            .forEachIndexed { index, mergedLine -> merged.rows[index] = mergedLine }
         return merged
     }
 

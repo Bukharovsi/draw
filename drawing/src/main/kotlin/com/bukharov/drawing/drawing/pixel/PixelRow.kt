@@ -13,10 +13,9 @@ internal class PixelRow private constructor(
     override fun iterator(): Iterator<Pixel> =
         canvas.iterator()
 
-    fun changePixel(i: Int, newPixel: Pixel): PixelRow {
+    operator fun set(i: Int, newPixel: Pixel) {
         if (!has(i)) throw PixelDoesNotExist(needed = i, boundaries = canvas.lastIndex)
         else canvas[i] = newPixel
-        return this
     }
 
     operator fun get(i: Int) =
@@ -31,7 +30,7 @@ internal class PixelRow private constructor(
         val merged = PixelRow(length)
         above
             .mapIndexed { index: Int, pixelAbove: Pixel -> this.canvas[index].mergeAtop(pixelAbove) }
-            .mapIndexed { index: Int, mergedPixel: Pixel -> merged.changePixel(index, mergedPixel) }
+            .mapIndexed { index: Int, mergedPixel: Pixel -> merged.set(index, mergedPixel) }
 
         return merged
     }
