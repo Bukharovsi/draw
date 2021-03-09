@@ -23,4 +23,6 @@ data class Dimensions constructor(
 
 fun Point.toDimension() = Dimensions(width = this.x + 1, height = this.y + 1)
 
-data class DimensionMustBePositive(val width: Int, val height: Int) : IllegalArgumentException()
+data class DimensionMustBePositive(val width: Int, val height: Int) : UserReadableError, IllegalArgumentException() {
+    override fun message() = "Dimensions must be positive, $width and $height given"
+}

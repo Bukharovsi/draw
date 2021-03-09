@@ -31,7 +31,7 @@ internal class LineTest {
 
     @Test
     fun `if line is just point - it will not be created`() {
-        shouldThrow<LineShouldNotBeAPoint> { Line.create(Point.zero, Point.zero) }
+        shouldThrow<LineShouldNotBePoint> { Line.create(Point.zero, Point.zero) }
     }
 
     @Test

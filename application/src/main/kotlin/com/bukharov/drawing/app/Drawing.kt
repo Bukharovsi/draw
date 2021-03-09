@@ -5,6 +5,7 @@ import com.bukharov.drawing.app.command.application.PrintCommand
 import com.bukharov.drawing.drawing.Canvas
 import com.bukharov.drawing.app.pixel.BorderDecoratorFactory
 import com.bukharov.drawing.app.pixel.HorizontalAndVerticalBorder
+import com.bukharov.drawing.geometry.UserReadableError
 import java.io.InputStream
 import java.io.PrintStream
 import java.util.Scanner
@@ -29,8 +30,13 @@ class Drawing(
                     workCanvas = foundCommand.execute(workCanvas)
                     printCommand.execute(workCanvas)
                 } catch (e: Throwable) {
-                    // todo add error handler
-                    outStream.println(e::class.toString() +" " + e.message)
+
+                    if (e is UserReadableError) {
+                        outStream.println(e.message())
+                    } else {
+                        // todo add error handler
+                        outStream.println("Unhandled exception: " + e::class.toString() +" " + e.message)
+                    }
                 }
             } else {
                 outStream.println("Sorry, command is not supported")

@@ -29,7 +29,7 @@ data class Line internal constructor(
 
     companion object {
         fun create(from: Point, to: Point): Line {
-            val line = if (from == to) throw LineShouldNotBeAPoint(from) else Line(from, to)
+            val line = if (from == to) throw LineShouldNotBePoint(from) else Line(from, to)
 
             if (!(line.isHorizontal() || line.isVertical())) {
                 throw LineShouldBeVerticalOrHorizontal(line)
@@ -39,5 +39,10 @@ data class Line internal constructor(
     }
 }
 
-class LineShouldNotBeAPoint(val coordinate: Point) : IllegalArgumentException()
-class LineShouldBeVerticalOrHorizontal(val line: Line) : IllegalArgumentException()
+class LineShouldNotBePoint(val coordinate: Point) : UserReadableError, IllegalArgumentException() {
+    override fun message() = "line should have length > 1. Coordinates $coordinate is incorrect"
+}
+
+class LineShouldBeVerticalOrHorizontal(val line: Line) : UserReadableError, IllegalArgumentException() {
+    override fun message() = "Only horizontal and vertical lines are supported yet"
+}

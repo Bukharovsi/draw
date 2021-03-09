@@ -7,11 +7,19 @@ class Rectangle(
 
     init {
         if (upperLeftCorner.y <= lowerRightCorner.y) {
-            throw RectangleCoordinatesAreIncorrect(upperLeftCorner, lowerRightCorner)
+            throw RectangleCoordinatesAreIncorrect(
+                upperLeftCorner,
+                lowerRightCorner,
+                "upper corner is lower or equal to lower corner"
+            )
         }
 
         if (upperLeftCorner.x >= lowerRightCorner.x) {
-            throw RectangleCoordinatesAreIncorrect(upperLeftCorner, lowerRightCorner)
+            throw RectangleCoordinatesAreIncorrect(
+                upperLeftCorner,
+                lowerRightCorner,
+                "left corner is roghter or equal to right corner"
+            )
         }
     }
 
@@ -57,5 +65,13 @@ class Rectangle(
 
 class RectangleCoordinatesAreIncorrect(
     val upperLeftCorner: Point,
-    val lowerRightCorner: Point
-) : IllegalArgumentException()
+    val lowerRightCorner: Point,
+    val reason: String
+) : UserReadableError, IllegalArgumentException() {
+    override fun message() =
+        "Rectangle with coordinates " +
+            "upper left corner $upperLeftCorner, " +
+            "lower right corner $lowerRightCorner" +
+            " can not be created because $reason"
+
+}

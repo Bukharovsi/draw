@@ -50,5 +50,11 @@ class Field(
     }
 }
 
-class ShapeCanNotBePlacedToCanvas(val shape: Shape, val field: Field) : IllegalArgumentException()
-class WrongCanvasSize(val wrongSize: Point) : IllegalArgumentException()
+class ShapeCanNotBePlacedToCanvas(val shape: Shape, val field: Field) : UserReadableError, IllegalArgumentException() {
+    override fun message() = "Shape with dimensions from " +
+        "${shape.downLeftCorner()}  ${shape.upperRightCorner()} can not be placed to field with size ${field.rightUpperCorner}"
+}
+
+class WrongCanvasSize(val wrongSize: Point) : UserReadableError, IllegalArgumentException() {
+    override fun message() = "Incorrect size ${wrongSize} given"
+}
