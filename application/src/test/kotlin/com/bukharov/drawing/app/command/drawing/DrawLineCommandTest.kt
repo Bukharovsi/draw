@@ -31,7 +31,7 @@ internal class DrawLineCommandTest {
     }
 
     @Test
-    fun `command should create rectangle with correct shape`() {
+    fun `command should create put line on canvas`() {
         val command = DrawLineCommand.Factory().tryToCreate("L 2 5 2 0")
         val canvas = DrawableCanvas(Dimensions(10, 10))
         command?.execute(canvas)

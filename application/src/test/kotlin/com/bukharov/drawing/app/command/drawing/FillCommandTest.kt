@@ -1,7 +1,15 @@
 package com.bukharov.drawing.app.command.drawing
 
+import com.bukharov.drawing.drawing.DrawableCanvas
+import com.bukharov.drawing.drawing.pixel.Pixel
+import com.bukharov.drawing.drawing.pixel.PixelLayer
+import com.bukharov.drawing.geometry.Dimensions
+import com.bukharov.drawing.geometry.Point
 import io.kotest.matchers.nulls.shouldBeNull
+import io.kotest.matchers.should
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -21,5 +29,16 @@ internal class FillCommandTest {
         stringCommand: String
     ) {
         FillCommand.Factory().tryToCreate(stringCommand).shouldBeInstanceOf<FillCommand>()
+    }
+
+    @Test
+    fun `command should fill canvas`() {
+        val canvas = DrawableCanvas(Dimensions(5, 5))
+        FillCommand.Factory().tryToCreate("B 0 0 c")
+            ?.execute(canvas)
+            ?.rasterize()
+            .should {
+                it?.get(Point.zero) shouldBe Pixel.FiledPixel('c')
+            }
     }
 }

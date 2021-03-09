@@ -1,7 +1,13 @@
 package com.bukharov.drawing.app.command.drawing
 
+import com.bukharov.drawing.drawing.Canvas
+import com.bukharov.drawing.geometry.Dimensions
 import io.kotest.matchers.nulls.shouldBeNull
+import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.should
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -21,5 +27,15 @@ internal class CreateCanvasCommandTest {
         stringCommand: String
     ) {
         CreateCanvasCommand.Factory().tryToCreate(stringCommand).shouldBeInstanceOf<CreateCanvasCommand>()
+    }
+
+    @Test
+    fun `command should create canvas`() {
+        CreateCanvasCommand.Factory().tryToCreate("C 20 5")
+            ?.execute(null)
+            .should {
+                it.shouldNotBeNull()
+                it.size shouldBe Dimensions(20, 5)
+            }
     }
 }

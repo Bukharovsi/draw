@@ -30,7 +30,7 @@ class Drawing(
                     printCommand.execute(workCanvas)
                 } catch (e: Throwable) {
                     // todo add error handler
-                    outStream.println(e.message)
+                    outStream.println(e::class.toString() +" " + e.message)
                 }
             } else {
                 outStream.println("Sorry, command is not supported")

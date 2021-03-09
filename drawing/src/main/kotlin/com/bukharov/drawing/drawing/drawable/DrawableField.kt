@@ -20,9 +20,11 @@ class DrawableField(
             mutableListOf(emptyBackground) + field
                 .shapes()
                 .map { shape ->
-                    if (shape is Line) DrawableLine(shape).rasterize()
-                    if (shape is Rectangle) DrawableRectangle(shape).rasterize()
-                    else throw ShapeCanNotBeRasterized(shape)
+                    when (shape) {
+                        is Line -> DrawableLine(shape).rasterize()
+                        is Rectangle -> DrawableRectangle(shape).rasterize()
+                        else -> throw ShapeCanNotBeRasterized(shape)
+                    }
                 }
 
         return layersOfShapes.reduce { acc, layer -> acc.mergeAtop(layer) }
