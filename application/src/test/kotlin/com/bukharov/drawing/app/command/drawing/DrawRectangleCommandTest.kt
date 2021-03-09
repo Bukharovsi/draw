@@ -1,6 +1,5 @@
 package com.bukharov.drawing.app.command.drawing
 
-import com.bukharov.drawing.drawing.Canvas
 import com.bukharov.drawing.drawing.DrawableCanvas
 import com.bukharov.drawing.geometry.Dimensions
 import com.bukharov.drawing.geometry.Point
@@ -35,6 +34,6 @@ internal class DrawRectangleCommandTest {
         val command = DrawRectangleCommand.Factory().tryToCreate("R 2 5 5 0")
         val canvas = DrawableCanvas(Dimensions(10, 10))
         command?.execute(canvas)
-        canvas.shapes() shouldContain Rectangle(upperLeftCorner = Point(2,5), lowerRightCorner = Point(5, 0))
+        canvas.shapes() shouldContain Rectangle(upperLeftCorner = Point(2, 5), lowerRightCorner = Point(5, 0))
     }
 }

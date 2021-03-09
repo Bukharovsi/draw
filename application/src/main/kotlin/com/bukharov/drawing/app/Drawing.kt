@@ -10,7 +10,7 @@ import java.io.InputStream
 import java.io.PrintStream
 import java.util.Scanner
 
-@Suppress("TooGenericExceptionCaught")
+@Suppress("TooGenericExceptionCaught", "NestedBlockDepth")
 class Drawing(
     private val inStream: InputStream,
     private val outStream: PrintStream
@@ -30,12 +30,11 @@ class Drawing(
                     workCanvas = foundCommand.execute(workCanvas)
                     printCommand.execute(workCanvas)
                 } catch (e: Throwable) {
-
                     if (e is UserReadableError) {
                         outStream.println(e.message())
                     } else {
                         // todo add error handler
-                        outStream.println("Unhandled exception: " + e::class.toString() +" " + e.message)
+                        outStream.println("Unhandled exception: " + e::class.toString() + " " + e.message)
                     }
                 }
             } else {

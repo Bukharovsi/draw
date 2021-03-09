@@ -3,7 +3,6 @@ package com.bukharov.drawing.app.command.drawing
 import com.bukharov.drawing.app.command.drawing.error.CanvasShouldBePresent
 import com.bukharov.drawing.app.command.util.groupAsIntOrThrow
 import com.bukharov.drawing.drawing.Canvas
-import com.bukharov.drawing.geometry.Line
 import com.bukharov.drawing.geometry.Point
 import com.bukharov.drawing.geometry.Rectangle
 

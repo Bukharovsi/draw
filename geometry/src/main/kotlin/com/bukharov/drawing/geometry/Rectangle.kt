@@ -73,5 +73,4 @@ class RectangleCoordinatesAreIncorrect(
             "upper left corner $upperLeftCorner, " +
             "lower right corner $lowerRightCorner" +
             " can not be created because $reason"
-
 }

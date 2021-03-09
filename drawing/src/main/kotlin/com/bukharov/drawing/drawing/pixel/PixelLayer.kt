@@ -2,6 +2,7 @@ package com.bukharov.drawing.drawing.pixel
 
 import com.bukharov.drawing.geometry.Dimensions
 import com.bukharov.drawing.geometry.Point
+import com.bukharov.drawing.geometry.maxOfDimensions
 
 class PixelLayer private constructor(
     private val rows: Array<PixelRow>,
@@ -39,20 +40,21 @@ class PixelLayer private constructor(
             needed = coordinate,
             boundaries = dimensions.toUpperRightCoordinate()
         )
-        rows[coordinate.y].set(coordinate.x, pixel)
+        rows[coordinate.y][coordinate.x] = pixel
     }
 
     fun mergeAtop(aboveLayer: PixelLayer): PixelLayer {
-        if (aboveLayer.dimensions.moreByAnyDirectionThan(this.dimensions)) {
-            throw LayersHaveDifferentSize(
-                background = this.dimensions,
-                above = aboveLayer.dimensions)
+        val merged = PixelLayer(maxOfDimensions(dimensions, aboveLayer.dimensions))
+
+        // fill merged canvas using `this` as origin
+        this.rows.forEachIndexed {
+                i, originRow -> merged.rows[i] = merged.rows[i].mergeAtop(originRow)
         }
 
-        val merged = this.clone()
-        aboveLayer.rows
-            .mapIndexed { index, lineAbove -> this.rows[index].mergeAtop(lineAbove) }
-            .forEachIndexed { index, mergedLine -> merged.rows[index] = mergedLine }
+        // fill merged canvas merging this and above layer
+        aboveLayer.rows.forEachIndexed {
+                i, lineAbove -> merged.rows[i] = merged.rows[i].mergeAtop(lineAbove)
+        }
         return merged
     }
 

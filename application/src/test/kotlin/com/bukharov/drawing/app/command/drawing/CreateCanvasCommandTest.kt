@@ -1,6 +1,5 @@
 package com.bukharov.drawing.app.command.drawing
 
-import com.bukharov.drawing.drawing.Canvas
 import com.bukharov.drawing.geometry.Dimensions
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull

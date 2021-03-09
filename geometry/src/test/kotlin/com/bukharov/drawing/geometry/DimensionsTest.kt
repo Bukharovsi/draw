@@ -20,4 +20,12 @@ internal class DimensionsTest {
     fun `coordinates might be transformed to dimension`() {
         Point(1, 3).toDimension() shouldBe Dimensions(width = 2, height = 4)
     }
+
+    @Test
+    fun `max of dimensions calculated correctly`() {
+        maxOfDimensions(
+            Dimensions(1, 40),
+            Dimensions(30, 8)
+        ) shouldBe Dimensions(30, 40)
+    }
 }

@@ -107,6 +107,27 @@ internal class PixelLayerTest {
     }
 
     @Test
+    fun `2 layers different dimensions should be merged`() {
+        val background = PixelLayer(Dimensions(2, 2), Pixel.O)
+        val layer1 = PixelLayer(Dimensions(3, 3))
+            .also {
+                it[Point(0, 0)] = Pixel.X
+                it[Point(1, 1)] = Pixel.X
+                it[Point(2, 2)] = Pixel.X
+            }
+
+        val merged = background.mergeAtop(layer1).asStrings()
+
+        val expected = listOf(
+            "xo ",
+            "ox ",
+            "  x"
+        )
+
+        merged shouldBe expected
+    }
+
+    @Test
     fun `2 empty layers merged - empty layer`() {
         val background = PixelLayer(Dimensions(3, 3))
         val layer1 = PixelLayer(Dimensions(3, 3))
@@ -114,14 +135,6 @@ internal class PixelLayerTest {
         val merged = background.mergeAtop(layer1)
 
         merged shouldBe PixelLayer(Dimensions(3, 3))
-    }
-
-    @Test
-    fun `a big layer can not be merged on top of a small one`() {
-        shouldThrow<LayersHaveDifferentSize> {
-            PixelLayer(Dimensions(3, 3))
-                .mergeAtop(PixelLayer(Dimensions(10, 10)))
-        }
     }
 
     @Test

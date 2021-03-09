@@ -2,7 +2,6 @@ package com.bukharov.drawing.app.command.drawing
 
 import com.bukharov.drawing.drawing.DrawableCanvas
 import com.bukharov.drawing.drawing.pixel.Pixel
-import com.bukharov.drawing.drawing.pixel.PixelLayer
 import com.bukharov.drawing.geometry.Dimensions
 import com.bukharov.drawing.geometry.Point
 import io.kotest.matchers.nulls.shouldBeNull

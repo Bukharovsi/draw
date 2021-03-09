@@ -23,6 +23,11 @@ data class Dimensions constructor(
 
 fun Point.toDimension() = Dimensions(width = this.x + 1, height = this.y + 1)
 
+fun maxOfDimensions(d1: Dimensions, d2: Dimensions) = Dimensions(
+    width = maxOf(d1.width, d2.width),
+    height = maxOf(d1.height, d2.height)
+)
+
 data class DimensionMustBePositive(val width: Int, val height: Int) : UserReadableError, IllegalArgumentException() {
     override fun message() = "Dimensions must be positive, $width and $height given"
 }

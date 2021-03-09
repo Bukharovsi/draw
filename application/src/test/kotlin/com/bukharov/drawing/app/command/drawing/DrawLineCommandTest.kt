@@ -4,7 +4,6 @@ import com.bukharov.drawing.drawing.DrawableCanvas
 import com.bukharov.drawing.geometry.Dimensions
 import com.bukharov.drawing.geometry.Line
 import com.bukharov.drawing.geometry.Point
-import com.bukharov.drawing.geometry.Rectangle
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.types.shouldBeInstanceOf
