@@ -83,6 +83,6 @@ internal class LineTest {
     fun `line returns correct lowest left corner if p1 is actual lowest left corner`() {
         val p1 = Point(1, 3)
         val p2 = Point(4, 3)
-        Line.create(p1, p2).downLeftCorner() shouldBe p1
+        Line.create(p1, p2).lowerLeftCorner() shouldBe p1
     }
 }

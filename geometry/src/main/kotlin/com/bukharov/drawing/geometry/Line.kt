@@ -11,7 +11,7 @@ data class Line internal constructor(
     fun isVertical(): Boolean =
         a.x == b.x
 
-    override fun downLeftCorner(): Point = lowestLeftOfPoints(a, b)
+    override fun lowerLeftCorner(): Point = lowestLeftOfPoints(a, b)
     override fun upperRightCorner(): Point = upperRightOfPoints(a, b)
 
     override fun equals(other: Any?): Boolean {

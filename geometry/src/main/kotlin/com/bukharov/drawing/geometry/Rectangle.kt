@@ -26,11 +26,11 @@ class Rectangle(
     fun edges() = setOf(
         Line(upperLeftCorner, upperRightCorner()),
         Line(upperRightCorner(), lowerRightCorner),
-        Line(lowerRightCorner, downLeftCorner()),
-        Line(downLeftCorner(), upperLeftCorner)
+        Line(lowerRightCorner, lowerLeftCorner()),
+        Line(lowerLeftCorner(), upperLeftCorner)
     )
 
-    override fun downLeftCorner() =
+    override fun lowerLeftCorner() =
         Point(
             x = upperLeftCorner.x,
             y = lowerRightCorner.y

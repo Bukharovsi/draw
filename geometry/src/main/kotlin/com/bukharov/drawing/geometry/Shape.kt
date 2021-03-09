@@ -1,6 +1,6 @@
 package com.bukharov.drawing.geometry
 
 interface Shape {
-    fun downLeftCorner(): Point
+    fun lowerLeftCorner(): Point
     fun upperRightCorner(): Point
 }
