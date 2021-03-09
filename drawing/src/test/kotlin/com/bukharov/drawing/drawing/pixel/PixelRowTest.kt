@@ -74,8 +74,7 @@ internal class PixelRowTest {
     @Test
     fun `when pixel is changed successfully then it will be retrievable`() {
         val newPixel = Pixel.X
-        PixelRow
-            .create(5)
+        PixelRow.create(5)
             .apply { this[1] = newPixel }
             .get(1)
             .shouldBe(newPixel)
@@ -83,7 +82,7 @@ internal class PixelRowTest {
 
     @Test
     fun `empty pixel line should be printed as all blanks`() {
-        val printedStream = PixelRow.create(5).print()
+        val printedStream = PixelRow.create(5).asString()
         val expectedString = "     " // 5 chars
         printedStream shouldBe expectedString
     }
@@ -93,7 +92,7 @@ internal class PixelRowTest {
         val printedStream = PixelRow.create(5)
             .apply { this[1] = Pixel.X }
             .apply { this[2] = Pixel.X }
-            .print()
+            .asString()
 
         val expectedString = " xx  " // 5 chars
         printedStream shouldBe expectedString
@@ -101,17 +100,13 @@ internal class PixelRowTest {
 
     @Test
     fun `two empty pixel lines are equal`() {
-        PixelRow.create(4) shouldBe PixelRow(4)
+        PixelRow.create(4) shouldBe PixelRow.create(4)
     }
 
     @Test
     fun `two identical pixel lines are equal`() {
-        val expected = PixelRow
-            .create(4).set(1, Pixel.X)
-
-        val actual = PixelRow
-            .create(4).set(1, Pixel.X)
-
+        val expected = PixelRow.create(4).set(1, Pixel.X)
+        val actual = PixelRow.create(4).set(1, Pixel.X)
         actual shouldBe expected
     }
 
@@ -128,10 +123,9 @@ internal class PixelRowTest {
 
     @Test
     fun `two empty lines the same length will be merged to one empty line`() {
-            PixelRow
-                .create(4)
-                .mergeAtop(PixelRow.create(4))
-                .shouldBe(PixelRow.create(4))
+            PixelRow.create(4)
+                .mergeAtop(PixelRow(4))
+                .shouldBe(PixelRow(4))
     }
 
     @Test
@@ -144,20 +138,10 @@ internal class PixelRowTest {
     }
 
     @Test
-    fun `long line can not be merged on a short one`() {
-        shouldThrow<LinesCanNotBeMerged> {
-            PixelRow
-                .create(4)
-                .mergeAtop(PixelRow.create(5))
-        }
-    }
-
-    @Test
     fun `short empty line might be merged on a long one`() {
-            PixelRow
-                .create(3)
+            PixelRow(3)
                 .mergeAtop(PixelRow.create(2))
-                .shouldBe(PixelRow(3))
+                .shouldBe(PixelRow.create(3))
     }
 
     @Test
@@ -182,11 +166,11 @@ internal class PixelRowTest {
     @Test
     fun `two partly filled lines with different length - merged into one partly filled`() {
 
-        val line1 = PixelRow.create(5)
+        val long = PixelRow.create(5)
             .apply { this[3] = Pixel.X }
             .apply { this[4] = Pixel.X }
 
-        val line2 = PixelRow.create(2)
+        val short = PixelRow.create(2)
             .apply { this[0] = Pixel.X }
             .apply { this[1] = Pixel.X }
 
@@ -196,7 +180,8 @@ internal class PixelRowTest {
             .apply { this[3] = Pixel.X }
             .apply { this[4] = Pixel.X }
 
-        line1.mergeAtop(line2) shouldBe expected
+        long.mergeAtop(short) shouldBe expected
+        short.mergeAtop(long) shouldBe expected
     }
 
     @Test

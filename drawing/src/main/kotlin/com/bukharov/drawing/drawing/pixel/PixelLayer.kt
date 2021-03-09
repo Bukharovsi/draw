@@ -58,7 +58,7 @@ class PixelLayer private constructor(
 
     override fun asStrings(): List<String> =
         rows.map {
-            it.print()
+            it.asString()
         }.toList()
 
     override fun toString(): String {

@@ -3,7 +3,7 @@ package com.bukharov.drawing.app.command.application
 import com.bukharov.drawing.app.command.Command
 import com.bukharov.drawing.app.command.drawing.error.CanvasShouldBePresent
 import com.bukharov.drawing.drawing.Canvas
-import com.bukharov.drawing.drawing.pixel.print
+import com.bukharov.drawing.drawing.pixel.asString
 import com.bukharov.drawing.app.pixel.BorderDecoratorFactory
 import java.io.PrintStream
 
@@ -16,7 +16,7 @@ class PrintCommand(
         printStream.println(
             borderFactory.create(current.rasterize())
                 .asStrings()
-                .print()
+                .asString()
         )
         return current
     }

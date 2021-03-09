@@ -1,5 +1,6 @@
 package com.bukharov.drawing.drawing.pixel
 
+@Suppress("TooManyFunctions")
 internal class PixelRow private constructor(
     private val canvas: Array<Pixel>,
     private val length: Int
@@ -22,20 +23,27 @@ internal class PixelRow private constructor(
         if (!has(i)) throw PixelDoesNotExist(needed = i, boundaries = canvas.lastIndex)
         else canvas[i]
 
+    fun getOrNull(i: Int) =
+        if (!has(i)) null
+        else canvas[i]
+
     fun has(i: Int): Boolean =
         0 <= i && i <= canvas.lastIndex
 
     fun mergeAtop(above: PixelRow): PixelRow {
-        if (this.length < above.length) throw LinesCanNotBeMerged(this.length, above.length)
-        val merged = this.clone()
-        above.forEachIndexed { index: Int, pixelAbove: Pixel -> merged[index] = this[index].mergeAtop(pixelAbove) }
+        val merged = PixelRow(maxOf(this.length, above.length))
+        // copy existing
+        this.forEachIndexed { i, _ -> merged[i] = this[i] }
+        // copy above
+        above.forEachIndexed {
+                i, pixelAbove -> merged[i] = (getOrNull(i) ?: merged[i]).mergeAtop(pixelAbove) }
         return merged
     }
 
     public override fun clone(): PixelRow = PixelRow(canvas, length)
 
-    fun print(): String =
-        CharArray(canvas.size, { i -> canvas[i].print() })
+    fun asString(): String =
+        CharArray(length, { i -> this[i].print() })
             .joinToString(separator = "")
 
     override fun toString(): String {
@@ -63,5 +71,4 @@ internal class PixelRow private constructor(
 }
 
 class LineLengthShouldBePositiveValue(val length: Int) : IllegalArgumentException()
-class LinesCanNotBeMerged(val line1Length: Int, val line2Length: Int) : IllegalStateException()
 data class PixelDoesNotExist(val needed: Int, val boundaries: Int) : IllegalStateException()
