@@ -3,6 +3,7 @@ package com.bukharov.drawing.app.command
 import com.bukharov.drawing.app.command.application.QuitCommand
 import com.bukharov.drawing.app.command.drawing.CreateCanvasCommand
 import com.bukharov.drawing.app.command.drawing.DrawLineCommand
+import com.bukharov.drawing.app.command.drawing.DrawRectangleCommand
 import com.bukharov.drawing.app.command.drawing.FillCommand
 
 object CommandFactory {
@@ -10,6 +11,7 @@ object CommandFactory {
     private val commandFactories: List<Command.Factory> = listOf(
         CreateCanvasCommand.Factory(),
         DrawLineCommand.Factory(),
+        DrawRectangleCommand.Factory(),
         FillCommand.Factory(),
         QuitCommand.Factory()
     )

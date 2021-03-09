@@ -14,8 +14,8 @@ class DrawableCanvas(
     override val size: Dimensions,
     val fillerFactory: FillerFactory = FloodFill4xDirection.Factory
 ) : Canvas {
-    var background: PixelLayer
-    var vectorLayers: Field
+    private var background: PixelLayer
+    private var vectorLayers: Field
 
     init {
         vectorLayers = Field(size.toUpperRightCoordinate())
@@ -33,6 +33,8 @@ class DrawableCanvas(
     override fun put(shape: Shape) {
         vectorLayers.put(shape = shape)
     }
+
+    override fun shapes() = vectorLayers.shapes()
 
     override fun fill(target: Point, withColor: Pixel) {
         background = fillerFactory.create(rasterize()).fill(target, withColor)

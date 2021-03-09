@@ -14,6 +14,8 @@ interface Canvas {
 
     fun put(shape: Shape)
 
+    fun shapes(): Set<Shape>
+
     fun print(): List<String>
 
     fun fill(target: Point, withColor: Pixel)

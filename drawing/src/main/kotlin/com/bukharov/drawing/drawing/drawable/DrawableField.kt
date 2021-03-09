@@ -3,6 +3,7 @@ package com.bukharov.drawing.drawing.drawable
 import com.bukharov.drawing.drawing.pixel.PixelLayer
 import com.bukharov.drawing.geometry.Field
 import com.bukharov.drawing.geometry.Line
+import com.bukharov.drawing.geometry.Rectangle
 import com.bukharov.drawing.geometry.toDimension
 
 /**
@@ -20,6 +21,7 @@ class DrawableField(
                 .shapes()
                 .map { shape ->
                     if (shape is Line) DrawableLine(shape).rasterize()
+                    if (shape is Rectangle) DrawableRectangle(shape).rasterize()
                     else throw ShapeCanNotBeRasterized(shape)
                 }
 
