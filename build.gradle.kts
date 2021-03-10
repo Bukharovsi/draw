@@ -126,9 +126,8 @@ subprojects {
             violationRules {
 
                 rule {
-                    excludes = listOf("application")
                     limit {
-                        minimum = BigDecimal("0.75")
+                        minimum = BigDecimal("0.80")
                     }
                 }
             }
