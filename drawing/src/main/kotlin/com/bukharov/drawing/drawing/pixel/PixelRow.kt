@@ -1,5 +1,7 @@
 package com.bukharov.drawing.drawing.pixel
 
+import com.bukharov.drawing.geometry.UserReadableError
+
 @Suppress("TooManyFunctions")
 internal class PixelRow private constructor(
     private val canvas: Array<Pixel>,
@@ -15,12 +17,12 @@ internal class PixelRow private constructor(
         canvas.iterator()
 
     operator fun set(i: Int, newPixel: Pixel) {
-        if (!has(i)) throw PixelDoesNotExist(needed = i, boundaries = canvas.lastIndex)
+        if (!has(i)) throw PixelDoesNotExist(needed = i)
         else canvas[i] = newPixel
     }
 
     operator fun get(i: Int) =
-        if (!has(i)) throw PixelDoesNotExist(needed = i, boundaries = canvas.lastIndex)
+        if (!has(i)) throw PixelDoesNotExist(needed = i)
         else canvas[i]
 
     fun getOrNull(i: Int) =
@@ -34,7 +36,7 @@ internal class PixelRow private constructor(
         val merged = PixelRow(maxOf(this.length, above.length))
         // copy existing
         this.forEachIndexed { i, _ -> merged[i] = this[i] }
-        // copy above
+        // merge above
         above.forEachIndexed {
                 i, pixelAbove -> merged[i] = (getOrNull(i) ?: merged[i]).mergeAtop(pixelAbove) }
         return merged
@@ -70,5 +72,10 @@ internal class PixelRow private constructor(
     }
 }
 
-class LineLengthShouldBePositiveValue(val length: Int) : IllegalArgumentException()
-data class PixelDoesNotExist(val needed: Int, val boundaries: Int) : IllegalStateException()
+class LineLengthShouldBePositiveValue(val length: Int) : UserReadableError, IllegalArgumentException() {
+    override fun message() = "Line length should be positive $length given"
+}
+
+data class PixelDoesNotExist(val needed: Int) : UserReadableError, IllegalStateException() {
+    override fun message() = "Pixel $needed does not exist"
+}

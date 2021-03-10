@@ -2,6 +2,7 @@ package com.bukharov.drawing.drawing.pixel
 
 import com.bukharov.drawing.geometry.Dimensions
 import com.bukharov.drawing.geometry.Point
+import com.bukharov.drawing.geometry.UserReadableError
 import com.bukharov.drawing.geometry.maxOfDimensions
 
 class PixelLayer private constructor(
@@ -23,10 +24,7 @@ class PixelLayer private constructor(
     }
 
     operator fun get(coordinate: Point): Pixel {
-        if (!has(coordinate)) throw LayerPixelDoesNotExist(
-            needed = coordinate,
-            boundaries = dimensions.toUpperRightCoordinate()
-        )
+        if (!has(coordinate)) throw LayerPixelDoesNotExist(needed = coordinate)
         return rows[coordinate.y][coordinate.x]
     }
 
@@ -36,10 +34,7 @@ class PixelLayer private constructor(
     }
 
     operator fun set(coordinate: Point, pixel: Pixel) {
-        if (!has(coordinate)) throw LayerPixelDoesNotExist(
-            needed = coordinate,
-            boundaries = dimensions.toUpperRightCoordinate()
-        )
+        if (!has(coordinate)) throw LayerPixelDoesNotExist(needed = coordinate)
         rows[coordinate.y][coordinate.x] = pixel
     }
 
@@ -81,4 +76,6 @@ class PixelLayer private constructor(
     public override fun clone() = PixelLayer(rows.map { it.clone() }.toTypedArray(), dimensions)
 }
 
-data class LayerPixelDoesNotExist(val needed: Point, val boundaries: Point) : IllegalStateException()
+data class LayerPixelDoesNotExist(val needed: Point) : UserReadableError, IllegalStateException() {
+    override fun message() = "pixel with coordinate $needed does not exist"
+}
