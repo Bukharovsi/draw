@@ -52,6 +52,19 @@ class Rectangle(
     override fun toString(): String {
         return "Rectangle(upperLeftCorner=$upperLeftCorner, lowerRightCorner=$lowerRightCorner)"
     }
+
+    companion object {
+        fun createUsing2DiagonalCoordinates(a: Point, b: Point): Rectangle {
+            val left = minXof(a, b)
+            val right = maxXof(a, b)
+            val lower = minYof(a, b)
+            val upper = maxYof(a, b)
+            return Rectangle(
+                upperLeftCorner = Point(x = left, y = upper),
+                lowerRightCorner = Point(x = right, y = lower)
+            )
+        }
+    }
 }
 
 class RectangleCoordinatesAreIncorrect(

@@ -12,5 +12,5 @@ The second approach requires application to know about all the errors that must 
 
 CHOSEN APPROACH
 
-There is no requirements for internalization, no 3rd party libraries, therefore we can take 1st approach.
+There are no requirements for internalization, no 3rd party libraries, therefore we can take 1st approach.
 But real application requires 2nd. 

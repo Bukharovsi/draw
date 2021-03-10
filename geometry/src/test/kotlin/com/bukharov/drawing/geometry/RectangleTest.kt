@@ -95,4 +95,48 @@ internal class RectangleTest {
         edges shouldContain Line(Point(3, 3), Point(3, 0))
         edges shouldContain Line(Point(3, 0), Point(0, 0))
     }
+
+    @Test
+    fun `if lower left and upper right coordinates - must be created`() {
+        val lowerLeft = Point(1, 2)
+        val upperRight = Point(3, 5)
+        val rectangle = Rectangle
+            .createUsing2DiagonalCoordinates(lowerLeft, upperRight)
+
+        rectangle.lowerLeftCorner shouldBe lowerLeft
+        rectangle.upperRightCorner shouldBe upperRight
+    }
+
+    @Test
+    fun `if lower right and upper left coordinates - must be created`() {
+        val lowerRight = Point(10, 2)
+        val upperLeft = Point(3, 5)
+        val rectangle = Rectangle
+            .createUsing2DiagonalCoordinates(lowerRight, upperLeft)
+
+        rectangle.lowerRightCorner shouldBe lowerRight
+        rectangle.upperLeftCorner shouldBe upperLeft
+    }
+
+    @Test
+    fun `if x coordinates are the same - must be NOT created`() {
+        val lowerRight = Point(3, 2)
+        val upperLeft = Point(3, 5)
+
+        shouldThrow<RectangleCoordinatesAreIncorrect> {
+            Rectangle
+                .createUsing2DiagonalCoordinates(lowerRight, upperLeft)
+        }
+    }
+
+    @Test
+    fun `if y coordinates are the same - must be NOT created`() {
+        val lowerRight = Point(6, 1)
+        val upperLeft = Point(3, 1)
+
+        shouldThrow<RectangleCoordinatesAreIncorrect> {
+            Rectangle
+                .createUsing2DiagonalCoordinates(lowerRight, upperLeft)
+        }
+    }
 }

@@ -14,9 +14,9 @@ class DrawRectangleCommand(
     override fun execute(current: Canvas?): Canvas {
         if (null == current) throw CanvasShouldBePresent()
         current.put(
-            Rectangle(
-                upperLeftCorner = upperLeftCorner,
-                lowerRightCorner = lowerRightCorner
+            Rectangle.createUsing2DiagonalCoordinates(
+                upperLeftCorner,
+                lowerRightCorner
             )
         )
         return current

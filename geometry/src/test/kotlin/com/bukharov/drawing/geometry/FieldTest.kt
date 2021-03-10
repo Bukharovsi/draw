@@ -91,8 +91,10 @@ internal class FieldTest {
         "0, 4, 0, 2"
     )
     fun `a shape might NOT be placed on canvas if it does not fit canvas`(
-        x1: Int, y1: Int,
-        x2: Int, y2: Int
+        x1: Int,
+        y1: Int,
+        x2: Int,
+        y2: Int
     ) {
         shouldThrow<ShapeCanNotBePlacedToCanvas> {
             Field(upperRightCorner = Point(9, 9), lowerLeftCorner = Point(1, 1))
