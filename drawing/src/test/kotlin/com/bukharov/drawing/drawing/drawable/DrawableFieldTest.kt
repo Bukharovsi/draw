@@ -13,7 +13,7 @@ internal class DrawableFieldTest {
 
     @Test
     fun `fully filled canvas might be rasterized`() {
-        val filledCanvas = Field(rightUpperCorner = Point(1, 1))
+        val filledCanvas = Field(upperRightCorner = Point(1, 1))
             .put(Line.create(Point.zero, Point(0, 1)))
             .put(Line.create(Point.zero, Point(1, 0)))
             .put(Line.create(Point(1, 1), Point(1, 0)))
@@ -29,7 +29,7 @@ internal class DrawableFieldTest {
 
     @Test
     fun `canvas might be rasterized`() {
-        val twoLines = Field(rightUpperCorner = Point(5, 5))
+        val twoLines = Field(upperRightCorner = Point(5, 5))
             .put(Line.create(Point.zero, Point(0, 4)))
             .put(Line.create(Point.zero, Point(4, 0)))
 
